@@ -52,7 +52,16 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\ActivityLevel.cs" />
+    <Compile Include="Model\Diet.cs" />
+    <Compile Include="Model\DietaryEntity.cs" />
+    <Compile Include="Model\Food.cs" />
+    <Compile Include="Model\FoodCategory.cs" />
+    <Compile Include="Model\Goal.cs" />
+    <Compile Include="Model\Meal.cs" />
+    <Compile Include="Model\MealType.cs" />
     <Compile Include="Model\Patient.cs" />
+    <Compile Include="Model\Plan.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

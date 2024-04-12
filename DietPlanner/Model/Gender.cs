@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace DietPlanner.Model
 {
-    internal class Diet
+    internal enum Gender
     {
-        private string dietID { get; set; }
-        private Goal goal { get; set; }
+        male, 
+        female, 
+        transgender, 
+        gender_neutral,
+        non_binary,
+        agender,
+        pangender
     }
 }
