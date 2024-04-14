@@ -8,6 +8,15 @@ namespace DietPlanner.Model
 {
     internal class MealType : DietaryEntity
     {
-        private string typeID { get; set; }
+        private string typeID;
+
+        public MealType() { }
+
+        public MealType(string typeID)
+        {
+            this.TypeID = typeID;
+        }
+
+        public string TypeID { get => typeID; set => typeID = value; }
     }
 }

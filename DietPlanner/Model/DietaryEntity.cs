@@ -10,6 +10,13 @@ namespace DietPlanner.Model
     {
         private string name;
 
+        protected DietaryEntity() { }
+
+        protected DietaryEntity(string name)
+        {
+            Name = name;
+        }
+
         public string Name { get => name; set => name = value; }
     }
 }
