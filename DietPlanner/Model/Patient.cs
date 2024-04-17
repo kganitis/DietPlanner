@@ -16,18 +16,17 @@ namespace DietPlanner.Model
         private int age;
         private float height;
         private float weight;
-        private ActivityLevel activityLevel;
-        private Goal goal;
+        private string activityLevel;
+        private string goal;
         private List<DietaryEntity> preferredFoods = new List<DietaryEntity>();
         private List<DietaryEntity> foodsToAvoid = new List<DietaryEntity>();
-        private Plan plan;
-
+        
         public Patient() { }
 
         public Patient(string patientID, string name, string phoneNumber, Gender gender, 
                         DateTime dateOfBirth, float height, float weight, 
-                        ActivityLevel activityLevel, Goal goal, List<DietaryEntity> preferredFoods, 
-                        List<DietaryEntity> foodsToAvoid, Plan plan)
+                        string activityLevel, string goal, List<DietaryEntity> preferredFoods, 
+                        List<DietaryEntity> foodsToAvoid)
         {
             this.patientID = patientID;
             this.name = name;
@@ -41,7 +40,6 @@ namespace DietPlanner.Model
             this.goal = goal;
             this.preferredFoods = preferredFoods;
             this.foodsToAvoid = foodsToAvoid;
-            this.plan = plan;
         }
                 
         public string PatientID { get => patientID; set => patientID = value; }
@@ -68,10 +66,9 @@ namespace DietPlanner.Model
         internal Gender Gender { get => gender; set => gender = value; }
         public float Height { get => height; set => height = value; }
         public float Weight { get => weight; set => weight = value; }
-        internal ActivityLevel ActivityLevel { get => activityLevel; set => activityLevel = value; }
-        internal Goal Goal { get => goal; set => goal = value; }
+        internal string ActivityLevel { get => activityLevel; set => activityLevel = value; }
+        internal string Goal { get => goal; set => goal = value; }
         internal List<DietaryEntity> PreferredFoods { get => preferredFoods; set => preferredFoods = value; }
         internal List<DietaryEntity> FoodsToAvoid { get => foodsToAvoid; set => foodsToAvoid = value; }
-        internal Plan Plan { get => plan; set => plan = value; }
     }
 }
