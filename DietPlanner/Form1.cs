@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace DietPlanner
 {
-    public partial class Form1 : Form
+    public partial class PlanForm : Form
     {
-        public Form1()
+        public PlanForm()
         {
             InitializeComponent();
+        }
+
+        private void PlanForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

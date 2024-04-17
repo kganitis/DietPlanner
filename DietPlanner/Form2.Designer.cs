@@ -29,42 +29,43 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.usernameTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.phoneTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.birthTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.heightTextBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.weightTextBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.levelTextBox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.goalComboBox = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.listBox = new System.Windows.Forms.ListBox();
+            this.maleRadioButton = new System.Windows.Forms.RadioButton();
+            this.femaleRadioButton = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
-            // textBox1
+            // usernameTextBox
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.textBox1.Location = new System.Drawing.Point(228, 100);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(240, 30);
-            this.textBox1.TabIndex = 0;
+            this.usernameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.usernameTextBox.Location = new System.Drawing.Point(228, 100);
+            this.usernameTextBox.Name = "usernameTextBox";
+            this.usernameTextBox.Size = new System.Drawing.Size(240, 30);
+            this.usernameTextBox.TabIndex = 0;
             // 
             // label1
             // 
@@ -96,14 +97,6 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "ΦΥΛΛΟ";
             // 
-            // textBox2
-            // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.textBox2.Location = new System.Drawing.Point(228, 174);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(240, 30);
-            this.textBox2.TabIndex = 4;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -114,13 +107,13 @@
             this.label4.TabIndex = 5;
             this.label4.Text = "ΤΗΛΕΦΩΝΟ";
             // 
-            // textBox3
+            // phoneTextBox
             // 
-            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.textBox3.Location = new System.Drawing.Point(228, 242);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(240, 30);
-            this.textBox3.TabIndex = 6;
+            this.phoneTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.phoneTextBox.Location = new System.Drawing.Point(228, 242);
+            this.phoneTextBox.Name = "phoneTextBox";
+            this.phoneTextBox.Size = new System.Drawing.Size(240, 30);
+            this.phoneTextBox.TabIndex = 6;
             // 
             // label5
             // 
@@ -132,13 +125,13 @@
             this.label5.TabIndex = 7;
             this.label5.Text = "ΗΜ. ΓΕΝ";
             // 
-            // textBox4
+            // birthTextBox
             // 
-            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.textBox4.Location = new System.Drawing.Point(228, 332);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(240, 30);
-            this.textBox4.TabIndex = 8;
+            this.birthTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.birthTextBox.Location = new System.Drawing.Point(228, 332);
+            this.birthTextBox.Name = "birthTextBox";
+            this.birthTextBox.Size = new System.Drawing.Size(240, 30);
+            this.birthTextBox.TabIndex = 8;
             // 
             // label6
             // 
@@ -150,13 +143,13 @@
             this.label6.TabIndex = 9;
             this.label6.Text = "ΥΨΟΣ";
             // 
-            // textBox5
+            // heightTextBox
             // 
-            this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.textBox5.Location = new System.Drawing.Point(228, 404);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(240, 30);
-            this.textBox5.TabIndex = 10;
+            this.heightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.heightTextBox.Location = new System.Drawing.Point(228, 404);
+            this.heightTextBox.Name = "heightTextBox";
+            this.heightTextBox.Size = new System.Drawing.Size(240, 30);
+            this.heightTextBox.TabIndex = 10;
             // 
             // label7
             // 
@@ -168,13 +161,13 @@
             this.label7.TabIndex = 11;
             this.label7.Text = "ΒΑΡΟΣ";
             // 
-            // textBox6
+            // weightTextBox
             // 
-            this.textBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.textBox6.Location = new System.Drawing.Point(228, 485);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(240, 30);
-            this.textBox6.TabIndex = 12;
+            this.weightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.weightTextBox.Location = new System.Drawing.Point(228, 485);
+            this.weightTextBox.Name = "weightTextBox";
+            this.weightTextBox.Size = new System.Drawing.Size(240, 30);
+            this.weightTextBox.TabIndex = 12;
             // 
             // label8
             // 
@@ -186,13 +179,13 @@
             this.label8.TabIndex = 13;
             this.label8.Text = "ΕΠΙΠΕΔΟ\r\nΔΡΑΣ/ΤΑΣ";
             // 
-            // textBox7
+            // levelTextBox
             // 
-            this.textBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.textBox7.Location = new System.Drawing.Point(228, 576);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(240, 30);
-            this.textBox7.TabIndex = 14;
+            this.levelTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.levelTextBox.Location = new System.Drawing.Point(228, 576);
+            this.levelTextBox.Name = "levelTextBox";
+            this.levelTextBox.Size = new System.Drawing.Size(240, 30);
+            this.levelTextBox.TabIndex = 14;
             // 
             // label9
             // 
@@ -204,18 +197,18 @@
             this.label9.TabIndex = 15;
             this.label9.Text = "ΣΤΟΧΟΣ";
             // 
-            // comboBox1
+            // goalComboBox
             // 
-            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.goalComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.goalComboBox.FormattingEnabled = true;
+            this.goalComboBox.Items.AddRange(new object[] {
             "GAIN_WEIGHT",
             "LOSE_WEIGHT",
             "MAINTANE WEIGHT"});
-            this.comboBox1.Location = new System.Drawing.Point(228, 662);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(240, 33);
-            this.comboBox1.TabIndex = 16;
+            this.goalComboBox.Location = new System.Drawing.Point(228, 662);
+            this.goalComboBox.Name = "goalComboBox";
+            this.goalComboBox.Size = new System.Drawing.Size(240, 33);
+            this.goalComboBox.TabIndex = 16;
             // 
             // button1
             // 
@@ -227,7 +220,7 @@
             this.button1.Size = new System.Drawing.Size(49, 51);
             this.button1.TabIndex = 18;
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // button2
             // 
@@ -239,16 +232,7 @@
             this.button2.Size = new System.Drawing.Size(49, 51);
             this.button2.TabIndex = 19;
             this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(670, 122);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(220, 115);
-            this.richTextBox1.TabIndex = 20;
-            this.richTextBox1.Text = "";
-            this.richTextBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.richTextBox1_MouseDown);
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // label10
             // 
@@ -270,14 +254,6 @@
             this.label11.TabIndex = 22;
             this.label11.Text = "Φαγητά προς Αποφυγή";
             // 
-            // richTextBox2
-            // 
-            this.richTextBox2.Location = new System.Drawing.Point(670, 411);
-            this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(220, 115);
-            this.richTextBox2.TabIndex = 23;
-            this.richTextBox2.Text = "";
-            // 
             // button3
             // 
             this.button3.BackColor = System.Drawing.Color.Transparent;
@@ -288,7 +264,7 @@
             this.button3.Size = new System.Drawing.Size(49, 51);
             this.button3.TabIndex = 24;
             this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
             // button4
             // 
@@ -300,65 +276,111 @@
             this.button4.Size = new System.Drawing.Size(49, 51);
             this.button4.TabIndex = 25;
             this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.button4.Click += new System.EventHandler(this.button4_Click_1);
             // 
             // button5
             // 
             this.button5.BackColor = System.Drawing.Color.Lime;
             this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.button5.Location = new System.Drawing.Point(1001, 404);
+            this.button5.Location = new System.Drawing.Point(536, 647);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(281, 64);
             this.button5.TabIndex = 26;
             this.button5.Text = "ΑΠΟΘΗΚΕΥΣΗ ΣΤΟΙΧΕΙΩΝ";
             this.button5.UseVisualStyleBackColor = false;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
             this.button6.BackColor = System.Drawing.Color.Lime;
             this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.button6.Location = new System.Drawing.Point(1001, 503);
+            this.button6.Location = new System.Drawing.Point(955, 298);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(281, 64);
             this.button6.TabIndex = 27;
             this.button6.Text = "ΕΚΔΟΣΗ ΕΒΔΟΜΑΔΙΑΙΟΥ ΠΛΑΝΟΥ";
             this.button6.UseVisualStyleBackColor = false;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 16;
+            this.listBox1.Location = new System.Drawing.Point(670, 109);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.listBox1.Size = new System.Drawing.Size(220, 116);
+            this.listBox1.TabIndex = 28;
+            // 
+            // listBox
+            // 
+            this.listBox.FormattingEnabled = true;
+            this.listBox.ItemHeight = 16;
+            this.listBox.Location = new System.Drawing.Point(670, 399);
+            this.listBox.Name = "listBox";
+            this.listBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.listBox.Size = new System.Drawing.Size(220, 116);
+            this.listBox.TabIndex = 29;
+            // 
+            // maleRadioButton
+            // 
+            this.maleRadioButton.AutoSize = true;
+            this.maleRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.maleRadioButton.Location = new System.Drawing.Point(228, 174);
+            this.maleRadioButton.Name = "maleRadioButton";
+            this.maleRadioButton.Size = new System.Drawing.Size(91, 33);
+            this.maleRadioButton.TabIndex = 30;
+            this.maleRadioButton.TabStop = true;
+            this.maleRadioButton.Text = "Male";
+            this.maleRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // femaleRadioButton
+            // 
+            this.femaleRadioButton.AutoSize = true;
+            this.femaleRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.femaleRadioButton.Location = new System.Drawing.Point(346, 174);
+            this.femaleRadioButton.Name = "femaleRadioButton";
+            this.femaleRadioButton.Size = new System.Drawing.Size(122, 33);
+            this.femaleRadioButton.TabIndex = 31;
+            this.femaleRadioButton.TabStop = true;
+            this.femaleRadioButton.Text = "Female";
+            this.femaleRadioButton.UseVisualStyleBackColor = true;
             // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1416, 739);
+            this.Controls.Add(this.femaleRadioButton);
+            this.Controls.Add(this.maleRadioButton);
+            this.Controls.Add(this.listBox);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.richTextBox2);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.goalComboBox);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.textBox7);
+            this.Controls.Add(this.levelTextBox);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.textBox6);
+            this.Controls.Add(this.weightTextBox);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.heightTextBox);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.birthTextBox);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.phoneTextBox);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.usernameTextBox);
             this.Name = "Form2";
             this.Text = "Form2";
+            this.Load += new System.EventHandler(this.Form2_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -366,32 +388,33 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox usernameTextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox phoneTextBox;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox birthTextBox;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox heightTextBox;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox weightTextBox;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox levelTextBox;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox goalComboBox;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.RichTextBox richTextBox2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox listBox;
+        private System.Windows.Forms.RadioButton maleRadioButton;
+        private System.Windows.Forms.RadioButton femaleRadioButton;
     }
 }
