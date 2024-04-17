@@ -61,21 +61,21 @@ namespace DietPlanner
             Form2 form2 = (Form2)this.Owner; // Αναφορά στην Form2
             if (form2 != null)
             {
-                RichTextBox richTextBox;
+                ListBox listBox;
                 // Χρήση της ButtonPressed για να αποφασίσουμε ποιο richtextbox να χρησιμοποιήσουμε
                 if (form2.ButtonPressed == 1)
                 {
-                    richTextBox = form2.RichTextBox1;
+                    listBox = form2.ListBox1;
                 }
                 else
                 {
-                    richTextBox = form2.RichTextBox2;
+                    listBox = form2.ListBox2;
                 }
-                if (richTextBox != null)
+                if (listBox != null)
                 {
                     foreach (string item in selectedItems)
                     {
-                        richTextBox.AppendText(item + Environment.NewLine);
+                        listBox.Items.Add(item);
                     }
                 }
             }
