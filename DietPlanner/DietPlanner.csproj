@@ -65,34 +65,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FoodPreferences.cs">
+    <Compile Include="ActivityLevel.cs" />
+    <Compile Include="FormPreferences.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FoodPreferences.Designer.cs">
-      <DependentUpon>FoodPreferences.cs</DependentUpon>
+    <Compile Include="FormPreferences.Designer.cs">
+      <DependentUpon>FormPreferences.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="FormPlan.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="FormPlan.Designer.cs">
+      <DependentUpon>FormPlan.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form2.cs">
+    <Compile Include="FormDataEntry.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <Compile Include="FormDataEntry.Designer.cs">
+      <DependentUpon>FormDataEntry.cs</DependentUpon>
     </Compile>
+    <Compile Include="Goal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FoodPreferences.resx">
-      <DependentUpon>FoodPreferences.cs</DependentUpon>
+    <EmbeddedResource Include="FormPreferences.resx">
+      <DependentUpon>FormPreferences.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="FormPlan.resx">
+      <DependentUpon>FormPlan.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form2.resx">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <EmbeddedResource Include="FormDataEntry.resx">
+      <DependentUpon>FormDataEntry.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
