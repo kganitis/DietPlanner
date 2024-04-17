@@ -152,7 +152,7 @@ namespace DietPlanner
                         SQLiteCommand command = new SQLiteCommand(preferSQL, connection);
                         command.Parameters.AddWithValue("@patientId", newPatientId); // Assuming newPatientId is the patient_id
                         command.Parameters.AddWithValue("@dietaryEntityId", item);
-                        command.Parameters.AddWithValue("@rule", "Yes");
+                        command.Parameters.AddWithValue("@rule", "No");
                         command.ExecuteNonQuery();
                     }
 
@@ -163,7 +163,7 @@ namespace DietPlanner
                         SQLiteCommand command = new SQLiteCommand(avoidSQl, connection);
                         command.Parameters.AddWithValue("@patientId", newPatientId); // Assuming newPatientId is the patient_id
                         command.Parameters.AddWithValue("@dietaryEntityId", item);
-                        command.Parameters.AddWithValue("@rule", "No");
+                        command.Parameters.AddWithValue("@rule", "Yes");
                         command.ExecuteNonQuery();
                     }
 
@@ -180,38 +180,6 @@ namespace DietPlanner
 
             }
 
-
-
-            /*
-            try
-            {
-                string selectSQL = "SELECT Name, Phone_number FROM Patient WHERE Name = @Name AND Phone_number = @PhoneNumber";
-                SQLiteCommand command = new SQLiteCommand(selectSQL, connection);
-                command.Parameters.AddWithValue("@Name", usernameTextBox.Text);
-                command.Parameters.AddWithValue("@PhoneNumber", phoneTextBox.Text);
-
-                SQLiteDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    string name = reader.GetString(0); // Use index 0 for the Name column
-                    string phone = reader.GetString(1); // Use index 1 for the Phone_number column
-                    if (usernameTextBox.Text.Equals(name) && phoneTextBox.Text.Equals(phone))
-                    {
-                        MessageBox.Show("Already Exists!!");
-                    }
-                    else
-                    {
-                        MessageBox.Show("New Patient!!");
-                    }
-                }
-
-            }
-            catch (Exception ex) 
-            {
-                MessageBox.Show("An error occurred: " + ex.Message);
-            }
-         */
         }
         private void OpenFoodPreferencesForm()
         {

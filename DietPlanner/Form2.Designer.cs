@@ -191,7 +191,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.label9.Location = new System.Drawing.Point(37, 662);
+            this.label9.Location = new System.Drawing.Point(36, 662);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(112, 29);
             this.label9.TabIndex = 15;
@@ -205,7 +205,7 @@
             "GAIN_WEIGHT",
             "LOSE_WEIGHT",
             "MAINTANE WEIGHT"});
-            this.goalComboBox.Location = new System.Drawing.Point(228, 662);
+            this.goalComboBox.Location = new System.Drawing.Point(227, 662);
             this.goalComboBox.Name = "goalComboBox";
             this.goalComboBox.Size = new System.Drawing.Size(240, 33);
             this.goalComboBox.TabIndex = 16;
