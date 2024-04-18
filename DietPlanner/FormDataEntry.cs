@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace DietPlanner
 {
@@ -272,10 +271,7 @@ namespace DietPlanner
 
         private void btnSaveData_Click(object sender, EventArgs e)
         {
-
-            string newPatientId = GenerateNewPatientId();
-            
-            // Check if any of the fields are empty or whitespace
+            // Check if any of the fields are empty or invalid
             if (string.IsNullOrWhiteSpace(PatientName) ||
                 string.IsNullOrWhiteSpace(Gender) ||
                 string.IsNullOrWhiteSpace(PhoneNumber) ||
@@ -283,9 +279,11 @@ namespace DietPlanner
                 PatientWeight == -1f ||
                 ActivityLevelCoefficient == 0f)
             {
-                MessageBox.Show("Παρακαλώ συμπληρώστε όλα τα πεδία!");
+                MessageBox.Show("Παρακαλώ συμπληρώστε όλα τα πεδία!", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            string newPatientId = GenerateNewPatientId();
 
             try
             {
@@ -310,7 +308,7 @@ namespace DietPlanner
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Προέκυψε ένα σφάλμα: " + ex.Message);
+                MessageBox.Show("Προέκυψε ένα σφάλμα: " + ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -359,11 +357,11 @@ namespace DietPlanner
                         command.ExecuteNonQuery();
                     }
 
-                    MessageBox.Show("Patient preferences added successfully");
+                    MessageBox.Show("Οι προτιμήσεις αποθηκεύτηκαν με επιτυχία!", "Επιτυχία", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("An error occurred: " + ex.Message);
+                    MessageBox.Show("Προέκυψε ένα σφάλμα: " + ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 finally
                 {
