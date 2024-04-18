@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using DietPlanner.DAO.dbutil;
 
 namespace DietPlanner
 {
     public partial class FormDataEntry : Form
     {
-        protected String connectionString = "Data source=DietPlanner.db;Version=3;";
-        protected SQLiteConnection connection;
+        
 
         private FormPreferences foodPreferences;
 
@@ -38,9 +38,10 @@ namespace DietPlanner
         private string GenerateNewPatientId()
         {
             // Connect to the database
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            
             {
-                connection.Open();
+
+                SQLiteConnection connection = DBUtil.OpenConnection();
 
                 // Query to get the maximum patient_id value
                 string selectMaxIdSQL = "SELECT MAX(CAST(SUBSTR(Patient_id, 2) AS INTEGER)) FROM Patient";
@@ -113,8 +114,7 @@ namespace DietPlanner
 
             try
             {
-                connection = new SQLiteConnection(connectionString);
-                connection.Open();
+                SQLiteConnection connection = DBUtil.OpenConnection();
                 string insertSQL = "INSERT INTO Patient(Patient_id, Name, Gender, Phone_number, Date_of_birth, Height, Weight, Activity_level) " +
                             "VALUES (@patientId, @name, @gender, @phone, @date, @height, @weight, @activity)";
 
@@ -138,7 +138,7 @@ namespace DietPlanner
             }
             finally
             {
-                connection.Close();
+                DBUtil.CloseConnection();
             }
 
             List<string> foodsPreferred = new List<string>();
@@ -158,8 +158,7 @@ namespace DietPlanner
             {
                 try
                 {
-                    connection = new SQLiteConnection(connectionString);
-                    connection.Open();
+                    SQLiteConnection connection = DBUtil.OpenConnection();
 
                     // Insert items from foodsPreferred with Rule set to Yes
                     foreach (var item in foodsPreferred)
@@ -191,7 +190,7 @@ namespace DietPlanner
                 }
                 finally
                 {
-                    connection.Close();
+                    DBUtil.OpenConnection();
                 }
             }
         }

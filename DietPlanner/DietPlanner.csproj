@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\PatientInsertController.cs" />
     <Compile Include="DAO\dbutil\DBUtil.cs" />
     <Compile Include="DAO\IGenericDAO.cs" />
     <Compile Include="DAO\IPatientDAO.cs" />

@@ -9,10 +9,10 @@ namespace DietPlanner.DAO
 {
     internal interface IPatientDAO : IGenericDAO<Patient>
     {
-        Patient GetPatientById(int id);
-        Patient GetPatientByName(string name);
-        void AddPreferredFoods(string patientId, List<DietaryEntity> foods);
-        void AddFoodsToAvoid(string patientId, List<DietaryEntity> foods);
+        //Patient GetPatientById(int id);
+        //Patient GetPatientByName(string name);
+        //void AddPreferredFoods(string patientId, List<DietaryEntity> foods);
+        //void AddFoodsToAvoid(string patientId, List<DietaryEntity> foods);
 
     }
 }

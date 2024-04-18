@@ -24,9 +24,7 @@ namespace DietPlanner.Model
         public Patient() { }
 
         public Patient(string patientID, string name, string phoneNumber, Gender gender, 
-                        DateTime dateOfBirth, float height, float weight, 
-                        string activityLevel, string goal, List<DietaryEntity> preferredFoods, 
-                        List<DietaryEntity> foodsToAvoid)
+                        DateTime dateOfBirth, float height, float weight, string activityLevel, string goal)
         {
             this.patientID = patientID;
             this.name = name;
@@ -38,10 +36,14 @@ namespace DietPlanner.Model
             this.weight = weight;
             this.activityLevel = activityLevel;
             this.goal = goal;
-            this.preferredFoods = preferredFoods;
-            this.foodsToAvoid = foodsToAvoid;
         }
-                
+
+        public Patient(List<DietaryEntity> preferredFoods, List<DietaryEntity> foodsToAvoid)
+        {
+            PreferredFoods = preferredFoods;
+            FoodsToAvoid = foodsToAvoid;
+        }
+
         public string PatientID { get => patientID; set => patientID = value; }
         public string Name { get => name; set => name = value; }
         public string PhoneNumber { get => phoneNumber; set => phoneNumber = value; }
