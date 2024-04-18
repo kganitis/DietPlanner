@@ -65,6 +65,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAO\dbutil\DBUtil.cs" />
+    <Compile Include="DAO\IGenericDAO.cs" />
+    <Compile Include="DAO\IPatientDAO.cs" />
+    <Compile Include="DAO\IPlanDAO.cs" />
+    <Compile Include="DAO\PatientDAOImp.cs" />
+    <Compile Include="DAO\PlanDAOImp.cs" />
+    <Compile Include="DTO\PatientDTO.cs" />
+    <Compile Include="DTO\PlanDTO.cs" />
     <Compile Include="FormPreferences.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,6 +104,8 @@
     <Compile Include="Model\Plan.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\IPatientService.cs" />
+    <Compile Include="Service\PatientServiceImp.cs" />
     <EmbeddedResource Include="FormPreferences.resx">
       <DependentUpon>FormPreferences.cs</DependentUpon>
     </EmbeddedResource>
