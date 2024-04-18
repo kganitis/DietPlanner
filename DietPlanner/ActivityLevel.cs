@@ -16,10 +16,10 @@ namespace DietPlanner
         private static readonly Dictionary<string, float> Coefficients = new Dictionary<string, float>
         {
             { SEDENTARY, 1.2f },
-            { LIGHTLY_ACTIVE, 1.4f },
-            { MODERATELY_ACTIVE, 1.6f },
-            { VERY_ACTIVE, 1.8f },
-            { EXTREMELY_ACTIVE, 2.0f }
+            { LIGHTLY_ACTIVE, 1.375f },
+            { MODERATELY_ACTIVE, 1.55f },
+            { VERY_ACTIVE, 1.725f },
+            { EXTREMELY_ACTIVE, 1.9f }
         };
 
         public static float GetCoefficient(string activityLevel)

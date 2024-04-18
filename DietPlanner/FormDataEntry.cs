@@ -6,6 +6,7 @@ using System.Data.SQLite;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -41,25 +42,21 @@ namespace DietPlanner
                 }
                 else
                 {
+                    MessageBox.Show("Παρακαλώ επιλέξτε φύλο.", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return String.Empty;
                 }
             }
             set
             {
+                maleRadioButton.Checked = false;
+                femaleRadioButton.Checked = false;
                 if (value == "Α")
                 {
                     maleRadioButton.Checked = true;
-                    femaleRadioButton.Checked = false;
                 }
                 else if (value == "Θ")
                 {
                     femaleRadioButton.Checked = true;
-                    maleRadioButton.Checked = false;
-                }
-                else
-                {
-                    maleRadioButton.Checked = false;
-                    femaleRadioButton.Checked = false;
                 }
             }
         }
@@ -136,7 +133,7 @@ namespace DietPlanner
             get
             {
                 float weight;
-                if (!float.TryParse(heightTextBox.Text, out weight))
+                if (!float.TryParse(weightTextBox.Text, out weight))
                 {
                     MessageBox.Show("Παρακαλώ εισάγετε μια έγκυρη τιμή για το βάρος.", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return -1f;
@@ -187,6 +184,30 @@ namespace DietPlanner
                 MessageBox.Show("Μη έγκυρη τιμή συντελεστή επιπέδου δραστηριότητας.", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        public double BMR
+        {
+            /*
+             * Harris-Benedict = (13.397m + 4.799h - 5.677a) + 88.362 (MEN)
+             * Harris-Benedict = (9.247m + 3.098h - 4.330a) + 447.593 (WOMEN)
+             * m is mass in kg, h is height in cm, a is age in years
+             */
+            get
+            {
+                if (Gender == String.Empty ||
+                PatientHeight == -1f ||
+                PatientWeight == -1f ||
+                ActivityLevelCoefficient == 0f)
+                {
+                    return 0f;
+                }
+                float weightCoeff = 13.397f, heightCoeff = 4.799f, ageCoeff = 5.677f, genderCoeff = 88.632f;
+                if (Gender == "Θ") { weightCoeff = 9.247f; heightCoeff = 3.098f; ageCoeff = 4.330f; genderCoeff = 447.593f; }
+                return weightCoeff * PatientWeight + heightCoeff * PatientHeight - ageCoeff * Age + genderCoeff;
+            }
+        }
+
+        public double TDEE => Math.Ceiling(BMR * ActivityLevelCoefficient);
 
         public int GoalValue
         {
@@ -398,6 +419,9 @@ namespace DietPlanner
             }
         }
 
-        
+        private void btnGeneratePlan_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(TDEE.ToString());
+        }
     }
 }

@@ -65,7 +65,7 @@
             this.patientNameTextBox.Location = new System.Drawing.Point(213, 81);
             this.patientNameTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.patientNameTextBox.Name = "patientNameTextBox";
-            this.patientNameTextBox.Size = new System.Drawing.Size(181, 26);
+            this.patientNameTextBox.Size = new System.Drawing.Size(224, 26);
             this.patientNameTextBox.TabIndex = 0;
             // 
             // labelTitle
@@ -118,7 +118,7 @@
             this.phoneTextBox.Location = new System.Drawing.Point(213, 197);
             this.phoneTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.phoneTextBox.Name = "phoneTextBox";
-            this.phoneTextBox.Size = new System.Drawing.Size(181, 26);
+            this.phoneTextBox.Size = new System.Drawing.Size(224, 26);
             this.phoneTextBox.TabIndex = 6;
             // 
             // labelDateOfBirth
@@ -139,9 +139,9 @@
             this.labelHeight.Location = new System.Drawing.Point(28, 314);
             this.labelHeight.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelHeight.Name = "labelHeight";
-            this.labelHeight.Size = new System.Drawing.Size(58, 24);
+            this.labelHeight.Size = new System.Drawing.Size(100, 24);
             this.labelHeight.TabIndex = 9;
-            this.labelHeight.Text = "Ύψος";
+            this.labelHeight.Text = "Ύψος (εκ.)";
             // 
             // heightTextBox
             // 
@@ -149,7 +149,7 @@
             this.heightTextBox.Location = new System.Drawing.Point(213, 314);
             this.heightTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.heightTextBox.Name = "heightTextBox";
-            this.heightTextBox.Size = new System.Drawing.Size(181, 26);
+            this.heightTextBox.Size = new System.Drawing.Size(100, 26);
             this.heightTextBox.TabIndex = 10;
             // 
             // labelWeight
@@ -159,9 +159,9 @@
             this.labelWeight.Location = new System.Drawing.Point(28, 377);
             this.labelWeight.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelWeight.Name = "labelWeight";
-            this.labelWeight.Size = new System.Drawing.Size(66, 24);
+            this.labelWeight.Size = new System.Drawing.Size(118, 24);
             this.labelWeight.TabIndex = 11;
-            this.labelWeight.Text = "Βάρος";
+            this.labelWeight.Text = "Βάρος (κιλά)";
             // 
             // weightTextBox
             // 
@@ -169,7 +169,7 @@
             this.weightTextBox.Location = new System.Drawing.Point(213, 375);
             this.weightTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.weightTextBox.Name = "weightTextBox";
-            this.weightTextBox.Size = new System.Drawing.Size(181, 26);
+            this.weightTextBox.Size = new System.Drawing.Size(100, 26);
             this.weightTextBox.TabIndex = 12;
             // 
             // labelActivityLevel
@@ -187,7 +187,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.label9.Location = new System.Drawing.Point(606, 141);
+            this.label9.Location = new System.Drawing.Point(572, 139);
             this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(76, 24);
@@ -198,14 +198,10 @@
             // 
             this.comboBoxGoal.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.comboBoxGoal.FormattingEnabled = true;
-            this.comboBoxGoal.Items.AddRange(new object[] {
-            "GAIN_WEIGHT",
-            "LOSE_WEIGHT",
-            "MAINTANE WEIGHT"});
-            this.comboBoxGoal.Location = new System.Drawing.Point(697, 139);
+            this.comboBoxGoal.Location = new System.Drawing.Point(663, 137);
             this.comboBoxGoal.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxGoal.Name = "comboBoxGoal";
-            this.comboBoxGoal.Size = new System.Drawing.Size(181, 28);
+            this.comboBoxGoal.Size = new System.Drawing.Size(222, 28);
             this.comboBoxGoal.TabIndex = 16;
             // 
             // btnAddPreferred
@@ -286,10 +282,10 @@
             // 
             this.btnSaveData.BackColor = System.Drawing.Color.LimeGreen;
             this.btnSaveData.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.btnSaveData.Location = new System.Drawing.Point(183, 515);
+            this.btnSaveData.Location = new System.Drawing.Point(213, 515);
             this.btnSaveData.Margin = new System.Windows.Forms.Padding(2);
             this.btnSaveData.Name = "btnSaveData";
-            this.btnSaveData.Size = new System.Drawing.Size(211, 52);
+            this.btnSaveData.Size = new System.Drawing.Size(224, 52);
             this.btnSaveData.TabIndex = 26;
             this.btnSaveData.Text = "Αποθήκευση Στοιχείων";
             this.btnSaveData.UseVisualStyleBackColor = false;
@@ -299,13 +295,14 @@
             // 
             this.btnGeneratePlan.BackColor = System.Drawing.Color.LimeGreen;
             this.btnGeneratePlan.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.btnGeneratePlan.Location = new System.Drawing.Point(744, 515);
+            this.btnGeneratePlan.Location = new System.Drawing.Point(647, 515);
             this.btnGeneratePlan.Margin = new System.Windows.Forms.Padding(2);
             this.btnGeneratePlan.Name = "btnGeneratePlan";
-            this.btnGeneratePlan.Size = new System.Drawing.Size(211, 52);
+            this.btnGeneratePlan.Size = new System.Drawing.Size(308, 52);
             this.btnGeneratePlan.TabIndex = 27;
             this.btnGeneratePlan.Text = "Έκδοση Εβδομαδιαίου Πλάνου";
             this.btnGeneratePlan.UseVisualStyleBackColor = false;
+            this.btnGeneratePlan.Click += new System.EventHandler(this.btnGeneratePlan_Click);
             // 
             // listBoxPreferred
             // 
@@ -358,7 +355,7 @@
             this.birthDatePicker.CustomFormat = "\"dd/MM/yyyy\"";
             this.birthDatePicker.Location = new System.Drawing.Point(213, 259);
             this.birthDatePicker.Name = "birthDatePicker";
-            this.birthDatePicker.Size = new System.Drawing.Size(181, 20);
+            this.birthDatePicker.Size = new System.Drawing.Size(138, 20);
             this.birthDatePicker.TabIndex = 32;
             // 
             // comboBoxActivityLevel
@@ -367,7 +364,7 @@
             this.comboBoxActivityLevel.FormattingEnabled = true;
             this.comboBoxActivityLevel.Location = new System.Drawing.Point(213, 447);
             this.comboBoxActivityLevel.Name = "comboBoxActivityLevel";
-            this.comboBoxActivityLevel.Size = new System.Drawing.Size(181, 28);
+            this.comboBoxActivityLevel.Size = new System.Drawing.Size(224, 28);
             this.comboBoxActivityLevel.TabIndex = 33;
             // 
             // FormDataEntry
