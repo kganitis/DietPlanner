@@ -65,7 +65,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActivityLevel.cs" />
+    <Compile Include="PlanGenerator.cs" />
+    <Compile Include="View\ActivityLevel.cs" />
     <Compile Include="FormPreferences.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,7 +85,16 @@
     <Compile Include="FormDataEntry.Designer.cs">
       <DependentUpon>FormDataEntry.cs</DependentUpon>
     </Compile>
-    <Compile Include="Goal.cs" />
+    <Compile Include="View\Goal.cs" />
+    <Compile Include="View\DietaryEntityView.cs" />
+    <Compile Include="View\FoodView.cs" />
+    <Compile Include="View\FoodCategoryView.cs" />
+    <Compile Include="View\GenderView.cs" />
+    <Compile Include="View\MealView.cs" />
+    <Compile Include="View\MealItemView.cs" />
+    <Compile Include="View\MealTypeView.cs" />
+    <Compile Include="View\PatientView.cs" />
+    <Compile Include="View\PlanView.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormPreferences.resx">

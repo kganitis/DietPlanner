@@ -142,7 +142,7 @@ namespace DietPlanner
             }
             set
             {
-                if (value <= 100 || value >= 250)
+                if (value <= 30 || value >= 300)
                 {
                     MessageBox.Show("Το βάρος δεν είναι έγκυρος αριθμός.", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -255,6 +255,7 @@ namespace DietPlanner
         {
             comboBoxActivityLevel.Items.AddRange(ActivityLevel.GetActivityLevels);
             comboBoxGoal.Items.AddRange(Goal.GetGoals);
+            LoadTestData("p0000");
         }
 
         private string GenerateNewPatientId()
@@ -421,7 +422,104 @@ namespace DietPlanner
 
         private void btnGeneratePlan_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(TDEE.ToString());
+            new PlanGenerator();
+        }
+
+        private void LoadTestData(string patientID)
+        {
+            // Fetch data from Patient table
+            try
+            {
+                using (connection = new SQLiteConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string query = "SELECT * FROM Patient WHERE Patient_id = '" + patientID + "'; ";
+                    SQLiteCommand command = new SQLiteCommand(query, connection);
+                    SQLiteDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        // Retrieve patient data from the database
+                        string name = reader["Name"].ToString();
+                        string gender = reader["Gender"].ToString();
+                        string phoneNumber = reader["Phone_number"].ToString();
+                        string dateOfBirth = reader["Date_of_birth"].ToString();
+                        float height = Convert.ToSingle(reader["Height"]);
+                        float weight = Convert.ToSingle(reader["Weight"]);
+                        float activityLevel = Convert.ToSingle(reader["Activity_level"]);
+
+                        // Set form values with retrieved patient data
+                        PatientName = name;
+                        Gender = gender;
+                        PhoneNumber = phoneNumber;
+                        BirthDate = dateOfBirth;
+                        PatientHeight = height;
+                        PatientWeight = weight;
+                        ActivityLevelCoefficient = activityLevel;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Δεν βρέθηκαν δεδομένα για τον ασθενή " + patientID, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Προέκυψε ένα σφάλμα: " + ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            // Fetch any data from Patient_Preferences table
+            try
+            {
+                listBoxPreferred.Items.Clear();
+                listBoxAvoided.Items.Clear();
+
+                using (connection = new SQLiteConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string query = @"SELECT Patient_id, Name, Rule
+                                     FROM Patient_Preferences
+                                     JOIN 
+                                     (
+                                         SELECT Category_id Id, Name FROM Food_Category
+                                         UNION
+                                         SELECT Food_id id, Name FROM Food
+                                         UNION
+                                         SELECT Meal_id id, Name FROM Meal
+                                         UNION
+                                         SELECT Type_id id, Name FROM Meal_Type
+                                     )
+                                     ON Dietary_entity_id = id
+                                     WHERE Patient_id = @patientID";
+
+                    SQLiteCommand command = new SQLiteCommand(query, connection);
+                    command.Parameters.AddWithValue("@patientID", patientID);
+
+                    SQLiteDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        string name = reader["Name"].ToString();
+                        int rule = Convert.ToInt32(reader["Rule"]);
+
+                        // Add dietary entity to the appropriate list box based on the rule
+                        if (rule == 1)
+                        {
+                            listBoxPreferred.Items.Add(name);
+                        }
+                        else
+                        {
+                            listBoxAvoided.Items.Add(name);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Προέκυψε ένα σφάλμα κατά τη φόρτωση των προτιμήσεων τροφίμων: " + ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
