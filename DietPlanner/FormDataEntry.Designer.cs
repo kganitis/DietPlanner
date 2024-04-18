@@ -29,20 +29,18 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDataEntry));
-            this.usernameTextBox = new System.Windows.Forms.TextBox();
+            this.patientNameTextBox = new System.Windows.Forms.TextBox();
             this.labelTitle = new System.Windows.Forms.Label();
             this.labelName = new System.Windows.Forms.Label();
             this.labelGender = new System.Windows.Forms.Label();
             this.labelPhoneNumber = new System.Windows.Forms.Label();
             this.phoneTextBox = new System.Windows.Forms.TextBox();
             this.labelDateOfBirth = new System.Windows.Forms.Label();
-            this.birthTextBox = new System.Windows.Forms.TextBox();
             this.labelHeight = new System.Windows.Forms.Label();
             this.heightTextBox = new System.Windows.Forms.TextBox();
             this.labelWeight = new System.Windows.Forms.Label();
             this.weightTextBox = new System.Windows.Forms.TextBox();
             this.labelActivityLevel = new System.Windows.Forms.Label();
-            this.activityLevelTextBox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.comboBoxGoal = new System.Windows.Forms.ComboBox();
             this.btnAddPreferred = new System.Windows.Forms.Button();
@@ -57,16 +55,18 @@
             this.listBoxAvoided = new System.Windows.Forms.ListBox();
             this.maleRadioButton = new System.Windows.Forms.RadioButton();
             this.femaleRadioButton = new System.Windows.Forms.RadioButton();
+            this.birthDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.comboBoxActivityLevel = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
-            // usernameTextBox
+            // patientNameTextBox
             // 
-            this.usernameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.usernameTextBox.Location = new System.Drawing.Point(213, 81);
-            this.usernameTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.usernameTextBox.Name = "usernameTextBox";
-            this.usernameTextBox.Size = new System.Drawing.Size(181, 26);
-            this.usernameTextBox.TabIndex = 0;
+            this.patientNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.patientNameTextBox.Location = new System.Drawing.Point(213, 81);
+            this.patientNameTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.patientNameTextBox.Name = "patientNameTextBox";
+            this.patientNameTextBox.Size = new System.Drawing.Size(181, 26);
+            this.patientNameTextBox.TabIndex = 0;
             // 
             // labelTitle
             // 
@@ -116,7 +116,7 @@
             // 
             this.phoneTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.phoneTextBox.Location = new System.Drawing.Point(213, 197);
-            this.phoneTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.phoneTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.phoneTextBox.Name = "phoneTextBox";
             this.phoneTextBox.Size = new System.Drawing.Size(181, 26);
             this.phoneTextBox.TabIndex = 6;
@@ -131,15 +131,6 @@
             this.labelDateOfBirth.Size = new System.Drawing.Size(160, 24);
             this.labelDateOfBirth.TabIndex = 7;
             this.labelDateOfBirth.Text = "Ημ/νία Γέννησης";
-            // 
-            // birthTextBox
-            // 
-            this.birthTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.birthTextBox.Location = new System.Drawing.Point(213, 255);
-            this.birthTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.birthTextBox.Name = "birthTextBox";
-            this.birthTextBox.Size = new System.Drawing.Size(181, 26);
-            this.birthTextBox.TabIndex = 8;
             // 
             // labelHeight
             // 
@@ -156,7 +147,7 @@
             // 
             this.heightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.heightTextBox.Location = new System.Drawing.Point(213, 314);
-            this.heightTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.heightTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.heightTextBox.Name = "heightTextBox";
             this.heightTextBox.Size = new System.Drawing.Size(181, 26);
             this.heightTextBox.TabIndex = 10;
@@ -176,7 +167,7 @@
             // 
             this.weightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.weightTextBox.Location = new System.Drawing.Point(213, 375);
-            this.weightTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.weightTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.weightTextBox.Name = "weightTextBox";
             this.weightTextBox.Size = new System.Drawing.Size(181, 26);
             this.weightTextBox.TabIndex = 12;
@@ -191,15 +182,6 @@
             this.labelActivityLevel.Size = new System.Drawing.Size(160, 48);
             this.labelActivityLevel.TabIndex = 13;
             this.labelActivityLevel.Text = "Επίπεδο\r\nΔραστηριότητας";
-            // 
-            // activityLevelTextBox
-            // 
-            this.activityLevelTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.activityLevelTextBox.Location = new System.Drawing.Point(213, 438);
-            this.activityLevelTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.activityLevelTextBox.Name = "activityLevelTextBox";
-            this.activityLevelTextBox.Size = new System.Drawing.Size(181, 26);
-            this.activityLevelTextBox.TabIndex = 14;
             // 
             // label9
             // 
@@ -221,7 +203,7 @@
             "LOSE_WEIGHT",
             "MAINTANE WEIGHT"});
             this.comboBoxGoal.Location = new System.Drawing.Point(697, 139);
-            this.comboBoxGoal.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxGoal.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxGoal.Name = "comboBoxGoal";
             this.comboBoxGoal.Size = new System.Drawing.Size(181, 28);
             this.comboBoxGoal.TabIndex = 16;
@@ -232,7 +214,7 @@
             this.btnAddPreferred.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAddPreferred.BackgroundImage")));
             this.btnAddPreferred.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnAddPreferred.Location = new System.Drawing.Point(627, 393);
-            this.btnAddPreferred.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAddPreferred.Margin = new System.Windows.Forms.Padding(2);
             this.btnAddPreferred.Name = "btnAddPreferred";
             this.btnAddPreferred.Size = new System.Drawing.Size(32, 32);
             this.btnAddPreferred.TabIndex = 18;
@@ -245,7 +227,7 @@
             this.btnRemovePreferred.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnRemovePreferred.BackgroundImage")));
             this.btnRemovePreferred.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnRemovePreferred.Location = new System.Drawing.Point(663, 393);
-            this.btnRemovePreferred.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnRemovePreferred.Margin = new System.Windows.Forms.Padding(2);
             this.btnRemovePreferred.Name = "btnRemovePreferred";
             this.btnRemovePreferred.Size = new System.Drawing.Size(32, 32);
             this.btnRemovePreferred.TabIndex = 19;
@@ -280,7 +262,7 @@
             this.btnAddAvoided.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAddAvoided.BackgroundImage")));
             this.btnAddAvoided.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnAddAvoided.Location = new System.Drawing.Point(887, 392);
-            this.btnAddAvoided.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAddAvoided.Margin = new System.Windows.Forms.Padding(2);
             this.btnAddAvoided.Name = "btnAddAvoided";
             this.btnAddAvoided.Size = new System.Drawing.Size(32, 32);
             this.btnAddAvoided.TabIndex = 24;
@@ -293,7 +275,7 @@
             this.btnRemoveAvoided.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnRemoveAvoided.BackgroundImage")));
             this.btnRemoveAvoided.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnRemoveAvoided.Location = new System.Drawing.Point(923, 392);
-            this.btnRemoveAvoided.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnRemoveAvoided.Margin = new System.Windows.Forms.Padding(2);
             this.btnRemoveAvoided.Name = "btnRemoveAvoided";
             this.btnRemoveAvoided.Size = new System.Drawing.Size(32, 32);
             this.btnRemoveAvoided.TabIndex = 25;
@@ -305,7 +287,7 @@
             this.btnSaveData.BackColor = System.Drawing.Color.LimeGreen;
             this.btnSaveData.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.btnSaveData.Location = new System.Drawing.Point(183, 515);
-            this.btnSaveData.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSaveData.Margin = new System.Windows.Forms.Padding(2);
             this.btnSaveData.Name = "btnSaveData";
             this.btnSaveData.Size = new System.Drawing.Size(211, 52);
             this.btnSaveData.TabIndex = 26;
@@ -318,7 +300,7 @@
             this.btnGeneratePlan.BackColor = System.Drawing.Color.LimeGreen;
             this.btnGeneratePlan.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.btnGeneratePlan.Location = new System.Drawing.Point(744, 515);
-            this.btnGeneratePlan.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnGeneratePlan.Margin = new System.Windows.Forms.Padding(2);
             this.btnGeneratePlan.Name = "btnGeneratePlan";
             this.btnGeneratePlan.Size = new System.Drawing.Size(211, 52);
             this.btnGeneratePlan.TabIndex = 27;
@@ -329,7 +311,7 @@
             // 
             this.listBoxPreferred.FormattingEnabled = true;
             this.listBoxPreferred.Location = new System.Drawing.Point(529, 255);
-            this.listBoxPreferred.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.listBoxPreferred.Margin = new System.Windows.Forms.Padding(2);
             this.listBoxPreferred.Name = "listBoxPreferred";
             this.listBoxPreferred.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.listBoxPreferred.Size = new System.Drawing.Size(166, 134);
@@ -339,7 +321,7 @@
             // 
             this.listBoxAvoided.FormattingEnabled = true;
             this.listBoxAvoided.Location = new System.Drawing.Point(789, 254);
-            this.listBoxAvoided.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.listBoxAvoided.Margin = new System.Windows.Forms.Padding(2);
             this.listBoxAvoided.Name = "listBoxAvoided";
             this.listBoxAvoided.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.listBoxAvoided.Size = new System.Drawing.Size(166, 134);
@@ -350,7 +332,7 @@
             this.maleRadioButton.AutoSize = true;
             this.maleRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.maleRadioButton.Location = new System.Drawing.Point(213, 137);
-            this.maleRadioButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.maleRadioButton.Margin = new System.Windows.Forms.Padding(2);
             this.maleRadioButton.Name = "maleRadioButton";
             this.maleRadioButton.Size = new System.Drawing.Size(100, 24);
             this.maleRadioButton.TabIndex = 30;
@@ -363,7 +345,7 @@
             this.femaleRadioButton.AutoSize = true;
             this.femaleRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.femaleRadioButton.Location = new System.Drawing.Point(317, 137);
-            this.femaleRadioButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.femaleRadioButton.Margin = new System.Windows.Forms.Padding(2);
             this.femaleRadioButton.Name = "femaleRadioButton";
             this.femaleRadioButton.Size = new System.Drawing.Size(89, 24);
             this.femaleRadioButton.TabIndex = 31;
@@ -371,11 +353,30 @@
             this.femaleRadioButton.Text = "Θηλυκό";
             this.femaleRadioButton.UseVisualStyleBackColor = true;
             // 
-            // Form2
+            // birthDatePicker
+            // 
+            this.birthDatePicker.CustomFormat = "\"dd/MM/yyyy\"";
+            this.birthDatePicker.Location = new System.Drawing.Point(213, 259);
+            this.birthDatePicker.Name = "birthDatePicker";
+            this.birthDatePicker.Size = new System.Drawing.Size(181, 20);
+            this.birthDatePicker.TabIndex = 32;
+            // 
+            // comboBoxActivityLevel
+            // 
+            this.comboBoxActivityLevel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.comboBoxActivityLevel.FormattingEnabled = true;
+            this.comboBoxActivityLevel.Location = new System.Drawing.Point(213, 447);
+            this.comboBoxActivityLevel.Name = "comboBoxActivityLevel";
+            this.comboBoxActivityLevel.Size = new System.Drawing.Size(181, 28);
+            this.comboBoxActivityLevel.TabIndex = 33;
+            // 
+            // FormDataEntry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1062, 600);
+            this.Controls.Add(this.comboBoxActivityLevel);
+            this.Controls.Add(this.birthDatePicker);
             this.Controls.Add(this.femaleRadioButton);
             this.Controls.Add(this.maleRadioButton);
             this.Controls.Add(this.listBoxAvoided);
@@ -390,23 +391,22 @@
             this.Controls.Add(this.btnAddPreferred);
             this.Controls.Add(this.comboBoxGoal);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.activityLevelTextBox);
             this.Controls.Add(this.labelActivityLevel);
             this.Controls.Add(this.weightTextBox);
             this.Controls.Add(this.labelWeight);
             this.Controls.Add(this.heightTextBox);
             this.Controls.Add(this.labelHeight);
-            this.Controls.Add(this.birthTextBox);
             this.Controls.Add(this.labelDateOfBirth);
             this.Controls.Add(this.phoneTextBox);
             this.Controls.Add(this.labelPhoneNumber);
             this.Controls.Add(this.labelGender);
             this.Controls.Add(this.labelName);
             this.Controls.Add(this.labelTitle);
-            this.Controls.Add(this.usernameTextBox);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.Name = "Form2";
+            this.Controls.Add(this.patientNameTextBox);
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Name = "FormDataEntry";
             this.Text = "Form2";
+            this.Load += new System.EventHandler(this.FormDataEntry_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -414,20 +414,18 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox usernameTextBox;
+        private System.Windows.Forms.TextBox patientNameTextBox;
         private System.Windows.Forms.Label labelTitle;
         private System.Windows.Forms.Label labelName;
         private System.Windows.Forms.Label labelGender;
         private System.Windows.Forms.Label labelPhoneNumber;
         private System.Windows.Forms.TextBox phoneTextBox;
         private System.Windows.Forms.Label labelDateOfBirth;
-        private System.Windows.Forms.TextBox birthTextBox;
         private System.Windows.Forms.Label labelHeight;
         private System.Windows.Forms.TextBox heightTextBox;
         private System.Windows.Forms.Label labelWeight;
         private System.Windows.Forms.TextBox weightTextBox;
         private System.Windows.Forms.Label labelActivityLevel;
-        private System.Windows.Forms.TextBox activityLevelTextBox;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox comboBoxGoal;
         private System.Windows.Forms.Button btnAddPreferred;
@@ -442,5 +440,7 @@
         private System.Windows.Forms.ListBox listBoxAvoided;
         private System.Windows.Forms.RadioButton maleRadioButton;
         private System.Windows.Forms.RadioButton femaleRadioButton;
+        private System.Windows.Forms.DateTimePicker birthDatePicker;
+        private System.Windows.Forms.ComboBox comboBoxActivityLevel;
     }
 }

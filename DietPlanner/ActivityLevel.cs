@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Remoting.Messaging;
 
 namespace DietPlanner
 {
@@ -10,24 +9,38 @@ namespace DietPlanner
     {
         public static readonly string SEDENTARY = "Καθιστική ζωή";
         public static readonly string LIGHTLY_ACTIVE = "Ελαφριά δραστηριότητα";
-        public static readonly string MODERATE_ACTIVE = "Μέτρια δραστηριότητα";
+        public static readonly string MODERATELY_ACTIVE = "Μέτρια δραστηριότητα";
         public static readonly string VERY_ACTIVE = "Αυξημένη δραστηριότητα";
         public static readonly string EXTREMELY_ACTIVE = "Υπερβολική δραστηριότητα";
 
-        public static float GetValue(string activityLevel)
+        private static readonly Dictionary<string, float> Coefficients = new Dictionary<string, float>
         {
-            if (activityLevel == SEDENTARY)
-                return 1f;
-            else if (activityLevel == LIGHTLY_ACTIVE)
-                return 1.25f;
-            else if (activityLevel == MODERATE_ACTIVE)
-                return 1.5f;
-            else if (activityLevel == VERY_ACTIVE)
-                return 1.75f;
-            else if (activityLevel == EXTREMELY_ACTIVE)
-                return 2f;
-            else
-                return 0f;
+            { SEDENTARY, 1.2f },
+            { LIGHTLY_ACTIVE, 1.4f },
+            { MODERATELY_ACTIVE, 1.6f },
+            { VERY_ACTIVE, 1.8f },
+            { EXTREMELY_ACTIVE, 2.0f }
+        };
+
+        public static float GetCoefficient(string activityLevel)
+        {
+            if (Coefficients.TryGetValue(activityLevel, out float coefficient))
+                return coefficient;
+
+            return 0f;
+        }
+
+        public static object[] GetActivityLevels => Coefficients.Keys.ToArray();
+
+        public static string GetLevelFromCoefficient(float coefficient)
+        {
+            foreach (var kvp in Coefficients)
+            {
+                if (Math.Abs(kvp.Value - coefficient) < float.Epsilon)
+                    return kvp.Key;
+            }
+
+            return string.Empty;
         }
     }
 }

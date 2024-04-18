@@ -4,35 +4,237 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace DietPlanner
 {
     public partial class FormDataEntry : Form
     {
-        protected String connectionString = "Data source=DietPlanner.db;Version=3;";
+        protected string connectionString = "Data source=DietPlanner.db;Version=3;";
         protected SQLiteConnection connection;
 
-        private FormPreferences foodPreferences;
+        private FormPreferences formPreferences;
+
+        public string PatientName
+        {
+            get { return patientNameTextBox.Text; }
+            set { patientNameTextBox.Text = value; }
+        }
+
+        #region Getters / Setters
+
+        public string Gender
+        {
+            get
+            {
+                if (maleRadioButton.Checked)
+                {
+                    return "Α";
+                }
+                else if (femaleRadioButton.Checked)
+                {
+                    return "Θ";
+                }
+                else
+                {
+                    return String.Empty;
+                }
+            }
+            set
+            {
+                if (value == "Α")
+                {
+                    maleRadioButton.Checked = true;
+                    femaleRadioButton.Checked = false;
+                }
+                else if (value == "Θ")
+                {
+                    femaleRadioButton.Checked = true;
+                    maleRadioButton.Checked = false;
+                }
+                else
+                {
+                    maleRadioButton.Checked = false;
+                    femaleRadioButton.Checked = false;
+                }
+            }
+        }
+
+        public string PhoneNumber
+        {
+            get { return phoneTextBox.Text; }
+            set { phoneTextBox.Text = value; }
+        }
+
+        public string BirthDate
+        {
+            get { return birthDatePicker.Value.ToString("dd/MM/yyyy"); }
+            set
+            {
+                DateTime parsedDate;
+                if (DateTime.TryParseExact(value, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate))
+                {
+                    birthDatePicker.Value = parsedDate;
+                }
+                else
+                {
+                    MessageBox.Show("Μη έγκυρη μορφή ημερομηνίας. Επιτρεπόμενη μορφή: ηη/MM/εεεε.", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        public int Age
+        {
+            get
+            {
+                DateTime birthDate = birthDatePicker.Value;
+                DateTime currentDate = DateTime.Today;
+
+                int age = currentDate.Year - birthDate.Year;
+                if (birthDate > currentDate.AddYears(-age))
+                {
+                    age--;
+                }
+                if (age < 15 || age > 100)
+                {
+                    MessageBox.Show("Ηλικία: " + age, "Προειδοποίηση", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                return age;
+            }
+        }
 
 
-        public ListBox ListBoxPreferred
+        public float PatientHeight
         {
-            get { return listBoxPreferred; }
+            get
+            {
+                float height;
+                if (!float.TryParse(heightTextBox.Text, out height))
+                {
+                    MessageBox.Show("Παρακαλώ εισάγετε μια έγκυρη τιμή για το ύψος (cm).", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return -1f;
+                }
+                return height;
+            }
+            set
+            {
+                if (value <= 100 || value >= 250)
+                {
+                    MessageBox.Show("Το ύψος δεν είναι έγκυρος αριθμός (cm).", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                heightTextBox.Text = value.ToString();
+            }
         }
-        public ListBox ListBoxAvoided
+
+        public float PatientWeight
         {
-            get { return listBoxAvoided; }
+            get
+            {
+                float weight;
+                if (!float.TryParse(heightTextBox.Text, out weight))
+                {
+                    MessageBox.Show("Παρακαλώ εισάγετε μια έγκυρη τιμή για το βάρος.", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return -1f;
+                }
+                return weight;
+            }
+            set
+            {
+                if (value <= 100 || value >= 250)
+                {
+                    MessageBox.Show("Το βάρος δεν είναι έγκυρος αριθμός.", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                weightTextBox.Text = value.ToString();
+            }
         }
+
+        public float ActivityLevelCoefficient
+        {
+            get
+            {
+                float coefficient = 0f;
+                if (comboBoxActivityLevel.SelectedItem != null)
+                {
+                    string selectedValue = comboBoxActivityLevel.SelectedItem.ToString();
+                    coefficient = ActivityLevel.GetCoefficient(selectedValue);
+                }
+                if (coefficient == 0f)
+                {
+                    MessageBox.Show("Μη έγκυρο επίπεδο δραστηριότητας.", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                return coefficient;
+            }
+            set
+            {
+                string activityLevel = ActivityLevel.GetLevelFromCoefficient(value);
+                if (string.IsNullOrEmpty(activityLevel)) return;
+                
+                foreach (var item in comboBoxActivityLevel.Items)
+                {
+                    if (item.ToString() == activityLevel)
+                    {
+                        comboBoxActivityLevel.SelectedItem = item;
+                        return;
+                    }
+                }
+                
+                MessageBox.Show("Μη έγκυρη τιμή συντελεστή επιπέδου δραστηριότητας.", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public int GoalValue
+        {
+            get
+            {
+                int value = int.MaxValue;
+                if (comboBoxGoal.SelectedItem != null)
+                {
+                    string selectedValue = comboBoxGoal.SelectedItem.ToString();
+                    value = Goal.GetValue(selectedValue);
+                }
+                if (value == int.MaxValue)
+                {
+                    MessageBox.Show("Μη έγκυρο επίπεδο δραστηριότητας.", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                return value;
+            }
+            set
+            {
+                string goal = Goal.GetGoalFromValue(value);
+                if (string.IsNullOrEmpty(goal)) return;
+                
+                foreach (var item in comboBoxGoal.Items)
+                {
+                    if (item.ToString() == goal)
+                    {
+                        comboBoxGoal.SelectedItem = item;
+                        return;
+                    }
+                }
+
+                MessageBox.Show("Μη έγκυρη τιμή στόχου.", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        #endregion
+
 
         public FormDataEntry()
         {
             InitializeComponent();
+        }
+
+        private void FormDataEntry_Load(object sender, EventArgs e)
+        {
+            comboBoxActivityLevel.Items.AddRange(ActivityLevel.GetActivityLevels);
+            comboBoxGoal.Items.AddRange(Goal.GetGoals);
         }
 
         private string GenerateNewPatientId()
@@ -59,55 +261,29 @@ namespace DietPlanner
             }
         }
 
-        private void OpenFoodPreferencesForm(ListBox foodsListBoxToFill)
+        private void ShowFoodPreferencesForm(ListBox foodsListBoxToFill)
         {
-            if (foodPreferences == null || foodPreferences.IsDisposed)
+            if (formPreferences == null || formPreferences.IsDisposed)
             {
-                foodPreferences = new FormPreferences(foodsListBoxToFill);
-                foodPreferences.Show();
+                formPreferences = new FormPreferences(foodsListBoxToFill);
+                formPreferences.Show();
             }
         }
 
         private void btnSaveData_Click(object sender, EventArgs e)
         {
-            string name = usernameTextBox.Text;
 
-            string gender = string.Empty;
-            if (maleRadioButton.Checked)
-            {
-                gender = "Α";
-            }
-            else if (femaleRadioButton.Checked)
-            {
-                gender = "Θ";
-            }
-
-            string phone = phoneTextBox.Text;
-            string birth = birthTextBox.Text;
-            string heightStr = heightTextBox.Text;
-            string weightStr = weightTextBox.Text;
-            string level = activityLevelTextBox.Text;
             string newPatientId = GenerateNewPatientId();
             
             // Check if any of the fields are empty or whitespace
-            if (string.IsNullOrWhiteSpace(name) ||
-                string.IsNullOrWhiteSpace(gender) ||
-                string.IsNullOrWhiteSpace(phone) ||
-                string.IsNullOrWhiteSpace(birth) ||
-                string.IsNullOrWhiteSpace(heightStr) ||
-                string.IsNullOrWhiteSpace(weightStr) ||
-                string.IsNullOrWhiteSpace(level))
+            if (string.IsNullOrWhiteSpace(PatientName) ||
+                string.IsNullOrWhiteSpace(Gender) ||
+                string.IsNullOrWhiteSpace(PhoneNumber) ||
+                PatientHeight == -1f ||
+                PatientWeight == -1f ||
+                ActivityLevelCoefficient == 0f)
             {
                 MessageBox.Show("Παρακαλώ συμπληρώστε όλα τα πεδία!");
-                return;
-            }
-
-            // Validate height and weight
-            float height, weight;
-            if (!float.TryParse(heightStr, out height) ||
-                !float.TryParse(weightStr, out weight))
-            {
-                MessageBox.Show("Παρακαλώ εισάγετε μια έγκυρη τιμή για το ύψος και το βάρος.");
                 return;
             }
 
@@ -116,17 +292,17 @@ namespace DietPlanner
                 connection = new SQLiteConnection(connectionString);
                 connection.Open();
                 string insertSQL = "INSERT INTO Patient(Patient_id, Name, Gender, Phone_number, Date_of_birth, Height, Weight, Activity_level) " +
-                            "VALUES (@patientId, @name, @gender, @phone, @date, @height, @weight, @activity)";
+                            "VALUES (@patientId, @name, @gender, @phone, @date, @weight, @weight, @activity)";
 
                 SQLiteCommand command = new SQLiteCommand(insertSQL, connection);
                 command.Parameters.AddWithValue("@patientId", newPatientId);
-                command.Parameters.AddWithValue("@name", name);
-                command.Parameters.AddWithValue("@gender", gender);
-                command.Parameters.AddWithValue("@phone", phone);
-                command.Parameters.AddWithValue("@date", birth);
-                command.Parameters.AddWithValue("@height", height);
-                command.Parameters.AddWithValue("@weight", weight);
-                command.Parameters.AddWithValue("@activity", level);
+                command.Parameters.AddWithValue("@name", PatientName);
+                command.Parameters.AddWithValue("@gender", Gender);
+                command.Parameters.AddWithValue("@phone", PhoneNumber);
+                command.Parameters.AddWithValue("@date", BirthDate);
+                command.Parameters.AddWithValue("@weight", PatientHeight);
+                command.Parameters.AddWithValue("@weight", PatientWeight);
+                command.Parameters.AddWithValue("@activity", ActivityLevelCoefficient);
 
                 command.ExecuteNonQuery();
 
@@ -198,7 +374,7 @@ namespace DietPlanner
 
         private void btnAddPreferred_Click(object sender, EventArgs e)
         {
-            OpenFoodPreferencesForm(listBoxPreferred);
+            ShowFoodPreferencesForm(listBoxPreferred);
         }
 
         private void btnRemovePreferred_Click(object sender, EventArgs e)
@@ -212,7 +388,7 @@ namespace DietPlanner
 
         private void btnAddAvoided_Click(object sender, EventArgs e)
         {
-            OpenFoodPreferencesForm(listBoxAvoided);
+            ShowFoodPreferencesForm(listBoxAvoided);
         }
 
         private void btnRemoveAvoided_Click(object sender, EventArgs e)
