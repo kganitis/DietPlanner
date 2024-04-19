@@ -1,4 +1,5 @@
-﻿using DietPlanner.Model;
+﻿using DietPlanner.DataFetcher;
+using DietPlanner.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,88 +16,32 @@ namespace DietPlanner
         private string connectionString = "Data source=DietPlanner.db;Version=3;";
         private SQLiteConnection connection;
 
-        private int TDEE;
-        private FoodCategoryView foodCategoriesTree;
+        private string patientID;
+        private PatientView patient;
         private Dictionary<string, FoodCategoryView> foodCategoriesAllowed, foodCategoriesPreferred, foodCategoriesAvoided;
         private Dictionary<string, FoodView> foodsAllowed, foodsPreferred, foodsAvoided;
         private Dictionary<string, MealView> mealsAllowed, mealsPreferred, mealsAvoided;
         private Dictionary<string, MealTypeView> mealTypesAllowed, mealTypesPreferred, mealTypesAvoided;
 
-        public PlanGenerator()
+        public PlanGenerator(string patientID)
         {
-            BuildFoodCategoryTree();
-            PrintFoodCategoryTree();
+            patient = DataAccess.GetPatient(patientID);
+            FoodCategoriesTree.BuildTree();
+            Dictionary<string, FoodCategoryView>[] foodCategoriesPreferences = DataAccess.GetFoodCategoryPreferencesData(patientID);
+            foodCategoriesPreferred = foodCategoriesPreferences[1];
+            foodCategoriesAvoided = foodCategoriesPreferences[0];
+            PrintDictionary(foodCategoriesPreferred, "Preferred Categories");
+            PrintDictionary(foodCategoriesAvoided, "Avoided Categories");
         }
 
-        private void BuildFoodCategoryTree()
+        private void PrintDictionary<T>(Dictionary<string, T> dictionary, string title) where T : DietaryEntityView
         {
-            try
+            Console.WriteLine($"--- {title} ---");
+            foreach (var kvp in dictionary)
             {
-                using (connection = new SQLiteConnection(connectionString))
-                {
-                    connection.Open();
-
-                    // Retrieve food category data from the database
-                    string query = "SELECT * FROM Food_Category ORDER BY Category_id;";
-                    SQLiteCommand command = new SQLiteCommand(query, connection);
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    // Parse the data and create instances of food categories
-                    while (reader.Read())
-                    {
-                        string categoryId = reader["Category_id"].ToString();
-                        string name = reader["Name"].ToString();
-                        string parentId = reader["Parent"].ToString();
-                        FoodCategoryView category = new FoodCategoryView(categoryId, name);
-                        FindAndAddToParent(foodCategoriesTree, category, parentId);
-                    }
-                }
+                Console.WriteLine($"ID: {kvp.Key}, Name: {kvp.Value.Name}");
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            void FindAndAddToParent(FoodCategoryView parent, FoodCategoryView category, string parentId)
-            {
-                if (String.IsNullOrEmpty(parentId))
-                {
-                    foodCategoriesTree = new FoodCategoryView(category.CategoryID, category.Name);
-                }
-
-                if (parent == null) { return; }
-
-                if (parent.CategoryID == parentId)
-                {
-                    category.ParentCategory = parent;
-                    parent.SubCategories.Add(category);
-                    return;
-                }
-                foreach (var child in parent.SubCategories)
-                {
-                    FindAndAddToParent(child, category, parentId);
-                }
-            }
+            Console.WriteLine();
         }
-
-        private void PrintFoodCategoryTree()
-        {
-            Console.WriteLine("Food Category Tree:");
-            PrintFoodCategory(foodCategoriesTree, 0);
-
-            void PrintFoodCategory(FoodCategoryView category, int depth)
-            {
-                // Print the category name with indentation based on depth
-                Console.WriteLine(new string(' ', depth * 2) + category.Name);
-
-                // Recursively print subcategories
-                foreach (var subCategory in category.SubCategories)
-                {
-                    PrintFoodCategory(subCategory, depth + 1);
-                }
-            }
-        }
-
-        
     }
 }

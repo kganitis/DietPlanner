@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DietPlanner.DataFetcher;
+using DietPlanner.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,6 +12,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace DietPlanner
 {
@@ -19,6 +22,8 @@ namespace DietPlanner
         protected SQLiteConnection connection;
 
         private FormPreferences formPreferences;
+
+        private string testPatientID = "p0000";
 
         public string PatientName
         {
@@ -67,7 +72,7 @@ namespace DietPlanner
             set { phoneTextBox.Text = value; }
         }
 
-        public string BirthDate
+        public string DateOfBirth
         {
             get { return birthDatePicker.Value.ToString("dd/MM/yyyy"); }
             set
@@ -103,7 +108,6 @@ namespace DietPlanner
                 return age;
             }
         }
-
 
         public float PatientHeight
         {
@@ -202,7 +206,7 @@ namespace DietPlanner
                     return 0f;
                 }
                 float weightCoeff = 13.397f, heightCoeff = 4.799f, ageCoeff = 5.677f, genderCoeff = 88.632f;
-                if (Gender == "Θ") { weightCoeff = 9.247f; heightCoeff = 3.098f; ageCoeff = 4.330f; genderCoeff = 447.593f; }
+                if (Gender == GenderView.FEMALE) { weightCoeff = 9.247f; heightCoeff = 3.098f; ageCoeff = 4.330f; genderCoeff = 447.593f; }
                 return weightCoeff * PatientWeight + heightCoeff * PatientHeight - ageCoeff * Age + genderCoeff;
             }
         }
@@ -214,20 +218,24 @@ namespace DietPlanner
             get
             {
                 int value = int.MaxValue;
+
                 if (comboBoxGoal.SelectedItem != null)
                 {
                     string selectedValue = comboBoxGoal.SelectedItem.ToString();
                     value = Goal.GetValue(selectedValue);
                 }
+
                 if (value == int.MaxValue)
                 {
-                    MessageBox.Show("Μη έγκυρο επίπεδο δραστηριότητας.", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Μη έγκυρη τιμή στόχου.", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
                 return value;
             }
             set
             {
                 string goal = Goal.GetGoalFromValue(value);
+
                 if (string.IsNullOrEmpty(goal)) return;
                 
                 foreach (var item in comboBoxGoal.Items)
@@ -245,7 +253,6 @@ namespace DietPlanner
 
         #endregion
 
-
         public FormDataEntry()
         {
             InitializeComponent();
@@ -255,7 +262,7 @@ namespace DietPlanner
         {
             comboBoxActivityLevel.Items.AddRange(ActivityLevel.GetActivityLevels);
             comboBoxGoal.Items.AddRange(Goal.GetGoals);
-            LoadTestData("p0000");
+            LoadTestData();
         }
 
         private string GenerateNewPatientId()
@@ -319,7 +326,7 @@ namespace DietPlanner
                 command.Parameters.AddWithValue("@name", PatientName);
                 command.Parameters.AddWithValue("@gender", Gender);
                 command.Parameters.AddWithValue("@phone", PhoneNumber);
-                command.Parameters.AddWithValue("@date", BirthDate);
+                command.Parameters.AddWithValue("@date", DateOfBirth);
                 command.Parameters.AddWithValue("@weight", PatientHeight);
                 command.Parameters.AddWithValue("@weight", PatientWeight);
                 command.Parameters.AddWithValue("@activity", ActivityLevelCoefficient);
@@ -422,103 +429,72 @@ namespace DietPlanner
 
         private void btnGeneratePlan_Click(object sender, EventArgs e)
         {
-            new PlanGenerator();
+            new PlanGenerator("p0000");
         }
 
-        private void LoadTestData(string patientID)
+        private void LoadTestData()
         {
-            // Fetch data from Patient table
+            PatientView patient = DataAccess.GetPatient(testPatientID);
+            
+            PatientName = patient.Name;
+            Gender = patient.Gender;
+            PhoneNumber = patient.PhoneNumber;
+            DateOfBirth = patient.DateOfBirth.ToString("dd/MM/yyyy");
+            PatientHeight = patient.Height;
+            PatientWeight = patient.Weight;
+            ActivityLevelCoefficient = patient.ActivityLevel;
+            GoalValue = patient.Goal;
+
             try
             {
-                using (connection = new SQLiteConnection(connectionString))
-                {
-                    connection.Open();
-
-                    string query = "SELECT * FROM Patient WHERE Patient_id = '" + patientID + "'; ";
-                    SQLiteCommand command = new SQLiteCommand(query, connection);
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    if (reader.Read())
-                    {
-                        // Retrieve patient data from the database
-                        string name = reader["Name"].ToString();
-                        string gender = reader["Gender"].ToString();
-                        string phoneNumber = reader["Phone_number"].ToString();
-                        string dateOfBirth = reader["Date_of_birth"].ToString();
-                        float height = Convert.ToSingle(reader["Height"]);
-                        float weight = Convert.ToSingle(reader["Weight"]);
-                        float activityLevel = Convert.ToSingle(reader["Activity_level"]);
-
-                        // Set form values with retrieved patient data
-                        PatientName = name;
-                        Gender = gender;
-                        PhoneNumber = phoneNumber;
-                        BirthDate = dateOfBirth;
-                        PatientHeight = height;
-                        PatientWeight = weight;
-                        ActivityLevelCoefficient = activityLevel;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Δεν βρέθηκαν δεδομένα για τον ασθενή " + patientID, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Προέκυψε ένα σφάλμα: " + ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            // Fetch any data from Patient_Preferences table
-            try
-            {
+                // Fetch any data from Patient_Preferences table
                 listBoxPreferred.Items.Clear();
                 listBoxAvoided.Items.Clear();
 
-                using (connection = new SQLiteConnection(connectionString))
+                connection = DBConnectionManager.GetConnection();
+                string query = @"SELECT Patient_id, Name, Rule
+                                  FROM Patient_Preferences
+                                  JOIN 
+                                  (
+                                      SELECT Category_id Id, Name FROM Food_Category
+                                      UNION
+                                      SELECT Food_id id, Name FROM Food
+                                      UNION
+                                      SELECT Meal_id id, Name FROM Meal
+                                      UNION
+                                      SELECT Type_id id, Name FROM Meal_Type
+                                  )
+                                  ON Dietary_entity_id = id
+                                  WHERE Patient_id = @patientID";
+
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@patientID", testPatientID);
+
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
                 {
-                    connection.Open();
+                    string name = reader["Name"].ToString();
+                    int rule = Convert.ToInt32(reader["Rule"]);
 
-                    string query = @"SELECT Patient_id, Name, Rule
-                                     FROM Patient_Preferences
-                                     JOIN 
-                                     (
-                                         SELECT Category_id Id, Name FROM Food_Category
-                                         UNION
-                                         SELECT Food_id id, Name FROM Food
-                                         UNION
-                                         SELECT Meal_id id, Name FROM Meal
-                                         UNION
-                                         SELECT Type_id id, Name FROM Meal_Type
-                                     )
-                                     ON Dietary_entity_id = id
-                                     WHERE Patient_id = @patientID";
-
-                    SQLiteCommand command = new SQLiteCommand(query, connection);
-                    command.Parameters.AddWithValue("@patientID", patientID);
-
-                    SQLiteDataReader reader = command.ExecuteReader();
-
-                    while (reader.Read())
+                    // Add dietary entity to the appropriate list box based on the rule
+                    if (rule == 1)
                     {
-                        string name = reader["Name"].ToString();
-                        int rule = Convert.ToInt32(reader["Rule"]);
-
-                        // Add dietary entity to the appropriate list box based on the rule
-                        if (rule == 1)
-                        {
-                            listBoxPreferred.Items.Add(name);
-                        }
-                        else
-                        {
-                            listBoxAvoided.Items.Add(name);
-                        }
+                        listBoxPreferred.Items.Add(name);
+                    }
+                    else
+                    {
+                        listBoxAvoided.Items.Add(name);
                     }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Προέκυψε ένα σφάλμα κατά τη φόρτωση των προτιμήσεων τροφίμων: " + ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                connection?.Close();
             }
         }
     }
