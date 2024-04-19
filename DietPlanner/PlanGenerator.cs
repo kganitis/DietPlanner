@@ -13,9 +13,6 @@ namespace DietPlanner
 {
     internal class PlanGenerator
     {
-        private string connectionString = "Data source=DietPlanner.db;Version=3;";
-        private SQLiteConnection connection;
-
         private string patientID;
         private PatientView patient;
         private Dictionary<string, FoodCategoryView> foodCategoriesAllowed, foodCategoriesPreferred, foodCategoriesAvoided;
@@ -25,13 +22,10 @@ namespace DietPlanner
 
         public PlanGenerator(string patientID)
         {
-            patient = DataAccess.GetPatient(patientID);
-            FoodCategoriesTree.BuildTree();
+            patient = DataAccess.GetPatientByID(patientID);
             Dictionary<string, FoodCategoryView>[] foodCategoriesPreferences = DataAccess.GetFoodCategoryPreferencesData(patientID);
             foodCategoriesPreferred = foodCategoriesPreferences[1];
             foodCategoriesAvoided = foodCategoriesPreferences[0];
-            PrintDictionary(foodCategoriesPreferred, "Preferred Categories");
-            PrintDictionary(foodCategoriesAvoided, "Avoided Categories");
         }
 
         private void PrintDictionary<T>(Dictionary<string, T> dictionary, string title) where T : DietaryEntityView

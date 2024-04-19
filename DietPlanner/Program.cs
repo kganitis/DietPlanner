@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DietPlanner.DataFetcher;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace DietPlanner
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            DietaryEntityData.Initialize();
             Application.Run(new FormDataEntry());
         }
     }

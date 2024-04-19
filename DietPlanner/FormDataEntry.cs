@@ -434,47 +434,34 @@ namespace DietPlanner
 
         private void LoadTestData()
         {
-            PatientView patient = DataAccess.GetPatient(testPatientID);
+            PatientView patientData = DataAccess.GetPatientByID(testPatientID);
             
-            PatientName = patient.Name;
-            Gender = patient.Gender;
-            PhoneNumber = patient.PhoneNumber;
-            DateOfBirth = patient.DateOfBirth.ToString("dd/MM/yyyy");
-            PatientHeight = patient.Height;
-            PatientWeight = patient.Weight;
-            ActivityLevelCoefficient = patient.ActivityLevel;
-            GoalValue = patient.Goal;
+            PatientName = patientData.Name;
+            Gender = patientData.Gender;
+            PhoneNumber = patientData.PhoneNumber;
+            DateOfBirth = patientData.DateOfBirth.ToString("dd/MM/yyyy");
+            PatientHeight = patientData.Height;
+            PatientWeight = patientData.Weight;
+            ActivityLevelCoefficient = patientData.ActivityLevel;
+            GoalValue = patientData.Goal;
+
+            listBoxPreferred.Items.Clear();
+            listBoxAvoided.Items.Clear();
 
             try
             {
-                // Fetch any data from Patient_Preferences table
-                listBoxPreferred.Items.Clear();
-                listBoxAvoided.Items.Clear();
-
                 connection = DBConnectionManager.GetConnection();
-                string query = @"SELECT Patient_id, Name, Rule
-                                  FROM Patient_Preferences
-                                  JOIN 
-                                  (
-                                      SELECT Category_id Id, Name FROM Food_Category
-                                      UNION
-                                      SELECT Food_id id, Name FROM Food
-                                      UNION
-                                      SELECT Meal_id id, Name FROM Meal
-                                      UNION
-                                      SELECT Type_id id, Name FROM Meal_Type
-                                  )
-                                  ON Dietary_entity_id = id
-                                  WHERE Patient_id = @patientID";
+                string query = @"SELECT *
+                                FROM Patient_Preferences_Names
+                                WHERE Patient_id = @patientID";
 
                 SQLiteCommand command = new SQLiteCommand(query, connection);
                 command.Parameters.AddWithValue("@patientID", testPatientID);
-
                 SQLiteDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    string name = reader["Name"].ToString();
+                    string name = reader["Dietary_entity_name"].ToString();
                     int rule = Convert.ToInt32(reader["Rule"]);
 
                     // Add dietary entity to the appropriate list box based on the rule

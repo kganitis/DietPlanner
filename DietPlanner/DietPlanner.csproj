@@ -67,7 +67,7 @@
   <ItemGroup>
     <Compile Include="DataFetcher\DataAccess.cs" />
     <Compile Include="DataFetcher\DBConnectionManager.cs" />
-    <Compile Include="DataFetcher\FoodCategoriesTree.cs" />
+    <Compile Include="DataFetcher\DietaryEntityData.cs" />
     <Compile Include="PlanGenerator.cs" />
     <Compile Include="View\ActivityLevel.cs" />
     <Compile Include="FormPreferences.cs">

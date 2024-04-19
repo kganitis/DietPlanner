@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Globalization;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,8 +18,10 @@ namespace DietPlanner.DataFetcher
         * READS patient data corresponding to the given patientID,
         * creates a Patient instance,
         * then returns it.
+        * 
+        * NOTE: It does NOT retrieve or set any food preferences values.
         */
-        public static PatientView GetPatient(string patientID)
+        public static PatientView GetPatientByID(string patientID)
         {
             PatientView patient = null;
 
@@ -77,6 +80,49 @@ namespace DietPlanner.DataFetcher
             return patient;
         }
 
+        public static Dictionary<string, DietaryEntityView>[] GetAllPreferencesByPatientID(string patientID)
+        {
+            SQLiteConnection connection = null;
+            try
+            {
+                connection = DBConnectionManager.GetConnection();
+
+                string query = @"SELECT Patient_id, Dietary_entity_id, Dietary_entity_name, Rule
+                                FROM Patient_Preferences_Names
+                                WHERE Patient_id = @patientID";
+
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@patientID", patientID);
+                
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    string name = reader["Name"].ToString();
+                    int rule = Convert.ToInt32(reader["Rule"]);
+
+                    // Add dietary entity to the appropriate structure based on the rule
+                    if (rule == 1)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                connection?.Close();
+            }
+
+            return null;
+        }
+
         /*
         * Connects to the DB,
         * READS ALL food category data,
@@ -84,7 +130,7 @@ namespace DietPlanner.DataFetcher
         * and connects them in a tree structure,
         * then returns the tree.
         */
-        public static FoodCategoryView GetFoodCategoriesTree()
+        public static FoodCategoryView GetFoodCategoryTree()
         {
             FoodCategoryView rootCategory = null;
 
@@ -142,6 +188,71 @@ namespace DietPlanner.DataFetcher
             }
         }
 
+        public static List<FoodView> GetAllFoodData()
+        {
+            List<FoodView> allFoodsList = new List<FoodView>();
+
+            SQLiteConnection connection = null;
+            try
+            {
+                connection = DBConnectionManager.GetConnection();
+
+                // Retrieve food data from the database
+                string query = "SELECT * FROM Food ORDER BY Food_id;";
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                // Parse the data, create instances of foods and add them to the list
+                while (reader.Read())
+                {
+                    string foodId = reader["Category_id"].ToString();
+                    string name = reader["Name"].ToString();
+                    string unit = reader["Unit"].ToString();
+                    int quantity = Int32.Parse(reader["Quantity"].ToString());
+                    string categoryID = reader["Category_id"].ToString();
+                    float calories = Convert.ToSingle(reader["Calories"].ToString());
+                    // ... more fields
+
+                    FoodView food = new FoodView()
+                    {
+                        FoodID = foodId,
+                        Name = name,
+                        Unit = unit,
+                        Quantity = quantity,
+                        Category = DietaryEntityData.GetCategoryByID(categoryID),
+                        Calories = calories
+                        // ... more fields
+                    };
+
+                    allFoodsList.Add(food);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                connection?.Close();
+            }
+
+            return allFoodsList;
+        }
+
+        public static List<MealView> GetAllMealData()
+        {
+            List<MealView> allMealsList = new List<MealView>();
+
+            return allMealsList;
+        }
+
+        public static List<MealTypeView> GetAllMealTypeData()
+        {
+            List<MealTypeView> allMealTypesList = new List<MealTypeView>();
+
+            return allMealTypesList;
+        }
+
         /*
         * Connects to the DB,
         * READS food categories preferences corresponding to the given patientID,
@@ -174,7 +285,7 @@ namespace DietPlanner.DataFetcher
                     int rule = Int32.Parse(reader["Rule"].ToString());
 
                     // Get the corresponding category from the tree
-                    FoodCategoryView category = FoodCategoriesTree.GetCategoryByID(categoryID);
+                    FoodCategoryView category = DietaryEntityData.GetCategoryByID(categoryID);
 
                     if (category != null)
                     {
