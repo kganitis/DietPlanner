@@ -211,7 +211,7 @@ namespace DietPlanner.DataFetcher
                 SQLiteConnection connection = DBConnectionManager.GetConnection();
 
                 // Retrieve food data from the database
-                string query = "SELECT * FROM Food;";
+                string query = "SELECT * FROM Food ORDER BY Name;";
                 SQLiteCommand command = new SQLiteCommand(query, connection);
                 SQLiteDataReader reader = command.ExecuteReader();
 
@@ -276,7 +276,7 @@ namespace DietPlanner.DataFetcher
                 SQLiteConnection connection = DBConnectionManager.GetConnection();
 
                 // Retrieve meal data from the database
-                string query = "SELECT * FROM Meal;";
+                string query = "SELECT * FROM Meal ORDER BY Name;";
                 SQLiteCommand command = new SQLiteCommand(query, connection);
                 SQLiteDataReader reader = command.ExecuteReader();
 

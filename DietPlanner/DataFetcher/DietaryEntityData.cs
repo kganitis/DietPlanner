@@ -24,6 +24,14 @@ namespace DietPlanner.DataFetcher
             allMealsList = DataAccess.GetAllMealData();
         }
 
+        public static FoodCategory GetFoodCategoryTree() => foodCategoryTree;
+
+        public static List<Food> GetAllFoodsList() => allFoodsList;
+        
+        public static List<Meal> GetAllMealsList() => allMealsList;
+
+        public static List<MealType> GetAllMealTypesList() => allMealTypesList;
+
         public static FoodCategory GetCategoryByID(string ID)
         {
             return FindCategoryInTreeRecursive(foodCategoryTree);
@@ -131,29 +139,5 @@ namespace DietPlanner.DataFetcher
             else if (mealType != null) { return mealType; }
             else { return null; }
         }
-
-        public static void PrintTree()
-        {
-            Console.WriteLine("Food Category Tree:");
-            PrintFoodCategory(foodCategoryTree, 0);
-
-            void PrintFoodCategory(FoodCategory category, int depth)
-            {
-                Console.WriteLine(new string(' ', depth * 2) + category.Name);
-                foreach (var subCategory in category.SubCategories)
-                {
-                    PrintFoodCategory(subCategory, depth + 1);
-                }
-            }
-        }
-
-        public static void PrintList<T>(List<T> list) where T: DietaryEntity
-        {
-            foreach (var item in list)
-            {
-                Console.WriteLine(item.Name);
-            }
-        }
-
     }
 }

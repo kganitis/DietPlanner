@@ -254,6 +254,48 @@ namespace DietPlanner
             }
         }
 
+        internal List<DietaryEntity> FoodsPreferred
+        {
+            get
+            {
+                List<DietaryEntity> foodsPreferred = new List<DietaryEntity>();
+                foreach (var item in listBoxPreferred.Items)
+                {
+                    foodsPreferred.Add(item as DietaryEntity);
+                }
+                return foodsPreferred;
+            }
+            set
+            {
+                listBoxPreferred.Items.Clear();
+                foreach (var item in value)
+                {
+                    listBoxPreferred.Items.Add(item);
+                }
+            }
+        }
+
+        internal List<DietaryEntity> FoodsAvoided
+        {
+            get
+            {
+                List<DietaryEntity> foodsAvoided = new List<DietaryEntity>();
+                foreach (var item in listBoxAvoided.Items)
+                {
+                    foodsAvoided.Add(item as DietaryEntity);
+                }
+                return foodsAvoided;
+            }
+            set
+            {
+                listBoxAvoided.Items.Clear();
+                foreach (var item in value)
+                {
+                    listBoxAvoided.Items.Add(item);
+                }
+            }
+        }
+
         #endregion
 
         public FormDataEntry()
@@ -304,14 +346,12 @@ namespace DietPlanner
 
             foreach (var item in listBoxPreferred.Items)
             {
-                DietaryEntity entity = DietaryEntityData.GetDietaryEntityByName(item.ToString());
-                newPatient.PreferredFoods.Add(entity);
+                newPatient.PreferredFoods.Add(item as DietaryEntity);
             }
 
             foreach (var item in listBoxAvoided.Items)
             {
-                DietaryEntity entity = DietaryEntityData.GetDietaryEntityByName(item.ToString());
-                newPatient.FoodsToAvoid.Add(entity);
+                newPatient.FoodsToAvoid.Add(item as DietaryEntity);
             }
             
             if (newPatient.PreferredFoods.Count > 0)
@@ -327,19 +367,19 @@ namespace DietPlanner
 
         private void btnAddPreferred_Click(object sender, EventArgs e)
         {
-            ShowFoodPreferencesForm(listBoxPreferred);
+            ShowFoodPreferencesForm(listBoxPreferred, listBoxAvoided);
         }
 
         private void btnAddAvoided_Click(object sender, EventArgs e)
         {
-            ShowFoodPreferencesForm(listBoxAvoided);
+            ShowFoodPreferencesForm(listBoxAvoided, listBoxPreferred);
         }
 
-        private void ShowFoodPreferencesForm(ListBox listBoxToFill)
+        private void ShowFoodPreferencesForm(ListBox listBoxToFill, ListBox exlcudedListBox)
         {
             if (formPreferences == null || formPreferences.IsDisposed)
             {
-                formPreferences = new FormPreferences(listBoxToFill);
+                formPreferences = new FormPreferences(listBoxToFill, exlcudedListBox);
                 formPreferences.Show();
             }
         }
@@ -381,22 +421,10 @@ namespace DietPlanner
             ActivityLevelCoefficient = patientData.ActivityLevel;
             GoalValue = patientData.Goal;
 
-            listBoxPreferred.Items.Clear();
-            listBoxAvoided.Items.Clear();
-
             List<DietaryEntity>[] foodsPreferences = DataAccess.GetAllPreferencesByPatientID(patientID);
-            List<DietaryEntity> foodsPreferred = foodsPreferences[1];
-            List<DietaryEntity> foodsAvoided = foodsPreferences[0];
 
-            foreach (var item in foodsPreferred)
-            {
-                listBoxPreferred.Items.Add(item.Name);
-            }
-
-            foreach (var item in foodsAvoided)
-            {
-                listBoxAvoided.Items.Add(item.Name);
-            }
+            FoodsPreferred = foodsPreferences[1];
+            FoodsAvoided = foodsPreferences[0];
         }
     }
 }

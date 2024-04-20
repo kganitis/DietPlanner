@@ -209,7 +209,7 @@
             this.btnAddPreferred.BackColor = System.Drawing.Color.Transparent;
             this.btnAddPreferred.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAddPreferred.BackgroundImage")));
             this.btnAddPreferred.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnAddPreferred.Location = new System.Drawing.Point(627, 393);
+            this.btnAddPreferred.Location = new System.Drawing.Point(627, 383);
             this.btnAddPreferred.Margin = new System.Windows.Forms.Padding(2);
             this.btnAddPreferred.Name = "btnAddPreferred";
             this.btnAddPreferred.Size = new System.Drawing.Size(32, 32);
@@ -222,7 +222,7 @@
             this.btnRemovePreferred.BackColor = System.Drawing.Color.Transparent;
             this.btnRemovePreferred.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnRemovePreferred.BackgroundImage")));
             this.btnRemovePreferred.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnRemovePreferred.Location = new System.Drawing.Point(663, 393);
+            this.btnRemovePreferred.Location = new System.Drawing.Point(663, 383);
             this.btnRemovePreferred.Margin = new System.Windows.Forms.Padding(2);
             this.btnRemovePreferred.Name = "btnRemovePreferred";
             this.btnRemovePreferred.Size = new System.Drawing.Size(32, 32);
@@ -257,7 +257,7 @@
             this.btnAddAvoided.BackColor = System.Drawing.Color.Transparent;
             this.btnAddAvoided.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAddAvoided.BackgroundImage")));
             this.btnAddAvoided.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnAddAvoided.Location = new System.Drawing.Point(887, 392);
+            this.btnAddAvoided.Location = new System.Drawing.Point(887, 382);
             this.btnAddAvoided.Margin = new System.Windows.Forms.Padding(2);
             this.btnAddAvoided.Name = "btnAddAvoided";
             this.btnAddAvoided.Size = new System.Drawing.Size(32, 32);
@@ -270,7 +270,7 @@
             this.btnRemoveAvoided.BackColor = System.Drawing.Color.Transparent;
             this.btnRemoveAvoided.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnRemoveAvoided.BackgroundImage")));
             this.btnRemoveAvoided.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnRemoveAvoided.Location = new System.Drawing.Point(923, 392);
+            this.btnRemoveAvoided.Location = new System.Drawing.Point(923, 382);
             this.btnRemoveAvoided.Margin = new System.Windows.Forms.Padding(2);
             this.btnRemoveAvoided.Name = "btnRemoveAvoided";
             this.btnRemoveAvoided.Size = new System.Drawing.Size(32, 32);
@@ -306,22 +306,28 @@
             // 
             // listBoxPreferred
             // 
+            this.listBoxPreferred.DisplayMember = "Name";
+            this.listBoxPreferred.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.listBoxPreferred.FormattingEnabled = true;
+            this.listBoxPreferred.ItemHeight = 20;
             this.listBoxPreferred.Location = new System.Drawing.Point(529, 255);
             this.listBoxPreferred.Margin = new System.Windows.Forms.Padding(2);
             this.listBoxPreferred.Name = "listBoxPreferred";
             this.listBoxPreferred.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listBoxPreferred.Size = new System.Drawing.Size(166, 134);
+            this.listBoxPreferred.Size = new System.Drawing.Size(166, 124);
             this.listBoxPreferred.TabIndex = 28;
             // 
             // listBoxAvoided
             // 
+            this.listBoxAvoided.DisplayMember = "Name";
+            this.listBoxAvoided.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.listBoxAvoided.FormattingEnabled = true;
+            this.listBoxAvoided.ItemHeight = 20;
             this.listBoxAvoided.Location = new System.Drawing.Point(789, 254);
             this.listBoxAvoided.Margin = new System.Windows.Forms.Padding(2);
             this.listBoxAvoided.Name = "listBoxAvoided";
             this.listBoxAvoided.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.listBoxAvoided.Size = new System.Drawing.Size(166, 134);
+            this.listBoxAvoided.Size = new System.Drawing.Size(166, 124);
             this.listBoxAvoided.TabIndex = 29;
             // 
             // maleRadioButton
