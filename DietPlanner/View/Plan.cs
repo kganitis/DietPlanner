@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DietPlanner.Model
+namespace DietPlanner.View
 {
-    internal class PlanView
+    internal class Plan
     {
         private string patientID;
-        private List<MealItemView> mealPlan = new List<MealItemView>();
+        private List<MealItem> mealPlan = new List<MealItem>();
         private int mealsPerDay;
 
-        public PlanView() { }
+        public Plan() { }
 
-        public PlanView(string patientID, List<MealItemView> mealPlan, int mealsPerDay)
+        public Plan(string patientID, List<MealItem> mealPlan, int mealsPerDay)
         {
             PatientID = patientID;
             MealPlan = mealPlan;
@@ -22,7 +22,7 @@ namespace DietPlanner.Model
         }
 
         public string PatientID { get => patientID; set => patientID = value; }
-        internal List<MealItemView> MealPlan { get => mealPlan; set => mealPlan = value; }
+        internal List<MealItem> MealPlan { get => mealPlan; set => mealPlan = value; }
         public int MealsPerDay { get => mealsPerDay; set => mealsPerDay = value; }
     }
 

@@ -1,4 +1,4 @@
-﻿using DietPlanner.Model;
+﻿using DietPlanner.View;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -11,10 +11,10 @@ namespace DietPlanner.DataFetcher
 {
     internal static class DietaryEntityData
     {
-        private static FoodCategoryView foodCategoryTree;
-        private static List<FoodView> allFoodsList;
-        private static List<MealView> allMealsList;
-        private static List<MealTypeView> allMealTypesList;
+        private static FoodCategory foodCategoryTree;
+        private static List<Food> allFoodsList;
+        private static List<Meal> allMealsList;
+        private static List<MealType> allMealTypesList;
 
         public static void Initialize()
         {
@@ -22,18 +22,15 @@ namespace DietPlanner.DataFetcher
             allFoodsList = DataAccess.GetAllFoodData();
             allMealTypesList = DataAccess.GetAllMealTypeData();
             allMealsList = DataAccess.GetAllMealData();
-            
-            PrintTree();
-            PrintList(allFoodsList);
         }
 
-        public static FoodCategoryView GetCategoryByID(string categoryID)
+        public static FoodCategory GetCategoryByID(string ID)
         {
             return FindCategoryInTreeRecursive(foodCategoryTree);
 
-            FoodCategoryView FindCategoryInTreeRecursive(FoodCategoryView category)
+            FoodCategory FindCategoryInTreeRecursive(FoodCategory category)
             {
-                if (category.CategoryID == categoryID)
+                if (category.ID == ID)
                 {
                     return category;
                 }
@@ -52,19 +49,87 @@ namespace DietPlanner.DataFetcher
             }
         }
 
-        public static FoodView GetFoodByID(string foodID)
+        public static FoodCategory GetCategoryByName(string name)
         {
-            return allFoodsList.FirstOrDefault(food => food.FoodID == foodID);
+            return FindCategoryInTreeRecursive(foodCategoryTree);
+
+            FoodCategory FindCategoryInTreeRecursive(FoodCategory category)
+            {
+                if (category.Name == name)
+                {
+                    return category;
+                }
+                else
+                {
+                    foreach (var subCategory in category.SubCategories)
+                    {
+                        var result = FindCategoryInTreeRecursive(subCategory);
+                        if (result != null)
+                        {
+                            return result;
+                        }
+                    }
+                }
+                return null;
+            }
         }
 
-        public static MealView GetMealByID(string mealID)
+        public static Food GetFoodByID(string ID)
         {
-            return allMealsList.FirstOrDefault(meal => meal.MealID == mealID);
+            return allFoodsList.FirstOrDefault(food => food.ID == ID);
         }
 
-        public static MealTypeView GetMealTypeByID(string typeID)
+        public static Food GetFoodByName(string name)
         {
-            return allMealTypesList.FirstOrDefault(type => type.TypeID == typeID);
+            return allFoodsList.FirstOrDefault(food => food.Name == name);
+        }
+
+        public static Meal GetMealByID(string ID)
+        {
+            return allMealsList.FirstOrDefault(meal => meal.ID == ID);
+        }
+
+        public static Meal GetMealByName(string name)
+        {
+            return allMealsList.FirstOrDefault(meal => meal.Name == name);
+        }
+
+        public static MealType GetMealTypeByID(string ID)
+        {
+            return allMealTypesList.FirstOrDefault(type => type.ID == ID);
+        }
+
+        public static MealType GetMealTypeByName(string name)
+        {
+            return allMealTypesList.FirstOrDefault(type => type.Name == name);
+        }
+
+        public static DietaryEntity GetDietaryEntityByID(string ID)
+        {
+            FoodCategory category = GetCategoryByID(ID);
+            Food food = GetFoodByID(ID);
+            Meal meal = GetMealByID(ID);
+            MealType mealType = GetMealTypeByID(ID);
+
+            if (category != null) { return category; }
+            else if (food != null) { return food; }
+            else if (meal != null) { return meal; }
+            else if (mealType != null) { return mealType; }
+            else { return null; }
+        }
+
+        public static DietaryEntity GetDietaryEntityByName(string name)
+        {
+            FoodCategory category = GetCategoryByName(name);
+            Food food = GetFoodByName(name);
+            Meal meal = GetMealByName(name);
+            MealType mealType = GetMealTypeByName(name);
+
+            if (category != null) { return category; }
+            else if (food != null) { return food; }
+            else if (meal != null) { return meal; }
+            else if (mealType != null) { return mealType; }
+            else { return null; }
         }
 
         public static void PrintTree()
@@ -72,7 +137,7 @@ namespace DietPlanner.DataFetcher
             Console.WriteLine("Food Category Tree:");
             PrintFoodCategory(foodCategoryTree, 0);
 
-            void PrintFoodCategory(FoodCategoryView category, int depth)
+            void PrintFoodCategory(FoodCategory category, int depth)
             {
                 Console.WriteLine(new string(' ', depth * 2) + category.Name);
                 foreach (var subCategory in category.SubCategories)
@@ -82,7 +147,7 @@ namespace DietPlanner.DataFetcher
             }
         }
 
-        public static void PrintList<T>(List<T> list) where T: DietaryEntityView
+        public static void PrintList<T>(List<T> list) where T: DietaryEntity
         {
             foreach (var item in list)
             {

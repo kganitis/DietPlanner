@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DietPlanner.Model
+namespace DietPlanner.View
 {
-    internal class FoodView : DietaryEntityView
+    internal class Food : DietaryEntity
     {
-        private string foodID;
         private string unit;
         private float quantity;
-        private FoodCategoryView category;
+        private FoodCategory category;
         private float calories;
         private float protein;
         private float carbs;
@@ -19,13 +18,14 @@ namespace DietPlanner.Model
         private float fiber;
         private float fats;
 
-        public FoodView() { }
+        public Food() { }
 
-        public FoodView(string foodID, string unit, float quantity, float calories, 
+        public Food(string id, string name, string unit, float quantity, float calories, 
                     float protein, float carbs, float sugars, float fiber,
-                    float fats, FoodCategoryView category)
+                    float fats, FoodCategory category)
         {
-            FoodID = foodID;
+            ID = id;
+            Name = name;
             Unit = unit;
             Quantity = quantity;
             Calories = calories;
@@ -37,7 +37,6 @@ namespace DietPlanner.Model
             Category = category;
         }
 
-        public string FoodID { get => foodID; set => foodID = value; }
         public string Unit { get => unit; set => unit = value; }
         public float Quantity { get => quantity; set => quantity = value; }
         public float Calories { get => calories; set => calories = value; }
@@ -46,6 +45,6 @@ namespace DietPlanner.Model
         public float Sugars { get => sugars; set => sugars = value; }
         public float Fiber { get => fiber; set => fiber = value; }
         public float Fats { get => fats; set => fats = value; }
-        internal FoodCategoryView Category { get => category; set => category = value; }
+        internal FoodCategory Category { get => category; set => category = value; }
     }
 }

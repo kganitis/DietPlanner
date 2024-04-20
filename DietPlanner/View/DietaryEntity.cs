@@ -4,19 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DietPlanner.Model
+namespace DietPlanner.View
 {
-    internal abstract class DietaryEntityView
+    internal abstract class DietaryEntity
     {
+        private string id;
         private string name;
 
-        protected DietaryEntityView() { }
+        protected DietaryEntity() { }
 
-        protected DietaryEntityView(string name)
+        protected DietaryEntity(string id, string name)
         {
+            ID = id;
             Name = name;
         }
 
+        public string ID { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
     }
 }

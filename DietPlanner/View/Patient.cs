@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace DietPlanner.Model
+namespace DietPlanner.View
 {
-    internal class PatientView
+    internal class Patient
     {
         private string patientID;
         private string name;
@@ -17,15 +19,15 @@ namespace DietPlanner.Model
         private float weight;
         private float activityLevel;
         private int goal;
-        private List<DietaryEntityView> preferredFoods = new List<DietaryEntityView>();
-        private List<DietaryEntityView> foodsToAvoid = new List<DietaryEntityView>();
+        private List<DietaryEntity> preferredFoods = new List<DietaryEntity>();
+        private List<DietaryEntity> foodsToAvoid = new List<DietaryEntity>();
         
-        public PatientView() { }
+        public Patient() { }
 
-        public PatientView(string patientID, string name, string phoneNumber, string gender, 
+        public Patient(string patientID, string name, string phoneNumber, string gender, 
                         DateTime dateOfBirth, float height, float weight,
-                        float activityLevel, int goal, List<DietaryEntityView> preferredFoods, 
-                        List<DietaryEntityView> foodsToAvoid)
+                        float activityLevel, int goal, List<DietaryEntity> preferredFoods, 
+                        List<DietaryEntity> foodsToAvoid)
         {
             this.patientID = patientID;
             this.name = name;
@@ -44,6 +46,22 @@ namespace DietPlanner.Model
         public string Name { get => name; set => name = value; }
         public string PhoneNumber { get => phoneNumber; set => phoneNumber = value; }
         public DateTime DateOfBirth { get => dateOfBirth; set => dateOfBirth = value; }
+        public string DateOfBirthStr
+        {
+            get { return dateOfBirth.ToString("dd/MM/yyyy"); }
+            set
+            {
+                DateTime parsedDate;
+                if (DateTime.TryParseExact(value, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate))
+                {
+                    dateOfBirth = parsedDate;
+                }
+                else
+                {
+                    MessageBox.Show("Μη έγκυρη μορφή ημερομηνίας. Επιτρεπόμενη μορφή: ηη/MM/εεεε.", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
         public int Age
         {
             get
@@ -66,8 +84,8 @@ namespace DietPlanner.Model
         public float Weight { get => weight; set => weight = value; }
         internal float ActivityLevel { get => activityLevel; set => activityLevel = value; }
         internal int Goal { get => goal; set => goal = value; }
-        internal List<DietaryEntityView> PreferredFoods { get => preferredFoods; set => preferredFoods = value; }
-        internal List<DietaryEntityView> FoodsToAvoid { get => foodsToAvoid; set => foodsToAvoid = value; }
+        internal List<DietaryEntity> PreferredFoods { get => preferredFoods; set => preferredFoods = value; }
+        internal List<DietaryEntity> FoodsToAvoid { get => foodsToAvoid; set => foodsToAvoid = value; }
 
         public double BMR
         {
@@ -79,7 +97,7 @@ namespace DietPlanner.Model
             get
             {
                 float weightCoeff = 13.397f, heightCoeff = 4.799f, ageCoeff = 5.677f, genderCoeff = 88.632f;
-                if (Gender == GenderView.FEMALE) { weightCoeff = 9.247f; heightCoeff = 3.098f; ageCoeff = 4.330f; genderCoeff = 447.593f; }
+                if (Gender == View.Gender.FEMALE) { weightCoeff = 9.247f; heightCoeff = 3.098f; ageCoeff = 4.330f; genderCoeff = 447.593f; }
                 return weightCoeff * Weight + heightCoeff * Height - ageCoeff * Age + genderCoeff;
             }
         }

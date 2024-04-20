@@ -1,5 +1,5 @@
 ﻿using DietPlanner.DataFetcher;
-using DietPlanner.Model;
+using DietPlanner.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,20 +18,17 @@ namespace DietPlanner
 {
     public partial class FormDataEntry : Form
     {
-        protected string connectionString = "Data source=DietPlanner.db;Version=3;";
-        protected SQLiteConnection connection;
-
         private FormPreferences formPreferences;
 
         private string testPatientID = "p0000";
+
+        #region Getters / Setters
 
         public string PatientName
         {
             get { return patientNameTextBox.Text; }
             set { patientNameTextBox.Text = value; }
         }
-
-        #region Getters / Setters
 
         public string Gender
         {
@@ -72,7 +69,7 @@ namespace DietPlanner
             set { phoneTextBox.Text = value; }
         }
 
-        public string DateOfBirth
+        public string DateOfBirthStr
         {
             get { return birthDatePicker.Value.ToString("dd/MM/yyyy"); }
             set
@@ -87,6 +84,12 @@ namespace DietPlanner
                     MessageBox.Show("Μη έγκυρη μορφή ημερομηνίας. Επιτρεπόμενη μορφή: ηη/MM/εεεε.", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        public DateTime DateOfBirth
+        {
+            get { return birthDatePicker.Value; }
+            set { birthDatePicker.Value = value;}
         }
 
         public int Age
@@ -206,7 +209,7 @@ namespace DietPlanner
                     return 0f;
                 }
                 float weightCoeff = 13.397f, heightCoeff = 4.799f, ageCoeff = 5.677f, genderCoeff = 88.632f;
-                if (Gender == GenderView.FEMALE) { weightCoeff = 9.247f; heightCoeff = 3.098f; ageCoeff = 4.330f; genderCoeff = 447.593f; }
+                if (Gender == View.Gender.FEMALE) { weightCoeff = 9.247f; heightCoeff = 3.098f; ageCoeff = 4.330f; genderCoeff = 447.593f; }
                 return weightCoeff * PatientWeight + heightCoeff * PatientHeight - ageCoeff * Age + genderCoeff;
             }
         }
@@ -262,140 +265,63 @@ namespace DietPlanner
         {
             comboBoxActivityLevel.Items.AddRange(ActivityLevel.GetActivityLevels);
             comboBoxGoal.Items.AddRange(Goal.GetGoals);
-            LoadTestData();
+            LoadPatientDataByID(testPatientID);
         }
 
-        private string GenerateNewPatientId()
+        private bool EmptyOrInvalidFields()
         {
-            // Connect to the database
-            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
-            {
-                connection.Open();
-
-                // Query to get the maximum patient_id value
-                string selectMaxIdSQL = "SELECT MAX(CAST(SUBSTR(Patient_id, 2) AS INTEGER)) FROM Patient";
-                SQLiteCommand maxIdCommand = new SQLiteCommand(selectMaxIdSQL, connection);
-
-                // Execute the query to get the maximum id
-                object maxIdResult = maxIdCommand.ExecuteScalar();
-
-                // If there are no records yet, start from "p0000"
-                int newIdNumber = maxIdResult == DBNull.Value ? 0 : Convert.ToInt32(maxIdResult) + 1;
-
-                // Format the new patient_id
-                string newPatientId = "p" + newIdNumber.ToString("D4"); // D4 ensures 4 digits, padding with leading zeros if necessary
-
-                return newPatientId;
-            }
-        }
-
-        private void ShowFoodPreferencesForm(ListBox foodsListBoxToFill)
-        {
-            if (formPreferences == null || formPreferences.IsDisposed)
-            {
-                formPreferences = new FormPreferences(foodsListBoxToFill);
-                formPreferences.Show();
-            }
-        }
-
-        private void btnSaveData_Click(object sender, EventArgs e)
-        {
-            // Check if any of the fields are empty or invalid
-            if (string.IsNullOrWhiteSpace(PatientName) ||
+            return string.IsNullOrWhiteSpace(PatientName) ||
                 string.IsNullOrWhiteSpace(Gender) ||
                 string.IsNullOrWhiteSpace(PhoneNumber) ||
                 PatientHeight == -1f ||
                 PatientWeight == -1f ||
-                ActivityLevelCoefficient == 0f)
+                ActivityLevelCoefficient == 0f ||
+                GoalValue == int.MaxValue;
+        }
+
+        private void btnSaveData_Click(object sender, EventArgs e)
+        {
+            if (EmptyOrInvalidFields())
             {
                 MessageBox.Show("Παρακαλώ συμπληρώστε όλα τα πεδία!", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            string newPatientId = GenerateNewPatientId();
-
-            try
+            Patient newPatient = new Patient()
             {
-                connection = new SQLiteConnection(connectionString);
-                connection.Open();
-                string insertSQL = "INSERT INTO Patient(Patient_id, Name, Gender, Phone_number, Date_of_birth, Height, Weight, Activity_level) " +
-                            "VALUES (@patientId, @name, @gender, @phone, @date, @weight, @weight, @activity)";
+                PatientID = DataAccess.GetNextAvailablePatientID(),
+                Name = PatientName,
+                Gender = Gender,
+                PhoneNumber = PhoneNumber,
+                DateOfBirth = DateOfBirth,
+                Height = PatientHeight,
+                Weight = PatientWeight,
+                ActivityLevel = ActivityLevelCoefficient,
+                Goal = GoalValue
+            };
 
-                SQLiteCommand command = new SQLiteCommand(insertSQL, connection);
-                command.Parameters.AddWithValue("@patientId", newPatientId);
-                command.Parameters.AddWithValue("@name", PatientName);
-                command.Parameters.AddWithValue("@gender", Gender);
-                command.Parameters.AddWithValue("@phone", PhoneNumber);
-                command.Parameters.AddWithValue("@date", DateOfBirth);
-                command.Parameters.AddWithValue("@weight", PatientHeight);
-                command.Parameters.AddWithValue("@weight", PatientWeight);
-                command.Parameters.AddWithValue("@activity", ActivityLevelCoefficient);
-
-                command.ExecuteNonQuery();
-
-                MessageBox.Show("Ο ασθενής καταχωρήθηκε με επιτυχία, με ΑΜ: " + newPatientId);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Προέκυψε ένα σφάλμα: " + ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                connection.Close();
-            }
-
-            List<string> foodsPreferred = new List<string>();
-            List<string> foodsAvoided = new List<string>();
+            DataAccess.SavePatientData(newPatient);
 
             foreach (var item in listBoxPreferred.Items)
             {
-                foodsPreferred.Add(item.ToString());
+                DietaryEntity entity = DietaryEntityData.GetDietaryEntityByName(item.ToString());
+                newPatient.PreferredFoods.Add(entity);
             }
 
             foreach (var item in listBoxAvoided.Items)
             {
-                foodsAvoided.Add(item.ToString());
+                DietaryEntity entity = DietaryEntityData.GetDietaryEntityByName(item.ToString());
+                newPatient.FoodsToAvoid.Add(entity);
             }
             
-            if (foodsPreferred.Count > 0 || foodsAvoided.Count > 0)
+            if (newPatient.PreferredFoods.Count > 0)
             {
-                try
-                {
-                    connection = new SQLiteConnection(connectionString);
-                    connection.Open();
+                DataAccess.SavePreferredFoodsForPatient(newPatient);
+            }
 
-                    // Insert items from foodsPreferred with Rule set to Yes
-                    foreach (var item in foodsPreferred)
-                    {
-                        string preferSQL = "INSERT INTO Patient_Preferences (Patient_id, Dietary_entity_id, Rule) VALUES (@patientId, @dietaryEntityId, @rule)";
-                        SQLiteCommand command = new SQLiteCommand(preferSQL, connection);
-                        command.Parameters.AddWithValue("@patientId", newPatientId); // Assuming newPatientId is the patient_id
-                        command.Parameters.AddWithValue("@dietaryEntityId", item);
-                        command.Parameters.AddWithValue("@rule", 1);
-                        command.ExecuteNonQuery();
-                    }
-
-                    // Insert items from foodsAvoided with Rule set to No
-                    foreach (var item in foodsAvoided)
-                    {
-                        string avoidSQl = "INSERT INTO Patient_Preferences (Patient_id, Dietary_entity_id, Rule) VALUES (@patientId, @dietaryEntityId, @rule)";
-                        SQLiteCommand command = new SQLiteCommand(avoidSQl, connection);
-                        command.Parameters.AddWithValue("@patientId", newPatientId); // Assuming newPatientId is the patient_id
-                        command.Parameters.AddWithValue("@dietaryEntityId", item);
-                        command.Parameters.AddWithValue("@rule", 0);
-                        command.ExecuteNonQuery();
-                    }
-
-                    MessageBox.Show("Οι προτιμήσεις αποθηκεύτηκαν με επιτυχία!", "Επιτυχία", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Προέκυψε ένα σφάλμα: " + ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    connection.Close();
-                }
+            if (newPatient.FoodsToAvoid.Count > 0)
+            {
+                DataAccess.SaveFoodsAvoidedForPatient(newPatient);
             }
         }
 
@@ -404,26 +330,36 @@ namespace DietPlanner
             ShowFoodPreferencesForm(listBoxPreferred);
         }
 
-        private void btnRemovePreferred_Click(object sender, EventArgs e)
-        {
-            for (int i = listBoxPreferred.SelectedIndices.Count - 1; i >= 0; i--)
-            {
-                int selectedIndex = listBoxPreferred.SelectedIndices[i];
-                listBoxPreferred.Items.RemoveAt(selectedIndex);
-            }
-        }
-
         private void btnAddAvoided_Click(object sender, EventArgs e)
         {
             ShowFoodPreferencesForm(listBoxAvoided);
         }
 
+        private void ShowFoodPreferencesForm(ListBox listBoxToFill)
+        {
+            if (formPreferences == null || formPreferences.IsDisposed)
+            {
+                formPreferences = new FormPreferences(listBoxToFill);
+                formPreferences.Show();
+            }
+        }
+
+        private void btnRemovePreferred_Click(object sender, EventArgs e)
+        {
+            RemoveItemFromListBox(listBoxPreferred);
+        }
+
         private void btnRemoveAvoided_Click(object sender, EventArgs e)
         {
-            for (int i = listBoxAvoided.SelectedIndices.Count - 1; i >= 0; i--)
+            RemoveItemFromListBox(listBoxAvoided);
+        }
+
+        private void RemoveItemFromListBox(ListBox listBox)
+        {
+            for (int i = listBox.SelectedIndices.Count - 1; i >= 0; i--)
             {
-                int selectedIndex = listBoxAvoided.SelectedIndices[i];
-                listBoxAvoided.Items.RemoveAt(selectedIndex);
+                int selectedIndex = listBox.SelectedIndices[i];
+                listBox.Items.RemoveAt(selectedIndex);
             }
         }
 
@@ -432,14 +368,14 @@ namespace DietPlanner
             new PlanGenerator("p0000");
         }
 
-        private void LoadTestData()
+        private void LoadPatientDataByID(string patientID)
         {
-            PatientView patientData = DataAccess.GetPatientByID(testPatientID);
+            Patient patientData = DataAccess.GetPatientByID(patientID);
             
             PatientName = patientData.Name;
             Gender = patientData.Gender;
             PhoneNumber = patientData.PhoneNumber;
-            DateOfBirth = patientData.DateOfBirth.ToString("dd/MM/yyyy");
+            DateOfBirthStr = patientData.DateOfBirth.ToString("dd/MM/yyyy");
             PatientHeight = patientData.Height;
             PatientWeight = patientData.Weight;
             ActivityLevelCoefficient = patientData.ActivityLevel;
@@ -448,40 +384,18 @@ namespace DietPlanner
             listBoxPreferred.Items.Clear();
             listBoxAvoided.Items.Clear();
 
-            try
+            List<DietaryEntity>[] foodsPreferences = DataAccess.GetAllPreferencesByPatientID(patientID);
+            List<DietaryEntity> foodsPreferred = foodsPreferences[1];
+            List<DietaryEntity> foodsAvoided = foodsPreferences[0];
+
+            foreach (var item in foodsPreferred)
             {
-                connection = DBConnectionManager.GetConnection();
-                string query = @"SELECT *
-                                FROM Patient_Preferences_Names
-                                WHERE Patient_id = @patientID";
-
-                SQLiteCommand command = new SQLiteCommand(query, connection);
-                command.Parameters.AddWithValue("@patientID", testPatientID);
-                SQLiteDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    string name = reader["Dietary_entity_name"].ToString();
-                    int rule = Convert.ToInt32(reader["Rule"]);
-
-                    // Add dietary entity to the appropriate list box based on the rule
-                    if (rule == 1)
-                    {
-                        listBoxPreferred.Items.Add(name);
-                    }
-                    else
-                    {
-                        listBoxAvoided.Items.Add(name);
-                    }
-                }
+                listBoxPreferred.Items.Add(item.Name);
             }
-            catch (Exception ex)
+
+            foreach (var item in foodsAvoided)
             {
-                MessageBox.Show("Προέκυψε ένα σφάλμα κατά τη φόρτωση των προτιμήσεων τροφίμων: " + ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                connection?.Close();
+                listBoxAvoided.Items.Add(item.Name);
             }
         }
     }
