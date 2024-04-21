@@ -8,20 +8,20 @@ namespace DietPlanner.View
 {
     internal class Plan
     {
-        private string patientID;
+        private Patient patient;
         private List<MealItem> mealPlan = new List<MealItem>();
         private int mealsPerDay;
 
         public Plan() { }
 
-        public Plan(string patientID, List<MealItem> mealPlan, int mealsPerDay)
+        public Plan(Patient patient, List<MealItem> mealPlan, int mealsPerDay)
         {
-            PatientID = patientID;
+            Patient = patient;
             MealPlan = mealPlan;
             MealsPerDay = mealsPerDay;
         }
 
-        public string PatientID { get => patientID; set => patientID = value; }
+        public Patient Patient { get => patient; set => patient = value; }
         internal List<MealItem> MealPlan { get => mealPlan; set => mealPlan = value; }
         public int MealsPerDay { get => mealsPerDay; set => mealsPerDay = value; }
     }

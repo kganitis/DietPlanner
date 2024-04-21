@@ -183,7 +183,9 @@ namespace DietPlanner
             set
             {
                 listBoxMealTypes.Items.Clear();
-                foreach (var mealType in DietaryEntityData.GetAllMealTypesList())
+                MealType dessert = DietaryEntityData.GetMealTypeByName("Dessert");
+                MealType cheatMeal = DietaryEntityData.GetMealTypeByName("Cheat Meal");
+                foreach (var mealType in new MealType[] { dessert, cheatMeal })
                 {
                     listBoxMealTypes.Items.Add(mealType);
                     if (SelectedEntities.Contains(mealType))

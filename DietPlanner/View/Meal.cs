@@ -9,11 +9,11 @@ namespace DietPlanner.View
     internal class Meal : DietaryEntity
     {
         private MealType type;
-        private Dictionary<Food, int> ingredients;
+        private Dictionary<Food, float> ingredients = new Dictionary<Food, float>();
 
         public Meal() { }
 
-        public Meal(string id, string name, MealType type, Dictionary<Food, int> ingredients)
+        public Meal(string id, string name, MealType type, Dictionary<Food, float> ingredients)
         {
             ID = id;
             Name = name;
@@ -22,6 +22,7 @@ namespace DietPlanner.View
         }
 
         internal MealType Type { get => type; set => type = value; }
-        internal Dictionary<Food, int> Ingredients { get => ingredients; set => ingredients = value; }
+        internal Dictionary<Food, float> Ingredients { get => ingredients; set => ingredients = value; }
+        internal float Calories => Ingredients.Sum(ingredient => ingredient.Key.Calories * ingredient.Value);
     }
 }

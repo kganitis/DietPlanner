@@ -339,20 +339,12 @@ namespace DietPlanner
                 Height = PatientHeight,
                 Weight = PatientWeight,
                 ActivityLevel = ActivityLevelCoefficient,
-                Goal = GoalValue
+                Goal = GoalValue,
+                PreferredFoods = FoodsPreferred,
+                FoodsToAvoid = FoodsAvoided
             };
 
             DataAccess.SavePatientData(newPatient);
-
-            foreach (var item in listBoxPreferred.Items)
-            {
-                newPatient.PreferredFoods.Add(item as DietaryEntity);
-            }
-
-            foreach (var item in listBoxAvoided.Items)
-            {
-                newPatient.FoodsToAvoid.Add(item as DietaryEntity);
-            }
             
             if (newPatient.PreferredFoods.Count > 0)
             {
@@ -405,7 +397,10 @@ namespace DietPlanner
 
         private void btnGeneratePlan_Click(object sender, EventArgs e)
         {
-            new PlanGenerator("p0000");
+            Patient patient = DataAccess.GetPatientByID(testPatientID);
+            patient.PreferredFoods = FoodsPreferred;
+            patient.FoodsToAvoid = FoodsAvoided;
+            new PlanGenerator(patient);
         }
 
         private void LoadPatientDataByID(string patientID)

@@ -296,6 +296,23 @@ namespace DietPlanner.DataFetcher
 
                     allMealsList.Add(meal);
                 }
+
+                // Retrieve meal ingredients data from the database
+                query = "SELECT * FROM Meal_Ingredients;";
+                command = new SQLiteCommand(query, connection);
+                reader = command.ExecuteReader();
+
+                // Parse the data, get the food instances and add them to the meals' ingredients dict
+                while (reader.Read())
+                {
+                    string mealId = reader["Meal_id"].ToString();
+                    string foodId = reader["Food_id"].ToString();
+                    float quantity = Convert.ToSingle(reader["Quantity"].ToString());
+
+                    Meal meal = allMealsList.FirstOrDefault(m => m.ID == mealId);
+                    Food food = DietaryEntityData.GetFoodByID(foodId);
+                    meal.Ingredients.Add(food, quantity);
+                }
             }
             catch (Exception ex)
             {
