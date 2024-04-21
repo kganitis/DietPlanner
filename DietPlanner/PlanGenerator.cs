@@ -3,6 +3,7 @@ using DietPlanner.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace DietPlanner
 {
@@ -10,15 +11,20 @@ namespace DietPlanner
     {
         private readonly Plan plan;
 
-        private readonly List<FoodCategory> foodCategoriesAllowed, foodCategoriesPreferred, foodCategoriesAvoided;
-        private readonly List<Food> foodsAllowed, foodsPreferred, foodsAvoided;
-        private readonly List<Meal> mealsAllowed, mealsPreferred, mealsAvoided;
-        private readonly List<MealType> mealTypesAllowed, mealTypesPreferred, mealTypesAvoided;
+        // Lists for dietary entities
+        private List<FoodCategory> foodCategoriesAllowed, foodCategoriesPreferred, foodCategoriesAvoided;
+        private List<Food> foodsAllowed, foodsPreferred, foodsAvoided;
+        private List<Meal> mealsAllowed, mealsPreferred, mealsAvoided;
+        private List<MealType> mealTypesAllowed, mealTypesPreferred, mealTypesAvoided;
 
+        // Specific meal types
         private readonly MealType breakfast, lunch, dinner, snack, dessert, cheatMeal;
-        private readonly Dictionary<MealType, int> mealTypeWeights;
-        private List<Meal> mealsSelectedForDay = new List<Meal>();
 
+        // Dictionary for meal type weights
+        private Dictionary<MealType, int> mealTypeWeights;
+
+        // Other parameters
+        private List<Meal> mealsSelectedForDay = new List<Meal>();
         private readonly int daysInPlan = 7;
         private readonly int mealsPerDay = 6;
         private readonly double dailyCalorieGoal;
@@ -39,6 +45,7 @@ namespace DietPlanner
                 MealsPerDay = mealsPerDay,
             };
 
+            // Initialization
             breakfast = DietaryEntityData.GetMealTypeByName("Breakfast");
             lunch = DietaryEntityData.GetMealTypeByName("Lunch");
             dinner = DietaryEntityData.GetMealTypeByName("Dinner");
@@ -46,49 +53,56 @@ namespace DietPlanner
             dessert = DietaryEntityData.GetMealTypeByName("Dessert");
             cheatMeal = DietaryEntityData.GetMealTypeByName("Cheat Meal");
 
+            InitializeMealTypeWeights();
+
+            DetermineAvoidedEntities(patient);
+            DetermineAllowedEntities();
+            DeterminePreferredEntities(patient);
+            
+            dailyCalorieGoal = CalculateDailyCalorieGoal(patient);
+
+            AdjustParametersBasedOnMealTypes();
+
+            GeneratePlan();
+
+            PrintPlan();
+        }
+
+        #region Initialization methods
+
+        private void InitializeMealTypeWeights()
+        {
             mealTypeWeights = new Dictionary<MealType, int>()
             {
-                { breakfast, 2 }, { lunch, 2 }, { dinner, 2 }, {snack, 1}, {dessert, 1}, {cheatMeal, 2}
+                { breakfast, 2 }, { lunch, 2 }, { dinner, 2 }, { snack, 1 }, { dessert, 1 }, { cheatMeal, 2 }
             };
+        }
 
+        private void DetermineAvoidedEntities(Patient patient)
+        {
             foodCategoriesAvoided = DetermineFoodCategoriesToAvoid(patient);
             foodsAvoided = DetermineFoodsToAvoid(patient);
             mealsAvoided = DetermineMealsToAvoid(patient);
             mealTypesAvoided = DetermineMealTypesToAvoid(patient);
+        }
 
+        private void DetermineAllowedEntities()
+        {
             foodCategoriesAllowed = DetermineAllowedFoodCategories();
             foodsAllowed = DetermineAllowedFoods();
             mealTypesAllowed = DetermineAllowedMealTypes();
             mealsAllowed = DetermineAllowedMeals();
+        }
 
+        private void DeterminePreferredEntities(Patient patient)
+        {
             foodCategoriesPreferred = DeterminePreferredFoodCategories(patient);
             foodsPreferred = DeterminePreferredFoods(patient);
             mealTypesPreferred = DeterminePreferredMealTypes(patient);
             mealsPreferred = DeterminePreferredMeals(patient);
-
-            dailyCalorieGoal = CalculateDailyCalorieGoal(patient);
-
-            if (mealTypesAllowed.Contains(dessert))
-            {
-                dessertDays = new List<int> { 5 };
-            }
-            if (mealTypesPreferred.Contains(dessert))
-            {
-                dessertDays = new List<int> { 1, 3, 5 };
-            }
-            if (mealTypesPreferred.Contains(cheatMeal))
-            {
-                cheatMealDay = 6;
-            }
-
-            PrintList("Patient.FoodsToAvoid", patient.FoodsToAvoid);
-            PrintList("Patient.PreferredFoods", patient.PreferredFoods);
-
-            PrintAllLists();
-
-            GeneratePlan();
-            PrintPlan();
         }
+
+        // Methods to determine allowed, preferred, and avoided entities
 
         private List<FoodCategory> DetermineFoodCategoriesToAvoid(Patient patient)
         {
@@ -132,7 +146,7 @@ namespace DietPlanner
         private List<Food> DetermineAllowedFoods()
         {
             return DietaryEntityData.GetAllFoodsList()
-                .Where(food => !foodCategoriesAvoided.Contains(food.Category))
+                .Where(food => foodCategoriesAllowed.Contains(food.Category))
                 .Where(food => !foodsAvoided.Contains(food))
                 .ToList();
         }
@@ -153,7 +167,42 @@ namespace DietPlanner
 
         private List<FoodCategory> DeterminePreferredFoodCategories(Patient patient)
         {
-            return patient.PreferredFoods.OfType<FoodCategory>().ToList();
+            List<FoodCategory> preferredList = patient.PreferredFoods.OfType<FoodCategory>().ToList();
+            List<FoodCategory> preferredAndDescendants = new List<FoodCategory>();
+
+            SearchForPreferredCategory(DietaryEntityData.GetFoodCategoryTree());
+
+            foodCategoriesAllowed = foodCategoriesAllowed.Union(preferredAndDescendants).ToList();
+
+            return preferredAndDescendants;
+
+            void SearchForPreferredCategory(FoodCategory category)
+            {
+                if (preferredList.Contains(category))
+                {
+                    AddCategoryAndDescendants(category);
+                }
+                else
+                {
+                    foreach (var subCategory in category.SubCategories)
+                    {
+                        SearchForPreferredCategory(subCategory);
+                    }
+                }
+            }
+
+            void AddCategoryAndDescendants(FoodCategory category)
+            {
+                if (category != null)
+                {
+                    preferredAndDescendants.Add(category);
+                }
+
+                foreach (var subCategory in category.SubCategories)
+                {
+                    AddCategoryAndDescendants(subCategory);
+                }
+            }
         }
 
         private List<Food> DeterminePreferredFoods(Patient patient)
@@ -164,9 +213,11 @@ namespace DietPlanner
                 .Where(food => foodCategoriesPreferred.Contains(food.Category))
                 .ToList();
 
-            PrintList("foodsPreferredFromCategories", foodsPreferredFromCategories);
+            List<Food> combinedFoodsPreferred = foodsPreferred.Union(foodsPreferredFromCategories).ToList();
 
-            return foodsPreferred.Union(foodsPreferredFromCategories).ToList();
+            foodsAllowed = foodsAllowed.Union(combinedFoodsPreferred).ToList();
+
+            return combinedFoodsPreferred;
         }
 
         private List<MealType> DeterminePreferredMealTypes(Patient patient)
@@ -186,12 +237,17 @@ namespace DietPlanner
                 .Where(meal => mealTypesPreferred.Contains(meal.Type))
                 .ToList();
 
-            return mealsPreferred
+            List<Meal> combinedMealsPreferred = mealsPreferred
                 .Union(mealsPreferredFromFoods)
                 .Union(mealsPreferredFromMealTypes)
                 .ToList();
+
+            mealsAllowed = mealsAllowed.Union(combinedMealsPreferred).ToList();
+
+            return combinedMealsPreferred;
         }
 
+        // Other methods
 
         private double CalculateDailyCalorieGoal(Patient patient)
         {
@@ -209,6 +265,26 @@ namespace DietPlanner
             return dailyGoal;
         }
 
+        private void AdjustParametersBasedOnMealTypes()
+        {
+            if (mealTypesAllowed.Contains(dessert))
+            {
+                dessertDays = new List<int> { 5 };
+            }
+            if (mealTypesPreferred.Contains(dessert))
+            {
+                dessertDays = new List<int> { 1, 3, 5 };
+            }
+            if (mealTypesPreferred.Contains(cheatMeal))
+            {
+                cheatMealDay = 6;
+            }
+        }
+
+        #endregion
+
+        #region Plan Generation methods
+
         private void GeneratePlan()
         {
             for (int day = 1; day <= daysInPlan; day++)
@@ -221,25 +297,18 @@ namespace DietPlanner
         {
             double remainingCalories = dailyCalorieGoal;
             int remainingWeightedMeals = 9;
+            mealsSelectedForDay.Clear();
 
             for (int time = 1; time <= mealsPerDay; time++)
             {
-                MealType mealType = GetMealTypeForTime(time);
+                MealType mealType = GetMealTypeForTime(day, time);
 
-                if (dessertDays.Contains(day) && time ==  dessertTime)
-                {
-                    mealType = dessert;
-                }
-                if (cheatMealDay == day && cheatMealTime == time)
-                {
-                    mealType = cheatMeal;
-                }
-
-                Meal selectedMeal = SelectMealForTime(mealType);
+                Meal selectedMeal = SelectMealOfType(mealType);
 
                 float quantity = CalculateQuantityForMeal(selectedMeal, remainingCalories, remainingWeightedMeals);
 
                 plan.MealPlan.Add(new MealItem(selectedMeal, quantity, day, time));
+
                 mealsSelectedForDay.Add(selectedMeal);
 
                 remainingCalories -= selectedMeal.Calories * quantity;
@@ -247,12 +316,13 @@ namespace DietPlanner
             }
         }
 
-        private Meal SelectMealForTime(MealType mealType)
+        private Meal SelectMealOfType(MealType mealType)
         {
             Random random = new Random();
 
             List<Meal> preferredMealsForType = mealsPreferred.Where(meal => meal.Type == mealType).ToList();
 
+            // Prioritize preferred meals by giving it an appearance boost
             if (random.NextDouble() < preferredMealProbability && preferredMealsForType.Count > 0)
             {
                 Meal selectedPreferredMeal = SelectNonRepeatedMeal(preferredMealsForType);
@@ -262,6 +332,7 @@ namespace DietPlanner
                 }
             }
 
+            // Select any allowed meal
             List<Meal> mealsForType = mealsAllowed.Where(meal => meal.Type == mealType).ToList();
             Meal selectedMeal;
 
@@ -281,16 +352,23 @@ namespace DietPlanner
             return selectedMeal;
         }
 
-
         private Meal SelectNonRepeatedMeal(List<Meal> mealsForType)
         {
             return mealsForType.FirstOrDefault(meal => !mealsSelectedForDay.Contains(meal));
         }
 
-
-        private MealType GetMealTypeForTime(int timeOfDay)
+        private MealType GetMealTypeForTime(int day, int time)
         {
-            switch (timeOfDay)
+            if (dessertDays.Contains(day) && time == dessertTime)
+            {
+                return dessert;
+            }
+            if (cheatMealDay == day && cheatMealTime == time)
+            {
+                return cheatMeal;
+            }
+
+            switch (time)
             {
                 case 1:
                     return breakfast;
@@ -298,10 +376,6 @@ namespace DietPlanner
                     return lunch;
                 case 5:
                     return dinner;
-                case 2:
-                case 4:
-                case 6:
-                    return snack;
                 default:
                     return snack;
             }
@@ -325,6 +399,10 @@ namespace DietPlanner
             return quantity;
         }
 
+        #endregion
+
+        #region Printing methods
+
         private void PrintList<T>(string title, List<T> list) where T : DietaryEntity
         {
             Console.WriteLine(title);
@@ -338,20 +416,24 @@ namespace DietPlanner
 
         private void PrintAllLists()
         {
+            PrintList("Food Categories Allowed:", foodCategoriesAllowed);
             PrintList("Food Categories Preferred:", foodCategoriesPreferred);
             PrintList("Food Categories Avoided:", foodCategoriesAvoided);
 
+            PrintList("Foods Allowed:", foodsAllowed);
             PrintList("Foods Preferred:", foodsPreferred);
             PrintList("Foods Avoided:", foodsAvoided);
 
+            PrintList("Meals Allowed:", mealsAllowed);
             PrintList("Meals Preferred:", mealsPreferred);
             PrintList("Meals Avoided:", mealsAvoided);
 
+            PrintList("Meal Types Allowed:", mealTypesAllowed);
             PrintList("Meal Types Preferred:", mealTypesPreferred);
             PrintList("Meal Types Avoided:", mealTypesAvoided);
         }
 
-        public void PrintPlan()
+        private void PrintPlan()
         {
             Console.WriteLine($"Plan for Patient ID: {plan.Patient.PatientID}");
             Console.WriteLine("===========================================");
@@ -389,5 +471,7 @@ namespace DietPlanner
                 Console.WriteLine();
             }
         }
+
+        #endregion
     }
 }
