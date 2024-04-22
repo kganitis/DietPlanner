@@ -64,9 +64,9 @@ namespace DietPlanner
 
             AdjustParametersBasedOnMealTypes();
 
-            GeneratePlan();
+            PrintAllLists();
 
-            PrintPlan();
+            GeneratePlan();
         }
 
         #region Initialization methods
@@ -230,7 +230,7 @@ namespace DietPlanner
         {
             List<Meal> mealsPreferred = patient.PreferredFoods.OfType<Meal>().ToList();
 
-            List<Meal> mealsPreferredFromFoods = mealsAllowed
+            List<Meal> mealsPreferredFromFoods = DietaryEntityData.GetAllMealsList()
                 .Where(meal => meal.Ingredients.Keys.Any(key => foodsPreferred.Contains(key)))
                 .ToList();
 

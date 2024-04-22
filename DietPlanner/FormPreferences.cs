@@ -2,20 +2,13 @@
 using DietPlanner.View;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DietPlanner
 {
     public partial class FormPreferences : Form
     {
-        private List<TreeNode> selectedNodes = new List<TreeNode>();
         private ListBox foodsListBoxToFill;
         private ListBox excludedListBox;
 
@@ -28,36 +21,38 @@ namespace DietPlanner
 
         internal FoodCategory FoodCategoryTree
         {
-            get
-            {
-                return treeViewFoodCategories.Nodes[0].Tag as FoodCategory;
-            }
+            get => treeViewFoodCategories.Nodes[0].Tag as FoodCategory;
             set
             {
                 treeViewFoodCategories.Nodes.Clear();
                 AddNode(treeViewFoodCategories.Nodes, value);
+                SearchAndCheckSelectedNodes(treeViewFoodCategories.Nodes[0]);
+
+                void SearchAndCheckSelectedNodes(TreeNode node)
+                {
+                    if (SelectedEntities.Contains(node.Tag as FoodCategory))
+                    {
+                        node.Checked = true;
+                        node.Nodes.Cast<TreeNode>().ToList().ForEach(childNode => CheckChildNodes(childNode));
+                    }
+                    else
+                    {
+                        node.Nodes.Cast<TreeNode>().ToList().ForEach(childNode => SearchAndCheckSelectedNodes(childNode));
+                    }
+                }
 
                 void AddNode(TreeNodeCollection nodes, FoodCategory category)
                 {
-                    if (ExcludedEntities.Contains(category))
+                    if (!ExcludedEntities.Contains(category))
                     {
-                        return;
-                    }
+                        TreeNode node = new TreeNode(category.Name)
+                        {
+                            Tag = category
+                        };
 
-                    TreeNode node = new TreeNode(category.Name)
-                    {
-                        Tag = category
-                    };
+                        nodes.Add(node);
 
-                    nodes.Add(node);
-                    if (SelectedEntities.Contains(category))
-                    {
-                        SelectNode(node);
-                    }
-                    
-                    foreach (var subCategory in category.SubCategories)
-                    {
-                        AddNode(node.Nodes, subCategory);
+                        category.SubCategories.ForEach(subCategory => AddNode(node.Nodes, subCategory));
                     }
                 }
             }
@@ -68,180 +63,101 @@ namespace DietPlanner
             get
             {
                 List<FoodCategory> selectedCategories = new List<FoodCategory>();
-                foreach (var node in selectedNodes)
+
+                void GetCheckedNodes(TreeNodeCollection nodes)
                 {
-                    selectedCategories.Add(node.Tag as FoodCategory);
+                    foreach (TreeNode node in nodes)
+                    {
+                        if (node.Checked)
+                        {
+                            selectedCategories.Add(node.Tag as FoodCategory);
+                        }
+
+                        GetCheckedNodes(node.Nodes);
+                    }
                 }
+
+                GetCheckedNodes(treeViewFoodCategories.Nodes);
                 return selectedCategories;
             }
         }
 
         internal List<Food> AllFoods
         {
-            get
-            {
-                List<Food> allFoods = new List<Food>();
-                foreach (var item in listBoxFoods.Items)
-                {
-                    allFoods.Add(item as Food);
-                }
-                return allFoods;
-            }
+            get => listBoxFoods.Items.Cast<Food>().ToList();
             set
             {
                 listBoxFoods.Items.Clear();
-                foreach (var food in DietaryEntityData.GetAllFoodsList())
+                value.ForEach(food =>
                 {
                     listBoxFoods.Items.Add(food);
-
                     if (SelectedEntities.Contains(food))
                     {
                         listBoxFoods.SelectedItems.Add(food);
                     }
-                }
+                });
 
-                foreach (var item in ExcludedEntities)
+                ExcludedEntities.OfType<Food>().ToList().ForEach(item =>
                 {
-                    if (item is Food)
-                    {
-                        listBoxFoods.Items.Remove(item);
-                    }
-                }
+                    listBoxFoods.Items.Remove(item);
+                });
             }
         }
 
-        internal List<Food> SelectedFoods
-        {
-            get
-            {
-                List<Food> selectedFoods = new List<Food>();
-                foreach (var item in listBoxFoods.SelectedItems)
-                {
-                    selectedFoods.Add((Food)item);
-                }
-                return selectedFoods;
-            }
-        }
+        internal List<Food> SelectedFoods => listBoxFoods.SelectedItems.Cast<Food>().ToList();
 
         internal List<Meal> AllMeals
         {
-            get
-            {
-                List<Meal> allMeals = new List<Meal>();
-                foreach (var item in listBoxMeals.Items)
-                {
-                    allMeals.Add(item as Meal);
-                }
-                return allMeals;
-            }
+            get => listBoxMeals.Items.Cast<Meal>().ToList();
             set
             {
                 listBoxMeals.Items.Clear();
-                foreach (var meal in DietaryEntityData.GetAllMealsList())
+                value.ForEach(meal =>
                 {
                     listBoxMeals.Items.Add(meal);
                     if (SelectedEntities.Contains(meal))
                     {
                         listBoxMeals.SelectedItems.Add(meal);
                     }
-                }
+                });
 
-                foreach (var item in ExcludedEntities)
+                ExcludedEntities.OfType<Meal>().ToList().ForEach(item =>
                 {
-                    if (item is Meal)
-                    {
-                        listBoxMeals.Items.Remove(item);
-                    }
-                }
+                    listBoxMeals.Items.Remove(item);
+                });
             }
         }
 
-        internal List<Meal> SelectedMeals
-        {
-            get
-            {
-                List<Meal> selectedMeals = new List<Meal>();
-                foreach (var item in listBoxMeals.SelectedItems)
-                {
-                    selectedMeals.Add((Meal)item);
-                }
-                return selectedMeals;
-            }
-        }
+        internal List<Meal> SelectedMeals => listBoxMeals.SelectedItems.Cast<Meal>().ToList();
 
         internal List<MealType> AllMealTypes
         {
-            get
-            {
-                List<MealType> allMealTypes = new List<MealType>();
-                foreach (var item in listBoxMealTypes.Items)
-                {
-                    allMealTypes.Add(item as MealType);
-                }
-                return allMealTypes;
-            }
+            get => listBoxMealTypes.Items.Cast<MealType>().ToList();
             set
             {
                 listBoxMealTypes.Items.Clear();
-                MealType dessert = DietaryEntityData.GetMealTypeByName("Dessert");
-                MealType cheatMeal = DietaryEntityData.GetMealTypeByName("Cheat Meal");
-                foreach (var mealType in new MealType[] { dessert, cheatMeal })
+                value = value.Where(mealType => mealType.Name == "Dessert" || mealType.Name == "Cheat Meal").ToList();
+                value.ForEach(mealType =>
                 {
                     listBoxMealTypes.Items.Add(mealType);
                     if (SelectedEntities.Contains(mealType))
                     {
                         listBoxMealTypes.SelectedItems.Add(mealType);
                     }
-                }
+                });
 
-                foreach (var item in ExcludedEntities)
+                ExcludedEntities.OfType<MealType>().ToList().ForEach(item =>
                 {
-                    if (item is MealType)
-                    {
-                        listBoxMealTypes.Items.Remove(item);
-                    }
-                }
+                    listBoxMealTypes.Items.Remove(item);
+                });
             }
         }
 
-        internal List<MealType> SelectedMealTypes
-        {
-            get
-            {
-                List<MealType> selectedMealTypes = new List<MealType>();
-                foreach (var item in listBoxMealTypes.SelectedItems)
-                {
-                    selectedMealTypes.Add((MealType)item);
-                }
-                return selectedMealTypes;
-            }
-        }
+        internal List<MealType> SelectedMealTypes => listBoxMealTypes.SelectedItems.Cast<MealType>().ToList();
 
-        internal List<DietaryEntity> SelectedEntities
-        {
-            get
-            {
-                List<DietaryEntity> selectedEntities = new List<DietaryEntity>();
-                foreach (var item in foodsListBoxToFill.Items)
-                {
-                    selectedEntities.Add(item as DietaryEntity);
-                }
-                return selectedEntities;
-            }
-        }
+        internal List<DietaryEntity> SelectedEntities => foodsListBoxToFill.Items.Cast<DietaryEntity>().ToList();
 
-        internal List<DietaryEntity> ExcludedEntities
-        {
-            get
-            {
-                List<DietaryEntity> excludedEntities = new List<DietaryEntity>();
-                foreach (var item in excludedListBox.Items)
-                {
-                    excludedEntities.Add(item as DietaryEntity);
-                }
-                return excludedEntities;
-            }
-        }
+        internal List<DietaryEntity> ExcludedEntities => excludedListBox.Items.Cast<DietaryEntity>().ToList();
 
         private void FormPreferences_Load(object sender, EventArgs e)
         {
@@ -256,69 +172,37 @@ namespace DietPlanner
         {
             foodsListBoxToFill.Items.Clear();
 
-            foreach (var category in SelectedFoodCategories)
-            {
-                foodsListBoxToFill.Items.Add(category);
-            }
+            var allSelectedItems = SelectedFoodCategories.Cast<object>()
+                                    .Concat(SelectedFoods)
+                                    .Concat(SelectedMeals)
+                                    .Concat(SelectedMealTypes);
 
-            foreach (var food in SelectedFoods)
+            foreach (var item in allSelectedItems)
             {
-                foodsListBoxToFill.Items.Add(food);
-            }
-
-            foreach (var meal in SelectedMeals)
-            {
-                foodsListBoxToFill.Items.Add(meal);
-            }
-
-            foreach (var mealType in SelectedMealTypes)
-            {
-                foodsListBoxToFill.Items.Add(mealType);
+                foodsListBoxToFill.Items.Add(item);
             }
 
             Close();
         }
 
-        /*
-         * This method attempts to add multi-select functionality to treeViewFoodCategories,
-         * by keep tracking the selected nodes in a list and manually adjusting their appearance colors.
-         * 
-         * Known issue:
-         *  When clicking on a selected node, it is removed from the selectedNodes list,
-         *  BUT it remains visually highlighted by the system because it has been clicked.
-         *  It won't be unhighlighted until another node is clicked.
-         * 
-         * A comprehensive solution to this issue is not trivial.
-         * For the purposes of this assignment, we will leave it as it is.
-         */
-        private void treeViewFoodCategories_MouseDown(object sender, MouseEventArgs e)
+        private void treeViewFoodCategories_AfterCheck(object sender, TreeViewEventArgs e)
         {
-            TreeNode clickedNode = treeViewFoodCategories.GetNodeAt(e.X, e.Y);
-            if (clickedNode != null)
+            // Disable event handling to prevent recursive calls
+            treeViewFoodCategories.AfterCheck -= treeViewFoodCategories_AfterCheck;
+
+            CheckChildNodes(e.Node);
+
+            // Re-enable event handling
+            treeViewFoodCategories.AfterCheck += treeViewFoodCategories_AfterCheck;
+        }
+
+        private void CheckChildNodes(TreeNode parentNode)
+        {
+            foreach (TreeNode childNode in parentNode.Nodes)
             {
-                if (selectedNodes.Contains(clickedNode))
-                {
-                    DeselectNode(clickedNode);
-                }
-                else
-                {
-                    SelectNode(clickedNode);
-                }
+                childNode.Checked = parentNode.Checked;
+                CheckChildNodes(childNode);
             }
-        }
-
-        private void SelectNode(TreeNode node)
-        {
-            selectedNodes.Add(node);
-            node.BackColor = SystemColors.Highlight;
-            node.ForeColor = SystemColors.HighlightText;
-        }
-
-        private void DeselectNode(TreeNode node)
-        {
-            selectedNodes.Remove(node);
-            node.BackColor = Color.White;
-            node.ForeColor = Color.Black;
         }
     }
 }

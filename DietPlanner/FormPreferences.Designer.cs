@@ -89,12 +89,13 @@
             // 
             // treeViewFoodCategories
             // 
+            this.treeViewFoodCategories.CheckBoxes = true;
             this.treeViewFoodCategories.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.treeViewFoodCategories.Location = new System.Drawing.Point(10, 28);
             this.treeViewFoodCategories.Name = "treeViewFoodCategories";
             this.treeViewFoodCategories.Size = new System.Drawing.Size(200, 464);
             this.treeViewFoodCategories.TabIndex = 6;
-            this.treeViewFoodCategories.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeViewFoodCategories_MouseDown);
+            this.treeViewFoodCategories.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeViewFoodCategories_AfterCheck);
             // 
             // FormPreferences
             // 
