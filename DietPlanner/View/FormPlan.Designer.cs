@@ -121,7 +121,7 @@
             // 
             // labelPatientName
             // 
-            this.labelPatientName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelPatientName.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.labelPatientName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.labelPatientName.Location = new System.Drawing.Point(0, 0);
             this.labelPatientName.Name = "labelPatientName";
@@ -143,7 +143,7 @@
             // labelTitle
             // 
             this.labelTitle.BackColor = System.Drawing.Color.PaleGoldenrod;
-            this.labelTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.labelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
             this.labelTitle.Location = new System.Drawing.Point(0, 0);
             this.labelTitle.Name = "labelTitle";
@@ -191,12 +191,12 @@
             // 
             this.treeViewDay7.BackColor = System.Drawing.Color.Ivory;
             this.treeViewDay7.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeViewDay7.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.treeViewDay7.Location = new System.Drawing.Point(0, 27);
+            this.treeViewDay7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewDay7.Location = new System.Drawing.Point(0, 24);
             this.treeViewDay7.Name = "treeViewDay7";
             this.treeViewDay7.ShowLines = false;
             this.treeViewDay7.ShowPlusMinus = false;
-            this.treeViewDay7.Size = new System.Drawing.Size(268, 868);
+            this.treeViewDay7.Size = new System.Drawing.Size(268, 871);
             this.treeViewDay7.TabIndex = 1;
             // 
             // labelDay7
@@ -225,12 +225,12 @@
             // 
             this.treeViewDay6.BackColor = System.Drawing.Color.Ivory;
             this.treeViewDay6.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeViewDay6.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.treeViewDay6.Location = new System.Drawing.Point(0, 27);
+            this.treeViewDay6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewDay6.Location = new System.Drawing.Point(0, 24);
             this.treeViewDay6.Name = "treeViewDay6";
             this.treeViewDay6.ShowLines = false;
             this.treeViewDay6.ShowPlusMinus = false;
-            this.treeViewDay6.Size = new System.Drawing.Size(264, 868);
+            this.treeViewDay6.Size = new System.Drawing.Size(264, 871);
             this.treeViewDay6.TabIndex = 1;
             // 
             // labelDay6
@@ -259,12 +259,12 @@
             // 
             this.treeViewDay5.BackColor = System.Drawing.Color.Ivory;
             this.treeViewDay5.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeViewDay5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.treeViewDay5.Location = new System.Drawing.Point(0, 27);
+            this.treeViewDay5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewDay5.Location = new System.Drawing.Point(0, 24);
             this.treeViewDay5.Name = "treeViewDay5";
             this.treeViewDay5.ShowLines = false;
             this.treeViewDay5.ShowPlusMinus = false;
-            this.treeViewDay5.Size = new System.Drawing.Size(264, 868);
+            this.treeViewDay5.Size = new System.Drawing.Size(264, 871);
             this.treeViewDay5.TabIndex = 1;
             // 
             // labelDay5
@@ -293,12 +293,12 @@
             // 
             this.treeViewDay4.BackColor = System.Drawing.Color.Ivory;
             this.treeViewDay4.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeViewDay4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.treeViewDay4.Location = new System.Drawing.Point(0, 27);
+            this.treeViewDay4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewDay4.Location = new System.Drawing.Point(0, 24);
             this.treeViewDay4.Name = "treeViewDay4";
             this.treeViewDay4.ShowLines = false;
             this.treeViewDay4.ShowPlusMinus = false;
-            this.treeViewDay4.Size = new System.Drawing.Size(264, 868);
+            this.treeViewDay4.Size = new System.Drawing.Size(264, 871);
             this.treeViewDay4.TabIndex = 1;
             // 
             // labelDay4
@@ -327,12 +327,12 @@
             // 
             this.treeViewDay3.BackColor = System.Drawing.Color.Ivory;
             this.treeViewDay3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeViewDay3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.treeViewDay3.Location = new System.Drawing.Point(0, 27);
+            this.treeViewDay3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewDay3.Location = new System.Drawing.Point(0, 24);
             this.treeViewDay3.Name = "treeViewDay3";
             this.treeViewDay3.ShowLines = false;
             this.treeViewDay3.ShowPlusMinus = false;
-            this.treeViewDay3.Size = new System.Drawing.Size(264, 868);
+            this.treeViewDay3.Size = new System.Drawing.Size(264, 871);
             this.treeViewDay3.TabIndex = 1;
             // 
             // labelDay3
@@ -361,12 +361,12 @@
             // 
             this.treeViewDay2.BackColor = System.Drawing.Color.Ivory;
             this.treeViewDay2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeViewDay2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.treeViewDay2.Location = new System.Drawing.Point(0, 27);
+            this.treeViewDay2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewDay2.Location = new System.Drawing.Point(0, 24);
             this.treeViewDay2.Name = "treeViewDay2";
             this.treeViewDay2.ShowLines = false;
             this.treeViewDay2.ShowPlusMinus = false;
-            this.treeViewDay2.Size = new System.Drawing.Size(264, 868);
+            this.treeViewDay2.Size = new System.Drawing.Size(264, 871);
             this.treeViewDay2.TabIndex = 1;
             // 
             // labelDay2
@@ -395,12 +395,12 @@
             // 
             this.treeViewDay1.BackColor = System.Drawing.Color.Ivory;
             this.treeViewDay1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeViewDay1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.treeViewDay1.Location = new System.Drawing.Point(0, 27);
+            this.treeViewDay1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewDay1.Location = new System.Drawing.Point(0, 24);
             this.treeViewDay1.Name = "treeViewDay1";
             this.treeViewDay1.ShowLines = false;
             this.treeViewDay1.ShowPlusMinus = false;
-            this.treeViewDay1.Size = new System.Drawing.Size(264, 868);
+            this.treeViewDay1.Size = new System.Drawing.Size(264, 871);
             this.treeViewDay1.TabIndex = 1;
             // 
             // labelDay1

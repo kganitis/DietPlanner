@@ -64,7 +64,7 @@ namespace DietPlanner
 
             AdjustParametersBasedOnMealTypes();
 
-            PrintAllLists();
+            // PrintAllLists();
 
             GeneratePlan();
         }
