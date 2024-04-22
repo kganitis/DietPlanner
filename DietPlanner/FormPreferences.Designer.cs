@@ -108,7 +108,7 @@
             this.Controls.Add(this.listBoxFoods);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormPreferences";
-            this.Text = "FoodPreferences";
+            this.Text = "Diet Planner";
             this.Load += new System.EventHandler(this.FormPreferences_Load);
             this.ResumeLayout(false);
 

@@ -3,13 +3,14 @@ using DietPlanner.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace DietPlanner
 {
     internal class PlanGenerator
     {
         private readonly Plan plan;
+
+        public Plan Plan => plan;
 
         // Lists for dietary entities
         private List<FoodCategory> foodCategoriesAllowed, foodCategoriesPreferred, foodCategoriesAvoided;
@@ -30,7 +31,7 @@ namespace DietPlanner
         private readonly double dailyCalorieGoal;
         private readonly int calorieDeficit = 500;
         private readonly int calorieSurplus = 500;
-        private readonly float[] possibleQuantities = { 0.5f, 1.0f, 1.5f, 2.0f };
+        private readonly float[] possibleMealItemQuantities = { 0.5f, 1.0f, 1.5f, 2.0f };
         private double preferredMealProbability = 0.66;
         private List<int> dessertDays = new List<int> { };
         private int dessertTime = 4;
@@ -299,6 +300,9 @@ namespace DietPlanner
             int remainingWeightedMeals = 9;
             mealsSelectedForDay.Clear();
 
+            Shuffle(mealsAllowed);
+            Shuffle(mealsPreferred);
+
             for (int time = 1; time <= mealsPerDay; time++)
             {
                 MealType mealType = GetMealTypeForTime(day, time);
@@ -323,7 +327,7 @@ namespace DietPlanner
             List<Meal> preferredMealsForType = mealsPreferred.Where(meal => meal.Type == mealType).ToList();
 
             // Prioritize preferred meals by giving it an appearance boost
-            if (random.NextDouble() < preferredMealProbability && preferredMealsForType.Count > 0)
+            if (random.NextDouble() < preferredMealProbability && preferredMealsForType.Any())
             {
                 Meal selectedPreferredMeal = SelectNonRepeatedMeal(preferredMealsForType);
                 if (selectedPreferredMeal != null)
@@ -336,17 +340,17 @@ namespace DietPlanner
             List<Meal> mealsForType = mealsAllowed.Where(meal => meal.Type == mealType).ToList();
             Meal selectedMeal;
 
-            if (mealsForType.Count == 0)
-            {
-                selectedMeal = mealsAllowed[random.Next(mealsAllowed.Count)];
-            }
-            else
+            if (mealsForType.Any())
             {
                 selectedMeal = SelectNonRepeatedMeal(mealsForType);
                 if (selectedMeal == null)
                 {
                     selectedMeal = mealsForType[random.Next(mealsForType.Count)];
                 }
+            }
+            else
+            {
+                selectedMeal = mealsAllowed[random.Next(mealsAllowed.Count)];
             }
 
             return selectedMeal;
@@ -387,7 +391,7 @@ namespace DietPlanner
             double calorieTarget = remainingCalories / remainingWeightedMeals * mealTypeWeights[meal.Type];
 
             double minDiff = int.MaxValue;
-            foreach (var possibleQuantity in possibleQuantities)
+            foreach (var possibleQuantity in possibleMealItemQuantities)
             {
                 double diff = Math.Abs(possibleQuantity * meal.Calories - calorieTarget);
                 if (diff < minDiff)
@@ -397,6 +401,21 @@ namespace DietPlanner
                 }
             }
             return quantity;
+        }
+
+        // Fisher-Yates shuffle algorithm
+        private void Shuffle<T>(List<T> list)
+        {
+            Random rng = new Random();
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
         }
 
         #endregion

@@ -400,7 +400,10 @@ namespace DietPlanner
             Patient patient = DataAccess.GetPatientByID(testPatientID);
             patient.PreferredFoods = FoodsPreferred;
             patient.FoodsToAvoid = FoodsAvoided;
-            new PlanGenerator(patient);
+            Plan plan = new PlanGenerator(patient).Plan;
+
+            FormPlan formPlan = new FormPlan(plan);
+            formPlan.Show();
         }
 
         private void LoadPatientDataByID(string patientID)

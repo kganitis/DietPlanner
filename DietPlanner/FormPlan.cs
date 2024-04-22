@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DietPlanner.View;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,16 +11,56 @@ using System.Windows.Forms;
 
 namespace DietPlanner
 {
-    public partial class PlanForm : Form
+    public partial class FormPlan : Form
     {
-        public PlanForm()
+        private Plan plan;
+        private TreeView[] treeViewDay;
+
+        internal FormPlan(Plan plan)
         {
             InitializeComponent();
+            this.plan = plan;
+            treeViewDay = new TreeView[] { treeViewDay1, treeViewDay2, treeViewDay3, treeViewDay4, treeViewDay5, treeViewDay6, treeViewDay7 };
         }
 
         private void PlanForm_Load(object sender, EventArgs e)
         {
+            labelPatientName.Text = $"ΟΝΟΜΑ ΑΣΘΕΝΟΥΣ: {plan.Patient.Name}";
+            PopulateTreeView();
+        }
 
+        private void PopulateTreeView()
+        {
+            for (int day = 0; day < treeViewDay.Length; day++)
+            {
+                var mealItemsForDay = plan.MealPlan.Where(item => item.Day == day + 1).ToList();
+
+                var dayTreeView = treeViewDay[day];
+                dayTreeView.Nodes.Clear();
+
+                foreach (var mealItem in mealItemsForDay)
+                {
+                    var mealTypeNode = new TreeNode(mealItem.Meal.Type.Name);
+                    var mealNode = new TreeNode(mealItem.Meal.Name);
+                    var caloriesNode = new TreeNode((mealItem.Calories).ToString("0.00") + " kcal");
+                    var ingredientsNode = new TreeNode("Ingredients");
+
+                    foreach (var ingredient in mealItem.Ingredients)
+                    {
+                        var ingredientNode = new TreeNode($"{ingredient.Key.Name}: {ingredient.Value * ingredient.Key.Quantity} {ingredient.Key.Unit}");
+                        ingredientsNode.Nodes.Add(ingredientNode);
+                    }
+
+                    mealTypeNode.Nodes.Add(mealNode);
+                    mealTypeNode.Nodes.Add(caloriesNode);
+                    mealTypeNode.Nodes.Add(ingredientsNode);
+
+                    mealTypeNode.NodeFont = new Font(dayTreeView.Font, FontStyle.Bold);
+                    dayTreeView.Nodes.Add(mealTypeNode);
+                }
+
+                dayTreeView.ExpandAll();
+            }
         }
     }
 }

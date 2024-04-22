@@ -408,7 +408,7 @@
             this.Controls.Add(this.patientNameTextBox);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormDataEntry";
-            this.Text = "Form2";
+            this.Text = "Diet Planner";
             this.Load += new System.EventHandler(this.FormDataEntry_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
