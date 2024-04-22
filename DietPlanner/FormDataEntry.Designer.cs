@@ -58,12 +58,15 @@
             this.birthDatePicker = new System.Windows.Forms.DateTimePicker();
             this.comboBoxActivityLevel = new System.Windows.Forms.ComboBox();
             this.btnSearchPatient = new System.Windows.Forms.Button();
+            this.labelID = new System.Windows.Forms.Label();
+            this.textBoxID = new System.Windows.Forms.TextBox();
+            this.btnClear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // patientNameTextBox
             // 
             this.patientNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.patientNameTextBox.Location = new System.Drawing.Point(213, 81);
+            this.patientNameTextBox.Location = new System.Drawing.Point(213, 151);
             this.patientNameTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.patientNameTextBox.Name = "patientNameTextBox";
             this.patientNameTextBox.Size = new System.Drawing.Size(224, 26);
@@ -85,7 +88,7 @@
             // 
             this.labelName.AutoSize = true;
             this.labelName.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.labelName.Location = new System.Drawing.Point(28, 81);
+            this.labelName.Location = new System.Drawing.Point(28, 151);
             this.labelName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelName.Name = "labelName";
             this.labelName.Size = new System.Drawing.Size(157, 24);
@@ -96,7 +99,7 @@
             // 
             this.labelGender.AutoSize = true;
             this.labelGender.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.labelGender.Location = new System.Drawing.Point(28, 137);
+            this.labelGender.Location = new System.Drawing.Point(30, 196);
             this.labelGender.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelGender.Name = "labelGender";
             this.labelGender.Size = new System.Drawing.Size(58, 24);
@@ -107,7 +110,7 @@
             // 
             this.labelPhoneNumber.AutoSize = true;
             this.labelPhoneNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.labelPhoneNumber.Location = new System.Drawing.Point(28, 197);
+            this.labelPhoneNumber.Location = new System.Drawing.Point(28, 243);
             this.labelPhoneNumber.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelPhoneNumber.Name = "labelPhoneNumber";
             this.labelPhoneNumber.Size = new System.Drawing.Size(101, 24);
@@ -117,7 +120,7 @@
             // phoneTextBox
             // 
             this.phoneTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.phoneTextBox.Location = new System.Drawing.Point(213, 197);
+            this.phoneTextBox.Location = new System.Drawing.Point(213, 243);
             this.phoneTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.phoneTextBox.Name = "phoneTextBox";
             this.phoneTextBox.Size = new System.Drawing.Size(224, 26);
@@ -128,7 +131,7 @@
             // 
             this.labelDateOfBirth.AutoSize = true;
             this.labelDateOfBirth.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.labelDateOfBirth.Location = new System.Drawing.Point(28, 255);
+            this.labelDateOfBirth.Location = new System.Drawing.Point(28, 292);
             this.labelDateOfBirth.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelDateOfBirth.Name = "labelDateOfBirth";
             this.labelDateOfBirth.Size = new System.Drawing.Size(160, 24);
@@ -139,7 +142,7 @@
             // 
             this.labelHeight.AutoSize = true;
             this.labelHeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.labelHeight.Location = new System.Drawing.Point(28, 314);
+            this.labelHeight.Location = new System.Drawing.Point(28, 343);
             this.labelHeight.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelHeight.Name = "labelHeight";
             this.labelHeight.Size = new System.Drawing.Size(100, 24);
@@ -149,7 +152,7 @@
             // heightTextBox
             // 
             this.heightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.heightTextBox.Location = new System.Drawing.Point(213, 314);
+            this.heightTextBox.Location = new System.Drawing.Point(213, 343);
             this.heightTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.heightTextBox.Name = "heightTextBox";
             this.heightTextBox.Size = new System.Drawing.Size(100, 26);
@@ -159,7 +162,7 @@
             // 
             this.labelWeight.AutoSize = true;
             this.labelWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.labelWeight.Location = new System.Drawing.Point(28, 377);
+            this.labelWeight.Location = new System.Drawing.Point(28, 391);
             this.labelWeight.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelWeight.Name = "labelWeight";
             this.labelWeight.Size = new System.Drawing.Size(118, 24);
@@ -169,7 +172,7 @@
             // weightTextBox
             // 
             this.weightTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.weightTextBox.Location = new System.Drawing.Point(213, 375);
+            this.weightTextBox.Location = new System.Drawing.Point(213, 389);
             this.weightTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.weightTextBox.Name = "weightTextBox";
             this.weightTextBox.Size = new System.Drawing.Size(100, 26);
@@ -337,7 +340,7 @@
             // 
             this.maleRadioButton.AutoSize = true;
             this.maleRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.maleRadioButton.Location = new System.Drawing.Point(213, 137);
+            this.maleRadioButton.Location = new System.Drawing.Point(215, 196);
             this.maleRadioButton.Margin = new System.Windows.Forms.Padding(2);
             this.maleRadioButton.Name = "maleRadioButton";
             this.maleRadioButton.Size = new System.Drawing.Size(100, 24);
@@ -350,7 +353,7 @@
             // 
             this.femaleRadioButton.AutoSize = true;
             this.femaleRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.femaleRadioButton.Location = new System.Drawing.Point(317, 137);
+            this.femaleRadioButton.Location = new System.Drawing.Point(319, 196);
             this.femaleRadioButton.Margin = new System.Windows.Forms.Padding(2);
             this.femaleRadioButton.Name = "femaleRadioButton";
             this.femaleRadioButton.Size = new System.Drawing.Size(89, 24);
@@ -362,7 +365,7 @@
             // birthDatePicker
             // 
             this.birthDatePicker.CustomFormat = "\"dd/MM/yyyy\"";
-            this.birthDatePicker.Location = new System.Drawing.Point(213, 259);
+            this.birthDatePicker.Location = new System.Drawing.Point(213, 296);
             this.birthDatePicker.Name = "birthDatePicker";
             this.birthDatePicker.Size = new System.Drawing.Size(138, 20);
             this.birthDatePicker.TabIndex = 32;
@@ -390,11 +393,48 @@
             this.btnSearchPatient.UseVisualStyleBackColor = false;
             this.btnSearchPatient.Click += new System.EventHandler(this.btnSearchPatient_Click);
             // 
+            // labelID
+            // 
+            this.labelID.AutoSize = true;
+            this.labelID.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.labelID.Location = new System.Drawing.Point(31, 98);
+            this.labelID.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelID.Name = "labelID";
+            this.labelID.Size = new System.Drawing.Size(170, 24);
+            this.labelID.TabIndex = 35;
+            this.labelID.Text = "Αριθμός Μητρώου";
+            // 
+            // textBoxID
+            // 
+            this.textBoxID.Enabled = false;
+            this.textBoxID.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.textBoxID.Location = new System.Drawing.Point(213, 98);
+            this.textBoxID.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxID.Name = "textBoxID";
+            this.textBoxID.Size = new System.Drawing.Size(102, 26);
+            this.textBoxID.TabIndex = 36;
+            // 
+            // btnClear
+            // 
+            this.btnClear.BackColor = System.Drawing.SystemColors.Control;
+            this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClear.Location = new System.Drawing.Point(340, 98);
+            this.btnClear.Margin = new System.Windows.Forms.Padding(2);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(97, 26);
+            this.btnClear.TabIndex = 37;
+            this.btnClear.Text = "Καθαρισμός";
+            this.btnClear.UseVisualStyleBackColor = false;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // FormDataEntry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1062, 600);
+            this.Controls.Add(this.btnClear);
+            this.Controls.Add(this.textBoxID);
+            this.Controls.Add(this.labelID);
             this.Controls.Add(this.btnSearchPatient);
             this.Controls.Add(this.comboBoxActivityLevel);
             this.Controls.Add(this.birthDatePicker);
@@ -464,5 +504,8 @@
         private System.Windows.Forms.DateTimePicker birthDatePicker;
         private System.Windows.Forms.ComboBox comboBoxActivityLevel;
         private System.Windows.Forms.Button btnSearchPatient;
+        private System.Windows.Forms.Label labelID;
+        private System.Windows.Forms.TextBox textBoxID;
+        private System.Windows.Forms.Button btnClear;
     }
 }

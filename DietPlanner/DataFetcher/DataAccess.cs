@@ -443,55 +443,47 @@ namespace DietPlanner.DataFetcher
 
         /*
          * Connects to the DB,
-         * finds the maximum patient ID
-         * and returns the next available ID
-         * incrementing the maximum by 1
+         * inserts into Patient table the data of the given patient,
+         * or updates them if the given patient is found,
+         * by deleting them first, then re-inserting them.
          */
-        public static string GetNextAvailablePatientID()
+        public static Patient SavePatientData(Patient patient)
         {
-            string nextAvailableId = "p0000";
+            string query = String.Empty;
+            SQLiteCommand command;
 
             try
             {
                 SQLiteConnection connection = DBConnectionManager.GetConnection();
+                
+                // Generate a new ID if needed
+                if (String.IsNullOrEmpty(patient.PatientID))
+                {
+                    // Get the maximum patient_id value
+                    query = "SELECT MAX(CAST(SUBSTR(Patient_id, 2) AS INTEGER)) FROM Patient";
+                    command = new SQLiteCommand(query, connection);
+                    object maxIdResult = command.ExecuteScalar();
 
-                // Get the maximum patient_id value
-                string query = "SELECT MAX(CAST(SUBSTR(Patient_id, 2) AS INTEGER)) FROM Patient";
-                SQLiteCommand command = new SQLiteCommand(query, connection);
-                object maxIdResult = command.ExecuteScalar();
+                    // Get the next value, or start from "p0000" if there are no records yet
+                    int newIdNumber = maxIdResult == DBNull.Value ? 0 : Convert.ToInt32(maxIdResult) + 1;
 
-                // Get the next value, or start from "p0000" if there are no records yet
-                int newIdNumber = maxIdResult == DBNull.Value ? 0 : Convert.ToInt32(maxIdResult) + 1;
+                    // Format the new patientID
+                    patient.PatientID = "p" + newIdNumber.ToString("D4"); // D4 ensures 4 digits, padding with leading zeros if necessary
+                }
 
-                // Format the new patientID
-                nextAvailableId = "p" + newIdNumber.ToString("D4"); // D4 ensures 4 digits, padding with leading zeros if necessary
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                DBConnectionManager.CloseConnection();
-            }
+                // First delete the given patient's data, if found
+                query = "DELETE FROM Patient WHERE Patient_id = @patientId";
 
-            return nextAvailableId;
-        }
+                command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@patientId", patient.PatientID);
 
-        /*
-         * Connects to the DB,
-         * inserts into Patient table the data of the given patient
-         */
-        public static void SavePatientData(Patient patient)
-        {
-            try
-            {
-                SQLiteConnection connection = DBConnectionManager.GetConnection();
+                command.ExecuteNonQuery();
 
-                string query = "INSERT INTO Patient(Patient_id, Name, Gender, Phone_number, Date_of_birth, Height, Weight, Activity_level, Goal) " +
+                // Insert patient's data (essentially updating them if previously deleted)
+                query = "INSERT INTO Patient(Patient_id, Name, Gender, Phone_number, Date_of_birth, Height, Weight, Activity_level, Goal) " +
                             "VALUES (@patientId, @name, @gender, @phoneNumber, @date, @height, @weight, @activity, @goal)";
 
-                SQLiteCommand command = new SQLiteCommand(query, connection);
+                command = new SQLiteCommand(query, connection);
                 command.Parameters.AddWithValue("@patientId", patient.PatientID);
                 command.Parameters.AddWithValue("@name", patient.Name);
                 command.Parameters.AddWithValue("@gender", patient.Gender);
@@ -504,16 +496,18 @@ namespace DietPlanner.DataFetcher
 
                 command.ExecuteNonQuery();
 
-                MessageBox.Show("Ο ασθενής καταχωρήθηκε με επιτυχία!");
+                MessageBox.Show("Τα στοιχεία αποθηκεύτηκαν με επιτυχία!");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message + "\n" + query, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
                 DBConnectionManager.CloseConnection();
             }
+
+            return patient;
         }
 
         /*
@@ -522,15 +516,26 @@ namespace DietPlanner.DataFetcher
          */
         public static void SavePreferredFoodsForPatient(Patient patient)
         {
+            string query = String.Empty;
+            SQLiteCommand command;
+
             try
             {
                 SQLiteConnection connection = DBConnectionManager.GetConnection();
 
+                // First delete the given patient's data, if found
+                query = "DELETE FROM Patient_Preferences WHERE Patient_id = @patientId AND Rule = 1";
+
+                command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@patientId", patient.PatientID);
+
+                command.ExecuteNonQuery();
+
                 foreach (var entity in patient.PreferredFoods)
                 {
-                    string query = "INSERT INTO Patient_Preferences (Patient_id, Dietary_entity_id, Rule) VALUES (@patientId, @dietaryEntityId, @rule)";
+                    query = "INSERT INTO Patient_Preferences (Patient_id, Dietary_entity_id, Rule) VALUES (@patientId, @dietaryEntityId, @rule)";
 
-                    SQLiteCommand command = new SQLiteCommand(query, connection);
+                    command = new SQLiteCommand(query, connection);
                     command.Parameters.AddWithValue("@patientId", patient.PatientID);
                     command.Parameters.AddWithValue("@dietaryEntityId", entity.ID);
                     command.Parameters.AddWithValue("@rule", 1);
@@ -540,7 +545,7 @@ namespace DietPlanner.DataFetcher
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message + "\n" + query, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -554,15 +559,26 @@ namespace DietPlanner.DataFetcher
          */
         public static void SaveFoodsAvoidedForPatient(Patient patient)
         {
+            string query = String.Empty;
+            SQLiteCommand command;
+
             try
             {
                 SQLiteConnection connection = DBConnectionManager.GetConnection();
 
+                // First delete the given patient's data, if found
+                query = "DELETE FROM Patient_Preferences WHERE Patient_id = @patientId AND Rule = 0";
+
+                command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@patientId", patient.PatientID);
+
+                command.ExecuteNonQuery();
+
                 foreach (var entity in patient.FoodsToAvoid)
                 {
-                    string query = "INSERT INTO Patient_Preferences (Patient_id, Dietary_entity_id, Rule) VALUES (@patientId, @dietaryEntityId, @rule)";
+                    query = "INSERT INTO Patient_Preferences (Patient_id, Dietary_entity_id, Rule) VALUES (@patientId, @dietaryEntityId, @rule)";
 
-                    SQLiteCommand command = new SQLiteCommand(query, connection);
+                    command = new SQLiteCommand(query, connection);
                     command.Parameters.AddWithValue("@patientId", patient.PatientID);
                     command.Parameters.AddWithValue("@dietaryEntityId", entity.ID);
                     command.Parameters.AddWithValue("@rule", 0);
@@ -572,7 +588,7 @@ namespace DietPlanner.DataFetcher
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message + "\n" + query, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {

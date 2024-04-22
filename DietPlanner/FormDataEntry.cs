@@ -2,17 +2,8 @@
 using DietPlanner.View;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SQLite;
-using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace DietPlanner
 {
@@ -23,6 +14,12 @@ namespace DietPlanner
         private Patient patient = null;
 
         #region Getters / Setters
+
+        public string ID
+        {
+            get { return textBoxID.Text; }
+            set { textBoxID.Text = value; }
+        }
 
         public string PatientName
         {
@@ -336,22 +333,38 @@ namespace DietPlanner
                 return false;
             }
 
-            patient = new Patient()
+            if (patient == null)
             {
-                PatientID = DataAccess.GetNextAvailablePatientID(),
-                Name = PatientName,
-                Gender = Gender,
-                PhoneNumber = PhoneNumber,
-                DateOfBirth = DateOfBirth,
-                Height = PatientHeight,
-                Weight = PatientWeight,
-                ActivityLevel = ActivityLevelCoefficient,
-                Goal = GoalValue,
-                PreferredFoods = FoodsPreferred,
-                FoodsToAvoid = FoodsAvoided
-            };
+                patient = new Patient()
+                {
+                    Name = PatientName,
+                    Gender = Gender,
+                    PhoneNumber = PhoneNumber,
+                    DateOfBirth = DateOfBirth,
+                    Height = PatientHeight,
+                    Weight = PatientWeight,
+                    ActivityLevel = ActivityLevelCoefficient,
+                    Goal = GoalValue,
+                    PreferredFoods = FoodsPreferred,
+                    FoodsToAvoid = FoodsAvoided
+                };
+            }
+            else
+            {
+                patient.Name = PatientName;
+                patient.Gender = Gender;
+                patient.PhoneNumber = PhoneNumber;
+                patient.DateOfBirth = DateOfBirth;
+                patient.Height = PatientHeight;
+                patient.Weight = PatientWeight;
+                patient.ActivityLevel = ActivityLevelCoefficient;
+                patient.Goal = GoalValue;
+                patient.PreferredFoods = FoodsPreferred;
+                patient.FoodsToAvoid = FoodsAvoided;
+            }
 
-            DataAccess.SavePatientData(patient);
+            patient = DataAccess.SavePatientData(patient);
+            ID = patient.PatientID;
 
             if (patient.PreferredFoods.Count > 0)
             {
@@ -415,6 +428,7 @@ namespace DietPlanner
                 return;
             }
 
+            ID = patient.PatientID;
             PatientName = patient.Name;
             Gender = patient.Gender;
             PhoneNumber = patient.PhoneNumber;
@@ -483,6 +497,22 @@ namespace DietPlanner
 
             FormPlan formPlan = new FormPlan(plan);
             formPlan.Show();
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            patient = null;
+            ID = String.Empty;
+            PatientName = String.Empty;
+            Gender = String.Empty;
+            PhoneNumber = String.Empty;
+            DateOfBirthStr = "01/01/2000";
+            heightTextBox.Clear();
+            weightTextBox.Clear();
+            comboBoxActivityLevel.SelectedItem = null;
+            comboBoxGoal.SelectedItem = null;
+            listBoxPreferred.Items.Clear();
+            listBoxAvoided.Items.Clear();
         }
     }
 }
