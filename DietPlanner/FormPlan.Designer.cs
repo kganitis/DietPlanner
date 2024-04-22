@@ -432,7 +432,7 @@
             this.btnSavePlan.Location = new System.Drawing.Point(1691, 2);
             this.btnSavePlan.Margin = new System.Windows.Forms.Padding(2);
             this.btnSavePlan.Name = "btnSavePlan";
-            this.btnSavePlan.Size = new System.Drawing.Size(201, 52);
+            this.btnSavePlan.Size = new System.Drawing.Size(201, 37);
             this.btnSavePlan.TabIndex = 28;
             this.btnSavePlan.Text = "Αποθήκευση Πλάνου";
             this.btnSavePlan.UseVisualStyleBackColor = false;
@@ -445,7 +445,7 @@
             this.btnRegeneratePlan.Location = new System.Drawing.Point(1486, 2);
             this.btnRegeneratePlan.Margin = new System.Windows.Forms.Padding(2);
             this.btnRegeneratePlan.Name = "btnRegeneratePlan";
-            this.btnRegeneratePlan.Size = new System.Drawing.Size(201, 52);
+            this.btnRegeneratePlan.Size = new System.Drawing.Size(201, 37);
             this.btnRegeneratePlan.TabIndex = 29;
             this.btnRegeneratePlan.Text = "Επανέκδοση Πλάνου";
             this.btnRegeneratePlan.UseVisualStyleBackColor = false;

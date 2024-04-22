@@ -1,4 +1,5 @@
-﻿using DietPlanner.View;
+﻿using DietPlanner.DataFetcher;
+using DietPlanner.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -87,7 +88,7 @@ namespace DietPlanner
 
         private void btnSavePlan_Click(object sender, EventArgs e)
         {
-
+            DataAccess.SavePlan(plan);
         }
 
         private void btnRegeneratePlan_Click(object sender, EventArgs e)

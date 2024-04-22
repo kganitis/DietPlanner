@@ -3,9 +3,6 @@
 
 
 ================================= Version 1.0 =================================
-- FormPlan:
-	- Save plan to DB
-
 - Re-organize the project structure
 
 - Deploy an executable file

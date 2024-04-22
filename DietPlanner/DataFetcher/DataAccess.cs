@@ -504,7 +504,7 @@ namespace DietPlanner.DataFetcher
 
                 command.ExecuteNonQuery();
 
-                MessageBox.Show("Ο ασθενής καταχωρήθηκε με επιτυχία");
+                MessageBox.Show("Ο ασθενής καταχωρήθηκε με επιτυχία!");
             }
             catch (Exception ex)
             {
@@ -569,6 +569,50 @@ namespace DietPlanner.DataFetcher
 
                     command.ExecuteNonQuery();
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                DBConnectionManager.CloseConnection();
+            }
+        }
+
+        /*
+         * Connects to the DB,
+         * inserts into Plan table the data for the given plan
+         */
+        public static void SavePlan(Plan plan)
+        {
+            try
+            {
+                SQLiteConnection connection = DBConnectionManager.GetConnection();
+
+                // First clear any existing plan for the patient
+                string query = "DELETE FROM Plan WHERE Patient_id = @patientID";
+
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@patientID", plan.Patient.PatientID);
+
+                command.ExecuteNonQuery();
+
+                // Insert new plan data
+                foreach (var mealItem in plan.MealPlan)
+                {
+                    query = "INSERT INTO Plan (Patient_id, Day, Time_of_day, Meal_id, Quantity) VALUES (@patientID, @day, @time, @mealID, @quantity)";
+
+                    command = new SQLiteCommand(query, connection);
+                    command.Parameters.AddWithValue("@patientID", plan.Patient.PatientID);
+                    command.Parameters.AddWithValue("@day", mealItem.Day);
+                    command.Parameters.AddWithValue("@time", mealItem.TimeOfDay);
+                    command.Parameters.AddWithValue("@mealID", mealItem.Meal.ID);
+                    command.Parameters.AddWithValue("@quantity", mealItem.Quantity);
+
+                    command.ExecuteNonQuery();
+                }
+                MessageBox.Show("Το πλάνο αποθηκεύτηκε με επιτυχία!");
             }
             catch (Exception ex)
             {
