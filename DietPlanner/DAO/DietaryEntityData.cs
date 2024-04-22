@@ -1,13 +1,8 @@
-﻿using DietPlanner.View;
-using System;
+﻿using DietPlanner.DTO;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace DietPlanner.DataFetcher
+namespace DietPlanner.DataAccess
 {
     internal static class DietaryEntityData
     {

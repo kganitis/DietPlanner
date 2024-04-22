@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace DietPlanner.View
+namespace DietPlanner.DTO
 {
     public static class Goal
     {

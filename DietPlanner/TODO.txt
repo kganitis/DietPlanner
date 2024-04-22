@@ -23,10 +23,8 @@
 		- Snacks should be neutral, with few calories and no sugar
 	- Translate to greek
 
-- Functionality to search patient by Name/Phone
-	- Update patient's data => Turn SaveData into SaveOrUpdateData
-	- View patient's plan
-	- Generate new plan
+- Functionality to view patient's existing plan
+	- Option to generate a new one
 ===============================================================================
 
 

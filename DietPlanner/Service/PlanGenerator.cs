@@ -1,5 +1,5 @@
-﻿using DietPlanner.DataFetcher;
-using DietPlanner.View;
+﻿using DietPlanner.DataAccess;
+using DietPlanner.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;

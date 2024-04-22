@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Data.SQLite;
 
-internal static class DBConnectionManager
+internal static class DBUtil
 {
     private static readonly string connectionString = "Data source=DietPlanner.db;Version=3;";
     private static SQLiteConnection connection;
 
-    static DBConnectionManager()
+    static DBUtil()
     {
         connection = new SQLiteConnection(connectionString);
     }

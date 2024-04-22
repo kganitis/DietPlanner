@@ -1,15 +1,12 @@
-﻿using DietPlanner.View;
+﻿using DietPlanner.DTO;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Globalization;
 using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DietPlanner.DataFetcher
+namespace DietPlanner.DataAccess
 {
     internal static class DataAccess
     {
@@ -28,7 +25,7 @@ namespace DietPlanner.DataFetcher
 
             try
             {
-                SQLiteConnection connection = DBConnectionManager.GetConnection();
+                SQLiteConnection connection = DBUtil.GetConnection();
 
                 string query = "SELECT * FROM Patient WHERE Patient_id = @patientID";
                 SQLiteCommand command = new SQLiteCommand(query, connection);
@@ -99,7 +96,7 @@ namespace DietPlanner.DataFetcher
             }
             finally
             {
-                DBConnectionManager.CloseConnection();
+                DBUtil.CloseConnection();
             }
 
             return patient;
@@ -120,7 +117,7 @@ namespace DietPlanner.DataFetcher
 
             try
             {
-                SQLiteConnection connection = DBConnectionManager.GetConnection();
+                SQLiteConnection connection = DBUtil.GetConnection();
 
                 string query = "SELECT * FROM Patient WHERE Name LIKE @name AND Phone_number = @phoneNumber";
                 SQLiteCommand command = new SQLiteCommand(query, connection);
@@ -193,7 +190,7 @@ namespace DietPlanner.DataFetcher
             }
             finally
             {
-                DBConnectionManager.CloseConnection();
+                DBUtil.CloseConnection();
             }
 
             return patient;
@@ -212,7 +209,7 @@ namespace DietPlanner.DataFetcher
 
             try
             {
-                SQLiteConnection connection = DBConnectionManager.GetConnection();
+                SQLiteConnection connection = DBUtil.GetConnection();
 
                 // Retrieve food category data from the database
                 string query = "SELECT * FROM Food_Category ORDER BY Category_id;";
@@ -236,7 +233,7 @@ namespace DietPlanner.DataFetcher
             }
             finally
             {
-                DBConnectionManager.CloseConnection();
+                DBUtil.CloseConnection();
             }
 
             return rootCategory;
@@ -276,7 +273,7 @@ namespace DietPlanner.DataFetcher
 
             try
             {
-                SQLiteConnection connection = DBConnectionManager.GetConnection();
+                SQLiteConnection connection = DBUtil.GetConnection();
 
                 // Retrieve food data from the database
                 string query = "SELECT * FROM Food ORDER BY Name;";
@@ -322,7 +319,7 @@ namespace DietPlanner.DataFetcher
             }
             finally
             {
-                DBConnectionManager.CloseConnection();
+                DBUtil.CloseConnection();
             }
 
             return allFoodsList;
@@ -341,7 +338,7 @@ namespace DietPlanner.DataFetcher
 
             try
             {
-                SQLiteConnection connection = DBConnectionManager.GetConnection();
+                SQLiteConnection connection = DBUtil.GetConnection();
 
                 // Retrieve meal data from the database
                 string query = "SELECT * FROM Meal ORDER BY Name;";
@@ -388,7 +385,7 @@ namespace DietPlanner.DataFetcher
             }
             finally
             {
-                DBConnectionManager.CloseConnection();
+                DBUtil.CloseConnection();
             }
 
             return allMealsList;
@@ -407,7 +404,7 @@ namespace DietPlanner.DataFetcher
 
             try
             {
-                SQLiteConnection connection = DBConnectionManager.GetConnection();
+                SQLiteConnection connection = DBUtil.GetConnection();
 
                 // Retrieve meal type data from the database
                 string query = "SELECT * FROM Meal_Type;";
@@ -435,7 +432,7 @@ namespace DietPlanner.DataFetcher
             }
             finally
             {
-                DBConnectionManager.CloseConnection();
+                DBUtil.CloseConnection();
             }
 
             return allMealTypesList;
@@ -454,7 +451,7 @@ namespace DietPlanner.DataFetcher
 
             try
             {
-                SQLiteConnection connection = DBConnectionManager.GetConnection();
+                SQLiteConnection connection = DBUtil.GetConnection();
                 
                 // Generate a new ID if needed
                 if (String.IsNullOrEmpty(patient.PatientID))
@@ -504,7 +501,7 @@ namespace DietPlanner.DataFetcher
             }
             finally
             {
-                DBConnectionManager.CloseConnection();
+                DBUtil.CloseConnection();
             }
 
             return patient;
@@ -521,7 +518,7 @@ namespace DietPlanner.DataFetcher
 
             try
             {
-                SQLiteConnection connection = DBConnectionManager.GetConnection();
+                SQLiteConnection connection = DBUtil.GetConnection();
 
                 // First delete the given patient's data, if found
                 query = "DELETE FROM Patient_Preferences WHERE Patient_id = @patientId AND Rule = 1";
@@ -549,7 +546,7 @@ namespace DietPlanner.DataFetcher
             }
             finally
             {
-                DBConnectionManager.CloseConnection();
+                DBUtil.CloseConnection();
             }
         }
 
@@ -564,7 +561,7 @@ namespace DietPlanner.DataFetcher
 
             try
             {
-                SQLiteConnection connection = DBConnectionManager.GetConnection();
+                SQLiteConnection connection = DBUtil.GetConnection();
 
                 // First delete the given patient's data, if found
                 query = "DELETE FROM Patient_Preferences WHERE Patient_id = @patientId AND Rule = 0";
@@ -592,7 +589,7 @@ namespace DietPlanner.DataFetcher
             }
             finally
             {
-                DBConnectionManager.CloseConnection();
+                DBUtil.CloseConnection();
             }
         }
 
@@ -604,7 +601,7 @@ namespace DietPlanner.DataFetcher
         {
             try
             {
-                SQLiteConnection connection = DBConnectionManager.GetConnection();
+                SQLiteConnection connection = DBUtil.GetConnection();
 
                 // First clear any existing plan for the patient
                 string query = "DELETE FROM Plan WHERE Patient_id = @patientID";
@@ -636,7 +633,7 @@ namespace DietPlanner.DataFetcher
             }
             finally
             {
-                DBConnectionManager.CloseConnection();
+                DBUtil.CloseConnection();
             }
         }
     }

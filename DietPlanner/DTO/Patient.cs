@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DietPlanner.View
+namespace DietPlanner.DTO
 {
     internal class Patient
     {
@@ -97,7 +94,7 @@ namespace DietPlanner.View
             get
             {
                 float weightCoeff = 13.397f, heightCoeff = 4.799f, ageCoeff = 5.677f, genderCoeff = 88.632f;
-                if (Gender == View.Gender.FEMALE) { weightCoeff = 9.247f; heightCoeff = 3.098f; ageCoeff = 4.330f; genderCoeff = 447.593f; }
+                if (Gender == DTO.Gender.FEMALE) { weightCoeff = 9.247f; heightCoeff = 3.098f; ageCoeff = 4.330f; genderCoeff = 447.593f; }
                 return weightCoeff * Weight + heightCoeff * Height - ageCoeff * Age + genderCoeff;
             }
         }
