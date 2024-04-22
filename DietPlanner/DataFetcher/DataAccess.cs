@@ -17,9 +17,10 @@ namespace DietPlanner.DataFetcher
          * Connects to the DB,
          * READS patient data corresponding to the given patientID,
          * creates a Patient instance,
-         * then returns it.
-         * 
-         * NOTE: It does NOT retrieve or set any food preferences values.
+         * READS patient preferences data for the given patientID,
+         * fetches the dietary entity instances,
+         * and adds them to the appropriate patient's preferenece list,
+         * then returns the patient instance.
          */
         public static Patient GetPatientByID(string patientID)
         {
@@ -36,7 +37,7 @@ namespace DietPlanner.DataFetcher
 
                 if (reader.Read())
                 {
-                    // Retrieve patient data from the database
+                    // Retrieve patient data from the Patient table
                     string name = reader["Name"].ToString();
                     string gender = reader["Gender"].ToString();
                     string phoneNumber = reader["Phone_number"].ToString();
@@ -47,7 +48,7 @@ namespace DietPlanner.DataFetcher
                     float height = Convert.ToSingle(reader["Height"]);
                     float weight = Convert.ToSingle(reader["Weight"]);
                     float activityLevel = Convert.ToSingle(reader["Activity_level"]);
-                    int goal = Int32.Parse(reader["Goal"].ToString());
+                    int goal = int.Parse(reader["Goal"].ToString());
 
                     patient = new Patient()
                     {
@@ -61,10 +62,35 @@ namespace DietPlanner.DataFetcher
                         ActivityLevel = activityLevel,
                         Goal = goal
                     };
+
+                    // Retrieve patient preferences from the Patient_Preferences table
+                    query = @"SELECT Patient_id, Dietary_entity_id, Rule
+                                FROM Patient_Preferences
+                                WHERE Patient_id = @patientID";
+
+                    command = new SQLiteCommand(query, connection);
+                    command.Parameters.AddWithValue("@patientID", patientID);
+
+                    reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        string id = reader["Dietary_entity_id"].ToString();
+                        int rule = Convert.ToInt32(reader["Rule"]);
+
+                        // Add dietary entity to the appropriate list based on the rule
+                        if (rule == 1)
+                        {
+                            patient.PreferredFoods.Add(DietaryEntityData.GetDietaryEntityByID(id));
+                        }
+                        else if (rule == 0)
+                        {
+                            patient.FoodsToAvoid.Add(DietaryEntityData.GetDietaryEntityByID(id));
+                        }
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Δεν βρέθηκαν δεδομένα για τον ασθενή " + patientID, "Μήνυμα", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Δεν βρέθηκαν δεδομένα για τον ασθενή: " + patientID, "Μήνυμα", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
@@ -81,42 +107,84 @@ namespace DietPlanner.DataFetcher
 
         /*
          * Connects to the DB,
+         * READS patient data corresponding to the given patientID,
+         * creates a Patient instance,
          * READS patient preferences data for the given patientID,
          * fetches the dietary entity instances,
-         * and adds them to the appropriate list,
-         * then returns the lists in a table.
+         * and adds them to the appropriate patient's preferenece list,
+         * then returns the patient instance.
          */
-        public static List<DietaryEntity>[] GetAllPreferencesByPatientID(string patientID)
+        public static Patient GetPatientByNameAndPhone(string name, string phoneNumber)
         {
-            List<DietaryEntity> foodsPreferred = new List<DietaryEntity>();
-            List<DietaryEntity> foodsAvoided = new List<DietaryEntity>();
+            Patient patient = null;
 
             try
             {
                 SQLiteConnection connection = DBConnectionManager.GetConnection();
 
-                string query = @"SELECT Patient_id, Dietary_entity_id, Rule
+                string query = "SELECT * FROM Patient WHERE Name LIKE @name AND Phone_number = @phoneNumber";
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@name", "%" + name + "%");
+                command.Parameters.AddWithValue("@phoneNumber", phoneNumber);
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    // Retrieve patient data from the Patient table
+                    string patientID = reader["Patient_id"].ToString();
+                    name = reader["Name"].ToString();
+                    string gender = reader["Gender"].ToString();
+                    phoneNumber = reader["Phone_number"].ToString();
+
+                    string dateOfBirth = reader["Date_of_birth"].ToString();
+                    DateTime.TryParseExact(dateOfBirth, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate);
+
+                    float height = Convert.ToSingle(reader["Height"]);
+                    float weight = Convert.ToSingle(reader["Weight"]);
+                    float activityLevel = Convert.ToSingle(reader["Activity_level"]);
+                    int goal = int.Parse(reader["Goal"].ToString());
+
+                    patient = new Patient()
+                    {
+                        PatientID = patientID,
+                        Name = name,
+                        Gender = gender,
+                        PhoneNumber = phoneNumber,
+                        DateOfBirth = parsedDate,
+                        Height = height,
+                        Weight = weight,
+                        ActivityLevel = activityLevel,
+                        Goal = goal
+                    };
+
+                    // Retrieve patient preferences from the Patient_Preferences table
+                    query = @"SELECT Patient_id, Dietary_entity_id, Rule
                                 FROM Patient_Preferences
                                 WHERE Patient_id = @patientID";
 
-                SQLiteCommand command = new SQLiteCommand(query, connection);
-                command.Parameters.AddWithValue("@patientID", patientID);
-                
-                SQLiteDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    string id = reader["Dietary_entity_id"].ToString();
-                    int rule = Convert.ToInt32(reader["Rule"]);
+                    command = new SQLiteCommand(query, connection);
+                    command.Parameters.AddWithValue("@patientID", patientID);
 
-                    // Add dietary entity to the appropriate list based on the rule
-                    if (rule == 1)
+                    reader = command.ExecuteReader();
+                    while (reader.Read())
                     {
-                        foodsPreferred.Add(DietaryEntityData.GetDietaryEntityByID(id));
+                        string entityID = reader["Dietary_entity_id"].ToString();
+                        int rule = Convert.ToInt32(reader["Rule"]);
+
+                        // Add dietary entity to the appropriate list based on the rule
+                        if (rule == 1)
+                        {
+                            patient.PreferredFoods.Add(DietaryEntityData.GetDietaryEntityByID(entityID));
+                        }
+                        else if (rule == 0)
+                        {
+                            patient.FoodsToAvoid.Add(DietaryEntityData.GetDietaryEntityByID(entityID));
+                        }
                     }
-                    else if (rule == 0)
-                    {
-                        foodsAvoided.Add(DietaryEntityData.GetDietaryEntityByID(id));
-                    }
+                }
+                else
+                {
+                    MessageBox.Show("Δεν βρέθηκαν δεδομένα ασθενή με τα στοιχεία που δώσατε.", "Μήνυμα", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
@@ -128,7 +196,7 @@ namespace DietPlanner.DataFetcher
                 DBConnectionManager.CloseConnection();
             }
 
-            return new List<DietaryEntity>[] { foodsAvoided, foodsPreferred };
+            return patient;
         }
 
         /*
@@ -395,7 +463,7 @@ namespace DietPlanner.DataFetcher
                 // Get the next value, or start from "p0000" if there are no records yet
                 int newIdNumber = maxIdResult == DBNull.Value ? 0 : Convert.ToInt32(maxIdResult) + 1;
 
-                // Format the new id
+                // Format the new patientID
                 nextAvailableId = "p" + newIdNumber.ToString("D4"); // D4 ensures 4 digits, padding with leading zeros if necessary
             }
             catch (Exception ex)
@@ -421,13 +489,13 @@ namespace DietPlanner.DataFetcher
                 SQLiteConnection connection = DBConnectionManager.GetConnection();
 
                 string query = "INSERT INTO Patient(Patient_id, Name, Gender, Phone_number, Date_of_birth, Height, Weight, Activity_level, Goal) " +
-                            "VALUES (@patientId, @name, @gender, @phone, @date, @height, @weight, @activity, @goal)";
+                            "VALUES (@patientId, @name, @gender, @phoneNumber, @date, @height, @weight, @activity, @goal)";
 
                 SQLiteCommand command = new SQLiteCommand(query, connection);
                 command.Parameters.AddWithValue("@patientId", patient.PatientID);
                 command.Parameters.AddWithValue("@name", patient.Name);
                 command.Parameters.AddWithValue("@gender", patient.Gender);
-                command.Parameters.AddWithValue("@phone", patient.PhoneNumber);
+                command.Parameters.AddWithValue("@phoneNumber", patient.PhoneNumber);
                 command.Parameters.AddWithValue("@date", patient.DateOfBirthStr);
                 command.Parameters.AddWithValue("@height", patient.Height);
                 command.Parameters.AddWithValue("@weight", patient.Weight);

@@ -1,4 +1,4 @@
-﻿TO DO NEXT (21 Apr 2024 13:18)
+﻿TO DO NEXT (22 Apr 2024 03:44)
 
 
 
@@ -27,7 +27,7 @@
 	- Translate to greek
 
 - Functionality to search patient by Name/Phone
-	- Update patient's data
+	- Update patient's data => Turn SaveData into SaveOrUpdateData
 	- View patient's plan
 	- Generate new plan
 ===============================================================================

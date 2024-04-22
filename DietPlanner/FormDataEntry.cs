@@ -18,9 +18,9 @@ namespace DietPlanner
 {
     public partial class FormDataEntry : Form
     {
-        private FormPreferences formPreferences;
+        FormPreferences formPreferences;
 
-        private string testPatientID = "p0000";
+        private Patient patient = null;
 
         #region Getters / Setters
 
@@ -301,15 +301,17 @@ namespace DietPlanner
         public FormDataEntry()
         {
             InitializeComponent();
+            patient = null;
         }
 
         private void FormDataEntry_Load(object sender, EventArgs e)
         {
             comboBoxActivityLevel.Items.AddRange(ActivityLevel.GetActivityLevels);
             comboBoxGoal.Items.AddRange(Goal.GetGoals);
-            LoadPatientDataByID(testPatientID);
+            LoadPatientDataByID("p0000");
         }
 
+        #region Save Data methods
         private bool EmptyOrInvalidFields()
         {
             return string.IsNullOrWhiteSpace(PatientName) ||
@@ -323,13 +325,18 @@ namespace DietPlanner
 
         private void btnSaveData_Click(object sender, EventArgs e)
         {
+            SavePatientData();
+        }
+
+        private bool SavePatientData()
+        {
             if (EmptyOrInvalidFields())
             {
                 MessageBox.Show("Παρακαλώ συμπληρώστε όλα τα πεδία!", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return false;
             }
 
-            Patient newPatient = new Patient()
+            patient = new Patient()
             {
                 PatientID = DataAccess.GetNextAvailablePatientID(),
                 Name = PatientName,
@@ -344,19 +351,85 @@ namespace DietPlanner
                 FoodsToAvoid = FoodsAvoided
             };
 
-            DataAccess.SavePatientData(newPatient);
-            
-            if (newPatient.PreferredFoods.Count > 0)
+            DataAccess.SavePatientData(patient);
+
+            if (patient.PreferredFoods.Count > 0)
             {
-                DataAccess.SavePreferredFoodsForPatient(newPatient);
+                DataAccess.SavePreferredFoodsForPatient(patient);
             }
 
-            if (newPatient.FoodsToAvoid.Count > 0)
+            if (patient.FoodsToAvoid.Count > 0)
             {
-                DataAccess.SaveFoodsAvoidedForPatient(newPatient);
+                DataAccess.SaveFoodsAvoidedForPatient(patient);
+            }
+
+            return true;
+        }
+
+        #endregion
+
+        #region Search Data methods
+
+        private void btnSearchPatient_Click(object sender, EventArgs e)
+        {
+            LoadPatientDataByNameAndPhone();
+        }
+
+        private void patientNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            UpdateSearchButtonState();
+        }
+
+        private void phoneTextBox_TextChanged(object sender, EventArgs e)
+        {
+            UpdateSearchButtonState();
+        }
+
+        private void UpdateSearchButtonState()
+        {
+            btnSearchPatient.Enabled = !String.IsNullOrEmpty(PatientName) && !String.IsNullOrEmpty(PhoneNumber);
+        }
+
+        private void LoadPatientDataByID(string patientID)
+        {
+            patient = DataAccess.GetPatientByID(patientID);
+            if (patient != null)
+            {
+                FillFormWithPatientData(patient);
             }
         }
 
+        private void LoadPatientDataByNameAndPhone()
+        {
+            patient = DataAccess.GetPatientByNameAndPhone(PatientName, PhoneNumber);
+            if (patient != null)
+            {
+                FillFormWithPatientData(patient);
+            }
+        }
+
+        private void FillFormWithPatientData(Patient patient)
+        {
+            if (patient == null)
+            {
+                return;
+            }
+
+            PatientName = patient.Name;
+            Gender = patient.Gender;
+            PhoneNumber = patient.PhoneNumber;
+            DateOfBirthStr = patient.DateOfBirth.ToString("dd/MM/yyyy");
+            PatientHeight = patient.Height;
+            PatientWeight = patient.Weight;
+            ActivityLevelCoefficient = patient.ActivityLevel;
+            GoalValue = patient.Goal;
+            FoodsPreferred = patient.PreferredFoods;
+            FoodsAvoided = patient.FoodsToAvoid;
+        }
+
+        #endregion
+
+        #region Preferences methods
         private void btnAddPreferred_Click(object sender, EventArgs e)
         {
             ShowFoodPreferencesForm(listBoxPreferred, listBoxAvoided);
@@ -394,35 +467,22 @@ namespace DietPlanner
                 listBox.Items.RemoveAt(selectedIndex);
             }
         }
+        #endregion
 
         private void btnGeneratePlan_Click(object sender, EventArgs e)
         {
-            Patient patient = DataAccess.GetPatientByID(testPatientID);
-            patient.PreferredFoods = FoodsPreferred;
-            patient.FoodsToAvoid = FoodsAvoided;
+            if (patient == null)
+            {
+                if (!SavePatientData())
+                {
+                    return;
+                }
+            }
+            
             Plan plan = new PlanGenerator(patient).Plan;
 
             FormPlan formPlan = new FormPlan(plan);
             formPlan.Show();
-        }
-
-        private void LoadPatientDataByID(string patientID)
-        {
-            Patient patientData = DataAccess.GetPatientByID(patientID);
-            
-            PatientName = patientData.Name;
-            Gender = patientData.Gender;
-            PhoneNumber = patientData.PhoneNumber;
-            DateOfBirthStr = patientData.DateOfBirth.ToString("dd/MM/yyyy");
-            PatientHeight = patientData.Height;
-            PatientWeight = patientData.Weight;
-            ActivityLevelCoefficient = patientData.ActivityLevel;
-            GoalValue = patientData.Goal;
-
-            List<DietaryEntity>[] foodsPreferences = DataAccess.GetAllPreferencesByPatientID(patientID);
-
-            FoodsPreferred = foodsPreferences[1];
-            FoodsAvoided = foodsPreferences[0];
         }
     }
 }

@@ -57,6 +57,7 @@
             this.femaleRadioButton = new System.Windows.Forms.RadioButton();
             this.birthDatePicker = new System.Windows.Forms.DateTimePicker();
             this.comboBoxActivityLevel = new System.Windows.Forms.ComboBox();
+            this.btnSearchPatient = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // patientNameTextBox
@@ -67,6 +68,7 @@
             this.patientNameTextBox.Name = "patientNameTextBox";
             this.patientNameTextBox.Size = new System.Drawing.Size(224, 26);
             this.patientNameTextBox.TabIndex = 0;
+            this.patientNameTextBox.TextChanged += new System.EventHandler(this.patientNameTextBox_TextChanged);
             // 
             // labelTitle
             // 
@@ -120,6 +122,7 @@
             this.phoneTextBox.Name = "phoneTextBox";
             this.phoneTextBox.Size = new System.Drawing.Size(224, 26);
             this.phoneTextBox.TabIndex = 6;
+            this.phoneTextBox.TextChanged += new System.EventHandler(this.phoneTextBox_TextChanged);
             // 
             // labelDateOfBirth
             // 
@@ -282,10 +285,10 @@
             // 
             this.btnSaveData.BackColor = System.Drawing.Color.LimeGreen;
             this.btnSaveData.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.btnSaveData.Location = new System.Drawing.Point(213, 515);
+            this.btnSaveData.Location = new System.Drawing.Point(260, 515);
             this.btnSaveData.Margin = new System.Windows.Forms.Padding(2);
             this.btnSaveData.Name = "btnSaveData";
-            this.btnSaveData.Size = new System.Drawing.Size(224, 52);
+            this.btnSaveData.Size = new System.Drawing.Size(177, 52);
             this.btnSaveData.TabIndex = 26;
             this.btnSaveData.Text = "Αποθήκευση Στοιχείων";
             this.btnSaveData.UseVisualStyleBackColor = false;
@@ -373,11 +376,26 @@
             this.comboBoxActivityLevel.Size = new System.Drawing.Size(224, 28);
             this.comboBoxActivityLevel.TabIndex = 33;
             // 
+            // btnSearchPatient
+            // 
+            this.btnSearchPatient.BackColor = System.Drawing.Color.Gold;
+            this.btnSearchPatient.Enabled = false;
+            this.btnSearchPatient.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.btnSearchPatient.Location = new System.Drawing.Point(32, 515);
+            this.btnSearchPatient.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSearchPatient.Name = "btnSearchPatient";
+            this.btnSearchPatient.Size = new System.Drawing.Size(177, 52);
+            this.btnSearchPatient.TabIndex = 34;
+            this.btnSearchPatient.Text = "Αναζήτηση ασθενή";
+            this.btnSearchPatient.UseVisualStyleBackColor = false;
+            this.btnSearchPatient.Click += new System.EventHandler(this.btnSearchPatient_Click);
+            // 
             // FormDataEntry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1062, 600);
+            this.Controls.Add(this.btnSearchPatient);
             this.Controls.Add(this.comboBoxActivityLevel);
             this.Controls.Add(this.birthDatePicker);
             this.Controls.Add(this.femaleRadioButton);
@@ -445,5 +463,6 @@
         private System.Windows.Forms.RadioButton femaleRadioButton;
         private System.Windows.Forms.DateTimePicker birthDatePicker;
         private System.Windows.Forms.ComboBox comboBoxActivityLevel;
+        private System.Windows.Forms.Button btnSearchPatient;
     }
 }

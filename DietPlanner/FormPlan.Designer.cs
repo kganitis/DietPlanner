@@ -56,6 +56,9 @@
             this.panelDay1 = new System.Windows.Forms.Panel();
             this.treeViewDay1 = new System.Windows.Forms.TreeView();
             this.labelDay1 = new System.Windows.Forms.Label();
+            this.flowLayoutPanelButtons = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnSavePlan = new System.Windows.Forms.Button();
+            this.btnRegeneratePlan = new System.Windows.Forms.Button();
             this.tableLayoutPanelBase.SuspendLayout();
             this.tableLayoutPanelPatientData.SuspendLayout();
             this.panelPatientName.SuspendLayout();
@@ -68,6 +71,7 @@
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelDay1.SuspendLayout();
+            this.flowLayoutPanelButtons.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanelBase
@@ -77,12 +81,15 @@
             this.tableLayoutPanelBase.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelBase.Controls.Add(this.tableLayoutPanelPatientData, 0, 0);
             this.tableLayoutPanelBase.Controls.Add(this.tableLayoutPanelDays, 0, 1);
+            this.tableLayoutPanelBase.Controls.Add(this.flowLayoutPanelButtons, 0, 2);
             this.tableLayoutPanelBase.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelBase.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanelBase.Name = "tableLayoutPanelBase";
-            this.tableLayoutPanelBase.RowCount = 2;
-            this.tableLayoutPanelBase.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanelBase.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
+            this.tableLayoutPanelBase.RowCount = 3;
+            this.tableLayoutPanelBase.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.5F));
+            this.tableLayoutPanelBase.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 87.5F));
+            this.tableLayoutPanelBase.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanelBase.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelBase.Size = new System.Drawing.Size(1900, 1037);
             this.tableLayoutPanelBase.TabIndex = 0;
             // 
@@ -99,7 +106,7 @@
             this.tableLayoutPanelPatientData.RowCount = 2;
             this.tableLayoutPanelPatientData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanelPatientData.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanelPatientData.Size = new System.Drawing.Size(1894, 97);
+            this.tableLayoutPanelPatientData.Size = new System.Drawing.Size(1894, 71);
             this.tableLayoutPanelPatientData.TabIndex = 0;
             // 
             // panelPatientName
@@ -107,18 +114,18 @@
             this.panelPatientName.BackColor = System.Drawing.Color.Cornsilk;
             this.panelPatientName.Controls.Add(this.labelPatientName);
             this.panelPatientName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPatientName.Location = new System.Drawing.Point(3, 51);
+            this.panelPatientName.Location = new System.Drawing.Point(3, 38);
             this.panelPatientName.Name = "panelPatientName";
-            this.panelPatientName.Size = new System.Drawing.Size(1888, 43);
+            this.panelPatientName.Size = new System.Drawing.Size(1888, 30);
             this.panelPatientName.TabIndex = 1;
             // 
             // labelPatientName
             // 
-            this.labelPatientName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelPatientName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelPatientName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.labelPatientName.Location = new System.Drawing.Point(0, 0);
             this.labelPatientName.Name = "labelPatientName";
-            this.labelPatientName.Size = new System.Drawing.Size(1888, 43);
+            this.labelPatientName.Size = new System.Drawing.Size(1888, 30);
             this.labelPatientName.TabIndex = 0;
             this.labelPatientName.Text = "ΟΝΟΜΑ ΑΣΘΕΝΟΥΣ:";
             this.labelPatientName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -130,17 +137,17 @@
             this.panelTitle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTitle.Location = new System.Drawing.Point(3, 3);
             this.panelTitle.Name = "panelTitle";
-            this.panelTitle.Size = new System.Drawing.Size(1888, 42);
+            this.panelTitle.Size = new System.Drawing.Size(1888, 29);
             this.panelTitle.TabIndex = 0;
             // 
             // labelTitle
             // 
             this.labelTitle.BackColor = System.Drawing.Color.PaleGoldenrod;
-            this.labelTitle.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.labelTitle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.labelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.labelTitle.Location = new System.Drawing.Point(0, -3);
+            this.labelTitle.Location = new System.Drawing.Point(0, 0);
             this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(1888, 45);
+            this.labelTitle.Size = new System.Drawing.Size(1888, 29);
             this.labelTitle.TabIndex = 0;
             this.labelTitle.Text = "Εβδομαδιαίο Πλάνο Γευμάτων";
             this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -163,11 +170,11 @@
             this.tableLayoutPanelDays.Controls.Add(this.panel1, 1, 0);
             this.tableLayoutPanelDays.Controls.Add(this.panelDay1, 0, 0);
             this.tableLayoutPanelDays.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelDays.Location = new System.Drawing.Point(3, 106);
+            this.tableLayoutPanelDays.Location = new System.Drawing.Point(3, 80);
             this.tableLayoutPanelDays.Name = "tableLayoutPanelDays";
             this.tableLayoutPanelDays.RowCount = 1;
             this.tableLayoutPanelDays.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelDays.Size = new System.Drawing.Size(1894, 928);
+            this.tableLayoutPanelDays.Size = new System.Drawing.Size(1894, 901);
             this.tableLayoutPanelDays.TabIndex = 1;
             // 
             // panel6
@@ -177,7 +184,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(1623, 3);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(268, 922);
+            this.panel6.Size = new System.Drawing.Size(268, 895);
             this.panel6.TabIndex = 6;
             // 
             // treeViewDay7
@@ -189,7 +196,7 @@
             this.treeViewDay7.Name = "treeViewDay7";
             this.treeViewDay7.ShowLines = false;
             this.treeViewDay7.ShowPlusMinus = false;
-            this.treeViewDay7.Size = new System.Drawing.Size(268, 895);
+            this.treeViewDay7.Size = new System.Drawing.Size(268, 868);
             this.treeViewDay7.TabIndex = 1;
             // 
             // labelDay7
@@ -211,7 +218,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(1353, 3);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(264, 922);
+            this.panel5.Size = new System.Drawing.Size(264, 895);
             this.panel5.TabIndex = 5;
             // 
             // treeViewDay6
@@ -223,7 +230,7 @@
             this.treeViewDay6.Name = "treeViewDay6";
             this.treeViewDay6.ShowLines = false;
             this.treeViewDay6.ShowPlusMinus = false;
-            this.treeViewDay6.Size = new System.Drawing.Size(264, 895);
+            this.treeViewDay6.Size = new System.Drawing.Size(264, 868);
             this.treeViewDay6.TabIndex = 1;
             // 
             // labelDay6
@@ -245,7 +252,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(1083, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(264, 922);
+            this.panel4.Size = new System.Drawing.Size(264, 895);
             this.panel4.TabIndex = 4;
             // 
             // treeViewDay5
@@ -257,7 +264,7 @@
             this.treeViewDay5.Name = "treeViewDay5";
             this.treeViewDay5.ShowLines = false;
             this.treeViewDay5.ShowPlusMinus = false;
-            this.treeViewDay5.Size = new System.Drawing.Size(264, 895);
+            this.treeViewDay5.Size = new System.Drawing.Size(264, 868);
             this.treeViewDay5.TabIndex = 1;
             // 
             // labelDay5
@@ -279,7 +286,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(813, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(264, 922);
+            this.panel3.Size = new System.Drawing.Size(264, 895);
             this.panel3.TabIndex = 3;
             // 
             // treeViewDay4
@@ -291,7 +298,7 @@
             this.treeViewDay4.Name = "treeViewDay4";
             this.treeViewDay4.ShowLines = false;
             this.treeViewDay4.ShowPlusMinus = false;
-            this.treeViewDay4.Size = new System.Drawing.Size(264, 895);
+            this.treeViewDay4.Size = new System.Drawing.Size(264, 868);
             this.treeViewDay4.TabIndex = 1;
             // 
             // labelDay4
@@ -313,7 +320,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(543, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(264, 922);
+            this.panel2.Size = new System.Drawing.Size(264, 895);
             this.panel2.TabIndex = 2;
             // 
             // treeViewDay3
@@ -325,7 +332,7 @@
             this.treeViewDay3.Name = "treeViewDay3";
             this.treeViewDay3.ShowLines = false;
             this.treeViewDay3.ShowPlusMinus = false;
-            this.treeViewDay3.Size = new System.Drawing.Size(264, 895);
+            this.treeViewDay3.Size = new System.Drawing.Size(264, 868);
             this.treeViewDay3.TabIndex = 1;
             // 
             // labelDay3
@@ -347,7 +354,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(273, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(264, 922);
+            this.panel1.Size = new System.Drawing.Size(264, 895);
             this.panel1.TabIndex = 1;
             // 
             // treeViewDay2
@@ -359,7 +366,7 @@
             this.treeViewDay2.Name = "treeViewDay2";
             this.treeViewDay2.ShowLines = false;
             this.treeViewDay2.ShowPlusMinus = false;
-            this.treeViewDay2.Size = new System.Drawing.Size(264, 895);
+            this.treeViewDay2.Size = new System.Drawing.Size(264, 868);
             this.treeViewDay2.TabIndex = 1;
             // 
             // labelDay2
@@ -381,7 +388,7 @@
             this.panelDay1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelDay1.Location = new System.Drawing.Point(3, 3);
             this.panelDay1.Name = "panelDay1";
-            this.panelDay1.Size = new System.Drawing.Size(264, 922);
+            this.panelDay1.Size = new System.Drawing.Size(264, 895);
             this.panelDay1.TabIndex = 0;
             // 
             // treeViewDay1
@@ -393,7 +400,7 @@
             this.treeViewDay1.Name = "treeViewDay1";
             this.treeViewDay1.ShowLines = false;
             this.treeViewDay1.ShowPlusMinus = false;
-            this.treeViewDay1.Size = new System.Drawing.Size(264, 895);
+            this.treeViewDay1.Size = new System.Drawing.Size(264, 868);
             this.treeViewDay1.TabIndex = 1;
             // 
             // labelDay1
@@ -407,6 +414,42 @@
             this.labelDay1.TabIndex = 0;
             this.labelDay1.Text = "Ημέρα 1η";
             this.labelDay1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // flowLayoutPanelButtons
+            // 
+            this.flowLayoutPanelButtons.Controls.Add(this.btnSavePlan);
+            this.flowLayoutPanelButtons.Controls.Add(this.btnRegeneratePlan);
+            this.flowLayoutPanelButtons.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanelButtons.Location = new System.Drawing.Point(3, 987);
+            this.flowLayoutPanelButtons.Name = "flowLayoutPanelButtons";
+            this.flowLayoutPanelButtons.Size = new System.Drawing.Size(1894, 47);
+            this.flowLayoutPanelButtons.TabIndex = 2;
+            // 
+            // btnSavePlan
+            // 
+            this.btnSavePlan.BackColor = System.Drawing.Color.LimeGreen;
+            this.btnSavePlan.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.btnSavePlan.Location = new System.Drawing.Point(1691, 2);
+            this.btnSavePlan.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSavePlan.Name = "btnSavePlan";
+            this.btnSavePlan.Size = new System.Drawing.Size(201, 52);
+            this.btnSavePlan.TabIndex = 28;
+            this.btnSavePlan.Text = "Αποθήκευση Πλάνου";
+            this.btnSavePlan.UseVisualStyleBackColor = false;
+            this.btnSavePlan.Click += new System.EventHandler(this.btnSavePlan_Click);
+            // 
+            // btnRegeneratePlan
+            // 
+            this.btnRegeneratePlan.BackColor = System.Drawing.Color.Gold;
+            this.btnRegeneratePlan.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.btnRegeneratePlan.Location = new System.Drawing.Point(1486, 2);
+            this.btnRegeneratePlan.Margin = new System.Windows.Forms.Padding(2);
+            this.btnRegeneratePlan.Name = "btnRegeneratePlan";
+            this.btnRegeneratePlan.Size = new System.Drawing.Size(201, 52);
+            this.btnRegeneratePlan.TabIndex = 29;
+            this.btnRegeneratePlan.Text = "Επανέκδοση Πλάνου";
+            this.btnRegeneratePlan.UseVisualStyleBackColor = false;
+            this.btnRegeneratePlan.Click += new System.EventHandler(this.btnRegeneratePlan_Click);
             // 
             // FormPlan
             // 
@@ -432,6 +475,7 @@
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panelDay1.ResumeLayout(false);
+            this.flowLayoutPanelButtons.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -466,6 +510,9 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TreeView treeViewDay2;
         private System.Windows.Forms.Label labelDay2;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelButtons;
+        private System.Windows.Forms.Button btnSavePlan;
+        private System.Windows.Forms.Button btnRegeneratePlan;
     }
 }
 
