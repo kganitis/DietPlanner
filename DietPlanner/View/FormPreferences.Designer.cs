@@ -33,6 +33,10 @@
             this.listBoxMealTypes = new System.Windows.Forms.ListBox();
             this.buttonInsert = new System.Windows.Forms.Button();
             this.treeViewFoodCategories = new System.Windows.Forms.TreeView();
+            this.labelCategories = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listBoxFoods
@@ -41,7 +45,7 @@
             this.listBoxFoods.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.listBoxFoods.FormattingEnabled = true;
             this.listBoxFoods.ItemHeight = 20;
-            this.listBoxFoods.Location = new System.Drawing.Point(215, 28);
+            this.listBoxFoods.Location = new System.Drawing.Point(215, 37);
             this.listBoxFoods.Margin = new System.Windows.Forms.Padding(2);
             this.listBoxFoods.Name = "listBoxFoods";
             this.listBoxFoods.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
@@ -54,7 +58,7 @@
             this.listBoxMeals.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.listBoxMeals.FormattingEnabled = true;
             this.listBoxMeals.ItemHeight = 20;
-            this.listBoxMeals.Location = new System.Drawing.Point(419, 28);
+            this.listBoxMeals.Location = new System.Drawing.Point(419, 37);
             this.listBoxMeals.Margin = new System.Windows.Forms.Padding(2);
             this.listBoxMeals.Name = "listBoxMeals";
             this.listBoxMeals.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
@@ -67,7 +71,7 @@
             this.listBoxMealTypes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.listBoxMealTypes.FormattingEnabled = true;
             this.listBoxMealTypes.ItemHeight = 20;
-            this.listBoxMealTypes.Location = new System.Drawing.Point(623, 28);
+            this.listBoxMealTypes.Location = new System.Drawing.Point(623, 37);
             this.listBoxMealTypes.Margin = new System.Windows.Forms.Padding(2);
             this.listBoxMealTypes.Name = "listBoxMealTypes";
             this.listBoxMealTypes.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
@@ -78,7 +82,7 @@
             // 
             this.buttonInsert.BackColor = System.Drawing.Color.LimeGreen;
             this.buttonInsert.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.buttonInsert.Location = new System.Drawing.Point(708, 505);
+            this.buttonInsert.Location = new System.Drawing.Point(708, 510);
             this.buttonInsert.Margin = new System.Windows.Forms.Padding(2);
             this.buttonInsert.Name = "buttonInsert";
             this.buttonInsert.Size = new System.Drawing.Size(115, 43);
@@ -91,27 +95,73 @@
             // 
             this.treeViewFoodCategories.CheckBoxes = true;
             this.treeViewFoodCategories.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.treeViewFoodCategories.Location = new System.Drawing.Point(10, 28);
+            this.treeViewFoodCategories.Location = new System.Drawing.Point(10, 37);
             this.treeViewFoodCategories.Name = "treeViewFoodCategories";
             this.treeViewFoodCategories.Size = new System.Drawing.Size(200, 464);
             this.treeViewFoodCategories.TabIndex = 6;
             this.treeViewFoodCategories.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeViewFoodCategories_AfterCheck);
+            // 
+            // labelCategories
+            // 
+            this.labelCategories.AutoSize = true;
+            this.labelCategories.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCategories.Location = new System.Drawing.Point(56, 14);
+            this.labelCategories.Name = "labelCategories";
+            this.labelCategories.Size = new System.Drawing.Size(102, 20);
+            this.labelCategories.TabIndex = 7;
+            this.labelCategories.Text = "Κατηγορίες";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(277, 14);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(74, 20);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Τρόφιμα";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(478, 14);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(79, 20);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Γεύματα";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(636, 14);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(173, 20);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Ειδικές προτιμήσεις";
             // 
             // FormPreferences
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(834, 561);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelCategories);
             this.Controls.Add(this.treeViewFoodCategories);
             this.Controls.Add(this.buttonInsert);
             this.Controls.Add(this.listBoxMealTypes);
             this.Controls.Add(this.listBoxMeals);
             this.Controls.Add(this.listBoxFoods);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormPreferences";
             this.Text = "Diet Planner";
             this.Load += new System.EventHandler(this.FormPreferences_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -121,5 +171,9 @@
         private System.Windows.Forms.ListBox listBoxMealTypes;
         private System.Windows.Forms.Button buttonInsert;
         private System.Windows.Forms.TreeView treeViewFoodCategories;
+        private System.Windows.Forms.Label labelCategories;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
