@@ -1,5 +1,6 @@
 ﻿using DietPlanner.DAO;
 using DietPlanner.DTO;
+using DietPlanner.Model;
 using DietPlanner.Service;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,11 @@ namespace DietPlanner.Controller
 {
     internal class PatientInsertController
     {
-        PatientDTO patientDTO;
-        IPatientDAO patientDAO = new PatientDAOImp();
-        IPatientService patientService = new PatientServiceImp();
+        public void InsertNewPatient(PatientDTO patientDTO)
+        {
+            IPatientDAO patientDAO = new PatientDAOImp();
+            IPatientService patientService = new PatientServiceImp(patientDAO);
+            patientService.InsertPatient(patientDTO);
+        }
     }
 }

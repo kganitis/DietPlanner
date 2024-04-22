@@ -8,15 +8,18 @@ namespace DietPlanner.Model
 {
     internal abstract class DietaryEntity
     {
+        private string id;
         private string name;
 
         protected DietaryEntity() { }
 
-        protected DietaryEntity(string name)
+        protected DietaryEntity(string id, string name)
         {
+            ID = id;
             Name = name;
         }
 
         public string Name { get => name; set => name = value; }
+        public string ID { get => id; set => id = value; }
     }
 }

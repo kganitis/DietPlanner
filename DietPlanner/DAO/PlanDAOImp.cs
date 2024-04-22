@@ -19,7 +19,7 @@ namespace DietPlanner.DAO
             throw new NotImplementedException();
         }
 
-        public bool Save(Plan entity)
+        public void Save(Plan entity)
         {
             throw new NotImplementedException();
         }

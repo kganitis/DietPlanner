@@ -8,21 +8,21 @@ namespace DietPlanner.Model
 {
     internal class Meal : DietaryEntity
     {
-        private int mealID;
         private MealType type;
-        private Dictionary<Food, int> ingredients;
+        private Dictionary<Food, float> ingredients;
 
         public Meal() { }
 
-        public Meal(int mealID, MealType type, Dictionary<Food, int> ingredients)
+        public Meal(string id, string name, MealType type, Dictionary<Food, float> ingredients)
         {
-            MealID = mealID;
+            ID = id;
+            Name = name;
             Type = type;
             Ingredients = ingredients;
         }
 
-        public int MealID { get => mealID; set => mealID = value; }
         internal MealType Type { get => type; set => type = value; }
-        internal Dictionary<Food, int> Ingredients { get => ingredients; set => ingredients = value; }
+        internal Dictionary<Food, float> Ingredients { get => ingredients; set => ingredients = value; }
+        internal float Calories => Ingredients.Sum(ingredient => ingredient.Key.Calories * ingredient.Value);
     }
 }

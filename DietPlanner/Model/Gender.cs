@@ -9,11 +9,6 @@ namespace DietPlanner.Model
     internal enum Gender
     {
         male, 
-        female, 
-        transgender, 
-        gender_neutral,
-        non_binary,
-        agender,
-        pangender
+        female 
     }
 }

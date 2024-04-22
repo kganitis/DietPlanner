@@ -8,20 +8,17 @@ namespace DietPlanner.Model
 {
     internal class FoodCategory : DietaryEntity
     {
-        private string categoryID;
-        private FoodCategory parentCategory;
+        private FoodCategory parentCategory = null;
         private List<FoodCategory> subCategories = new List<FoodCategory>();
 
         public FoodCategory() { }
 
-        public FoodCategory(string categoryID, FoodCategory parentCategory, List<FoodCategory> subCategories)
+        public FoodCategory(string id, FoodCategory parentCategory)
         {
-            CategoryID = categoryID;
-            ParentCategory = parentCategory;
-            SubCategories = subCategories;
+            ID = id;
+            ParentCategory = parentCategory;           
         }
 
-        public string CategoryID { get => categoryID; set => categoryID = value; }
         internal FoodCategory ParentCategory { get => parentCategory; set => parentCategory = value; }
         internal List<FoodCategory> SubCategories { get => subCategories; set => subCategories = value; }
     }

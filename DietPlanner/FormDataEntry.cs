@@ -11,6 +11,10 @@ using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using DietPlanner.DAO.dbutil;
+using DietPlanner.DTO;
+using DietPlanner.Model;
+using DietPlanner.Controller;
+using System.Globalization;
 
 namespace DietPlanner
 {
@@ -76,11 +80,11 @@ namespace DietPlanner
             string gender = string.Empty;
             if (maleRadioButton.Checked)
             {
-                gender = "Α";
+                gender = "M";
             }
             else if (femaleRadioButton.Checked)
             {
-                gender = "Θ";
+                gender = "F";
             }
 
             string phone = phoneTextBox.Text;
@@ -112,35 +116,30 @@ namespace DietPlanner
                 return;
             }
 
-            try
-            {
-                SQLiteConnection connection = DBUtil.OpenConnection();
-                string insertSQL = "INSERT INTO Patient(Patient_id, Name, Gender, Phone_number, Date_of_birth, Height, Weight, Activity_level) " +
-                            "VALUES (@patientId, @name, @gender, @phone, @date, @height, @weight, @activity)";
+            //Insert a new patient with Service Oriented Architecture (SOA) Impementation
 
-                SQLiteCommand command = new SQLiteCommand(insertSQL, connection);
-                command.Parameters.AddWithValue("@patientId", newPatientId);
-                command.Parameters.AddWithValue("@name", name);
-                command.Parameters.AddWithValue("@gender", gender);
-                command.Parameters.AddWithValue("@phone", phone);
-                command.Parameters.AddWithValue("@date", birth);
-                command.Parameters.AddWithValue("@height", height);
-                command.Parameters.AddWithValue("@weight", weight);
-                command.Parameters.AddWithValue("@activity", level);
+                PatientDTO patientDTO = new PatientDTO();
+                patientDTO.PatientID = newPatientId;
+                patientDTO.Name = name;
+                patientDTO.Gender = gender.Equals("M") ? Gender.male : Gender.female;
+                patientDTO.PhoneNumber = phone;
+                DateTime birthDate;
+                if (DateTime.TryParseExact(birth, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out birthDate))
+                {
+                    patientDTO.DateOfBirth = birthDate;
+                } 
+                else
+                {
+                    MessageBox.Show("Invalid birth date format. Please enter the date in the correct format.");
+                }
+                patientDTO.Height = height;
+                patientDTO.Weight = weight;
+                patientDTO.ActivityLevel = level;
 
-                command.ExecuteNonQuery();
-
-                MessageBox.Show("Ο ασθενής καταχωρήθηκε με επιτυχία, με ΑΜ: " + newPatientId);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Προέκυψε ένα σφάλμα: " + ex.Message);
-            }
-            finally
-            {
-                DBUtil.CloseConnection();
-            }
-
+                PatientInsertController patientInsertController = new PatientInsertController();
+                patientInsertController.InsertNewPatient(patientDTO);
+                
+             
             List<string> foodsPreferred = new List<string>();
             List<string> foodsAvoided = new List<string>();
 

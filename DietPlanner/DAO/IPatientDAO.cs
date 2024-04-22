@@ -11,8 +11,8 @@ namespace DietPlanner.DAO
     {
         //Patient GetPatientById(int id);
         //Patient GetPatientByName(string name);
-        //void AddPreferredFoods(string patientId, List<DietaryEntity> foods);
-        //void AddFoodsToAvoid(string patientId, List<DietaryEntity> foods);
-
+        //Patient GetPatientByPhone(string phoneNum);
+        //void SavePreferredFoods(string patientId, List<DietaryEntity> foods);
+        //void SaveFoodsToAvoid(string patientId, List<DietaryEntity> foods);
     }
 }

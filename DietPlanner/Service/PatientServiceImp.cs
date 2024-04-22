@@ -12,7 +12,12 @@ namespace DietPlanner.Service
 {
     internal class PatientServiceImp : IPatientService
     {
-        private readonly IPatientDAO _patientDAO;
+        private IPatientDAO _patientDAO;
+
+        public PatientServiceImp(IPatientDAO patientDAO)
+        {
+            _patientDAO = patientDAO;
+        }
 
         public void InsertPatient(PatientDTO patientDTO)
         {
@@ -27,6 +32,7 @@ namespace DietPlanner.Service
             newPatient.ActivityLevel = patientDTO.ActivityLevel;
             newPatient.Goal = patientDTO.Goal;
 
+            
             _patientDAO.Save(newPatient);// method needs to implement a check for not storing an already existing Patient
         }
     }

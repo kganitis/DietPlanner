@@ -8,7 +8,6 @@ namespace DietPlanner.Model
 {
     internal class Food : DietaryEntity
     {
-        private string foodID;
         private string unit;
         private float quantity;
         private FoodCategory category;
@@ -21,11 +20,11 @@ namespace DietPlanner.Model
 
         public Food() { }
 
-        public Food(string foodID, string unit, float quantity, float calories, 
+        public Food(string id, string unit, float quantity, float calories, 
                     float protein, float carbs, float sugars, float fiber,
                     float fats, FoodCategory category)
         {
-            FoodID = foodID;
+            ID = id;
             Unit = unit;
             Quantity = quantity;
             Calories = calories;
@@ -37,7 +36,6 @@ namespace DietPlanner.Model
             Category = category;
         }
 
-        public string FoodID { get => foodID; set => foodID = value; }
         public string Unit { get => unit; set => unit = value; }
         public float Quantity { get => quantity; set => quantity = value; }
         public float Calories { get => calories; set => calories = value; }

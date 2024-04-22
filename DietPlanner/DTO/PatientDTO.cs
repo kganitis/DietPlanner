@@ -14,7 +14,6 @@ namespace DietPlanner.DTO
         private string phoneNumber;
         private Gender gender;
         private DateTime dateOfBirth;
-        private int age;
         private float height;
         private float weight;
         private string activityLevel;
@@ -32,7 +31,6 @@ namespace DietPlanner.DTO
             this.phoneNumber = phoneNumber;
             this.gender = gender;
             this.dateOfBirth = dateOfBirth;
-            this.age = this.Age;
             this.height = height;
             this.weight = weight;
             this.activityLevel = activityLevel;
@@ -49,7 +47,7 @@ namespace DietPlanner.DTO
             {
                 // Calculate the age based on the current date and the patient's date of birth
                 DateTime currentDate = DateTime.Today;
-                age = currentDate.Year - dateOfBirth.Year;
+                int age = currentDate.Year - dateOfBirth.Year;
 
                 // Check if the birthday has occurred this year
                 if (currentDate < dateOfBirth.AddYears(age))
