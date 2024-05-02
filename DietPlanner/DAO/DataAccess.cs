@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace DietPlanner.DAO
 {
@@ -444,10 +445,11 @@ namespace DietPlanner.DAO
          * or updates them if the given patient is found,
          * by deleting them first, then re-inserting them.
          */
-        public static Patient SavePatientData(Patient patient)
+        public static bool SavePatientData(Patient patient)
         {
             string query = String.Empty;
             SQLiteCommand command;
+            bool success = false;
 
             try
             {
@@ -493,18 +495,19 @@ namespace DietPlanner.DAO
 
                 command.ExecuteNonQuery();
 
-                MessageBox.Show("Τα στοιχεία αποθηκεύτηκαν με επιτυχία!");
+                success = true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + "\n" + query, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                success = false;
             }
             finally
             {
                 DBUtil.CloseConnection();
             }
 
-            return patient;
+            return success;
         }
 
         /*
@@ -595,10 +598,71 @@ namespace DietPlanner.DAO
 
         /*
          * Connects to the DB,
+         * READS all plan data for a given patient,
+         * creates meal item instances
+         * and adds them to the MealPlan list of the plan instance,
+         * then returns the plan instance.
+         * Returns NULL if no patient is found.
+         */
+        public static Plan GetPlanForPatient(Patient patient)
+        {
+            Plan plan = null;
+
+            try
+            {
+                SQLiteConnection connection = DBUtil.GetConnection();
+
+                string query = "SELECT * FROM Plan WHERE Patient_id = @id";
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@id", patient.PatientID);
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    plan = new Plan()
+                    {
+                        Patient = patient
+                    };
+                }
+
+                while (reader.Read())
+                {
+                    string mealID = reader["Meal_id"].ToString();
+                    float quantity = Convert.ToSingle(reader["Quantity"]);
+                    int day = int.Parse(reader["Day"].ToString());
+                    int timeOfDay = int.Parse(reader["Time_of_day"].ToString());
+
+                    MealItem mealItem = new MealItem()
+                    {
+                        Meal = DietaryEntityData.GetMealByID(mealID),
+                        Quantity = quantity,
+                        Day = day,
+                        TimeOfDay = timeOfDay
+                    };
+
+                    plan.MealPlan.Add(mealItem);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                DBUtil.CloseConnection();
+            }
+
+            return plan;
+        }
+
+        /*
+         * Connects to the DB,
          * inserts into Plan table the data for the given plan
          */
-        public static void SavePlan(Plan plan)
+        public static bool SavePlan(Plan plan)
         {
+            bool success = false;
+
             try
             {
                 SQLiteConnection connection = DBUtil.GetConnection();
@@ -624,17 +688,21 @@ namespace DietPlanner.DAO
                     command.Parameters.AddWithValue("@quantity", mealItem.Quantity);
 
                     command.ExecuteNonQuery();
+
+                    success = true;
                 }
-                MessageBox.Show("Το πλάνο αποθηκεύτηκε με επιτυχία!");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                success = false;
             }
             finally
             {
                 DBUtil.CloseConnection();
             }
+
+            return success;
         }
     }
 }

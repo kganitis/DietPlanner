@@ -6,7 +6,7 @@ namespace DietPlanner.Model
     {
         private Patient patient;
         private List<MealItem> mealPlan = new List<MealItem>();
-        private int mealsPerDay;
+        private int mealsPerDay = 6;
 
         public Plan() { }
 

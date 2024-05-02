@@ -10,14 +10,16 @@ namespace DietPlanner
 {
     public partial class FormPlan : Form
     {
+        private FormDataEntry dataEntry;
         private Plan plan;
         private TreeView[] treeViewDay;
 
-        Font boldFont;
+        private Font boldFont;
 
-        internal FormPlan(Plan plan)
+        internal FormPlan(FormDataEntry dataEntry, Plan plan)
         {
             InitializeComponent();
+            this.dataEntry = dataEntry;
             this.plan = plan;
             treeViewDay = new TreeView[] { treeViewDay1, treeViewDay2, treeViewDay3, treeViewDay4, treeViewDay5, treeViewDay6, treeViewDay7 };
             boldFont = new Font(treeViewDay1.Font, FontStyle.Bold);
@@ -38,14 +40,15 @@ namespace DietPlanner
                 var dayTreeView = treeViewDay[day];
                 dayTreeView.Nodes.Clear();
 
-                foreach (var mealItem in mealItemsForDay)
+                for (int time = 1; time <= plan.MealsPerDay; time++)
                 {
-                    var mealTypeNode = new TreeNode(mealItem.Meal.Type.Name);
-                    var mealNode = new TreeNode(mealItem.Meal.Name);
-                    var caloriesNode = new TreeNode((mealItem.Calories).ToString("0.0") + " kcal");
+                    MealItem mealItemForTime = mealItemsForDay.Where(item => item.TimeOfDay == time).FirstOrDefault();
+                    var mealTypeNode = new TreeNode(mealItemForTime.Meal.Type.Name);
+                    var mealNode = new TreeNode(mealItemForTime.Meal.Name);
+                    var caloriesNode = new TreeNode((mealItemForTime.Calories).ToString("0.0") + " kcal");
                     var ingredientsNode = new TreeNode("Υλικά");
 
-                    foreach (var ingredient in mealItem.Ingredients)
+                    foreach (var ingredient in mealItemForTime.Ingredients)
                     {
                         var ingredientNode = new TreeNode($"{ingredient.Key.Name}: {ingredient.Value * ingredient.Key.Quantity} {ingredient.Key.Unit}");
                         ingredientsNode.Nodes.Add(ingredientNode);
@@ -84,13 +87,17 @@ namespace DietPlanner
 
         private void btnSavePlan_Click(object sender, EventArgs e)
         {
-            DataAccess.SavePlan(plan);
+            if (DataAccess.SavePlan(plan))
+            {
+                MessageBox.Show("Το πλάνο αποθηκεύτηκε με επιτυχία!");
+                dataEntry.Plan = plan;
+            }
         }
 
         private void btnRegeneratePlan_Click(object sender, EventArgs e)
         {
             Plan newPlan = new PlanGenerator(plan.Patient).Plan;
-            FormPlan formPlan = new FormPlan(newPlan);
+            FormPlan formPlan = new FormPlan(dataEntry, newPlan);
             Hide();
             formPlan.Show();
             Close();

@@ -75,7 +75,7 @@
             this.patientNameTextBox.Name = "patientNameTextBox";
             this.patientNameTextBox.Size = new System.Drawing.Size(224, 29);
             this.patientNameTextBox.TabIndex = 0;
-            this.patientNameTextBox.TextChanged += new System.EventHandler(this.patientNameTextBox_TextChanged);
+            this.patientNameTextBox.TextChanged += new System.EventHandler(this.UpdateSearchButtonState);
             // 
             // labelTitle
             // 
@@ -135,7 +135,7 @@
             this.phoneTextBox.Name = "phoneTextBox";
             this.phoneTextBox.Size = new System.Drawing.Size(224, 29);
             this.phoneTextBox.TabIndex = 6;
-            this.phoneTextBox.TextChanged += new System.EventHandler(this.phoneTextBox_TextChanged);
+            this.phoneTextBox.TextChanged += new System.EventHandler(this.UpdateSearchButtonState);
             // 
             // labelDateOfBirth
             // 
@@ -171,7 +171,6 @@
             this.heightTextBox.Name = "heightTextBox";
             this.heightTextBox.Size = new System.Drawing.Size(100, 29);
             this.heightTextBox.TabIndex = 10;
-            this.heightTextBox.TextChanged += new System.EventHandler(this.heightTextBox_TextChanged);
             // 
             // labelWeight
             // 
@@ -195,7 +194,6 @@
             this.weightTextBox.Name = "weightTextBox";
             this.weightTextBox.Size = new System.Drawing.Size(100, 29);
             this.weightTextBox.TabIndex = 12;
-            this.weightTextBox.TextChanged += new System.EventHandler(this.weightTextBox_TextChanged);
             // 
             // labelActivityLevel
             // 
@@ -232,7 +230,6 @@
             this.comboBoxGoal.Name = "comboBoxGoal";
             this.comboBoxGoal.Size = new System.Drawing.Size(222, 29);
             this.comboBoxGoal.TabIndex = 16;
-            this.comboBoxGoal.SelectedIndexChanged += new System.EventHandler(this.comboBoxGoal_SelectedIndexChanged);
             // 
             // btnAddPreferred
             // 
@@ -344,7 +341,7 @@
             this.btnGeneratePlan.TabIndex = 27;
             this.btnGeneratePlan.Text = "Έκδοση Εβδομαδιαίου Πλάνου";
             this.btnGeneratePlan.UseVisualStyleBackColor = false;
-            this.btnGeneratePlan.Click += new System.EventHandler(this.btnGeneratePlan_Click);
+            this.btnGeneratePlan.Click += new System.EventHandler(this.btnViewOrGeneratePlan_Click);
             // 
             // listBoxPreferred
             // 
@@ -359,7 +356,6 @@
             this.listBoxPreferred.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.listBoxPreferred.Size = new System.Drawing.Size(166, 235);
             this.listBoxPreferred.TabIndex = 28;
-            this.listBoxPreferred.SelectedIndexChanged += new System.EventHandler(this.listBoxPreferred_SelectedIndexChanged);
             // 
             // listBoxAvoided
             // 
@@ -374,7 +370,6 @@
             this.listBoxAvoided.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.listBoxAvoided.Size = new System.Drawing.Size(166, 235);
             this.listBoxAvoided.TabIndex = 29;
-            this.listBoxAvoided.SelectedIndexChanged += new System.EventHandler(this.listBoxAvoided_SelectedIndexChanged);
             // 
             // maleRadioButton
             // 
@@ -412,7 +407,6 @@
             this.birthDatePicker.Name = "birthDatePicker";
             this.birthDatePicker.Size = new System.Drawing.Size(189, 29);
             this.birthDatePicker.TabIndex = 32;
-            this.birthDatePicker.ValueChanged += new System.EventHandler(this.birthDatePicker_ValueChanged);
             // 
             // comboBoxActivityLevel
             // 
@@ -424,7 +418,6 @@
             this.comboBoxActivityLevel.Name = "comboBoxActivityLevel";
             this.comboBoxActivityLevel.Size = new System.Drawing.Size(224, 29);
             this.comboBoxActivityLevel.TabIndex = 33;
-            this.comboBoxActivityLevel.SelectedIndexChanged += new System.EventHandler(this.comboBoxActivityLevel_SelectedIndexChanged);
             // 
             // btnSearchPatient
             // 
@@ -466,7 +459,6 @@
             this.textBoxID.Name = "textBoxID";
             this.textBoxID.Size = new System.Drawing.Size(102, 29);
             this.textBoxID.TabIndex = 36;
-            this.textBoxID.TextChanged += new System.EventHandler(this.textBoxID_TextChanged);
             // 
             // btnClear
             // 

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace DietPlanner
 {
@@ -12,6 +13,7 @@ namespace DietPlanner
         FormPreferences formPreferences;
 
         private Patient patient = null;
+        private Plan plan = null;
 
         #region Getters / Setters
 
@@ -293,12 +295,47 @@ namespace DietPlanner
             }
         }
 
+        internal Patient Patient
+        {
+            get => patient;
+            set
+            {
+                patient = value;
+                if (value == null)
+                {
+                    ClearForm();
+                    Plan = null;
+                }
+                else
+                {
+                    FillFormWithPatientData();
+                    Plan = DataAccess.GetPlanForPatient(value);
+                }
+            }
+        }
+
+        internal Plan Plan
+        {
+            get => plan;
+            set
+            {
+                plan = value;
+                if (plan != null)
+                {
+                    btnGeneratePlan.Text = "Προβολή Εβδομαδιαίου Πλάνου";
+                }
+                else
+                {
+                    btnGeneratePlan.Text = "Έκδοση Εβδομαδιαίου Πλάνου";
+                }
+            }
+        }
+
         #endregion
 
         public FormDataEntry()
         {
             InitializeComponent();
-            patient = null;
         }
 
         private void FormDataEntry_Load(object sender, EventArgs e)
@@ -307,111 +344,22 @@ namespace DietPlanner
             comboBoxGoal.Items.AddRange(Goal.GetGoals);
         }
 
-        #region Save Data methods
-        private bool EmptyOrInvalidFields()
+        private void ClearForm()
         {
-            return string.IsNullOrWhiteSpace(PatientName) ||
-                string.IsNullOrWhiteSpace(Gender) ||
-                string.IsNullOrWhiteSpace(PhoneNumber) ||
-                PatientHeight == -1f ||
-                PatientWeight == -1f ||
-                ActivityLevelCoefficient == 0f ||
-                GoalValue == int.MaxValue;
+            ID = String.Empty;
+            PatientName = String.Empty;
+            Gender = String.Empty;
+            PhoneNumber = String.Empty;
+            DateOfBirthStr = "01/01/2000";
+            heightTextBox.Clear();
+            weightTextBox.Clear();
+            comboBoxActivityLevel.SelectedItem = null;
+            comboBoxGoal.SelectedItem = null;
+            listBoxPreferred.Items.Clear();
+            listBoxAvoided.Items.Clear();
         }
 
-        private void btnSaveData_Click(object sender, EventArgs e)
-        {
-            SavePatientData();
-        }
-
-        private bool SavePatientData()
-        {
-            if (EmptyOrInvalidFields())
-            {
-                MessageBox.Show("Παρακαλώ συμπληρώστε όλα τα πεδία!", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (patient == null)
-            {
-                patient = new Patient()
-                {
-                    Name = PatientName,
-                    Gender = Gender,
-                    PhoneNumber = PhoneNumber,
-                    DateOfBirth = DateOfBirth,
-                    Height = PatientHeight,
-                    Weight = PatientWeight,
-                    ActivityLevel = ActivityLevelCoefficient,
-                    Goal = GoalValue,
-                    PreferredFoods = FoodsPreferred,
-                    FoodsToAvoid = FoodsAvoided
-                };
-            }
-            else
-            {
-                patient.Name = PatientName;
-                patient.Gender = Gender;
-                patient.PhoneNumber = PhoneNumber;
-                patient.DateOfBirth = DateOfBirth;
-                patient.Height = PatientHeight;
-                patient.Weight = PatientWeight;
-                patient.ActivityLevel = ActivityLevelCoefficient;
-                patient.Goal = GoalValue;
-                patient.PreferredFoods = FoodsPreferred;
-                patient.FoodsToAvoid = FoodsAvoided;
-            }
-
-            patient = DAO.DataAccess.SavePatientData(patient);
-            ID = patient.PatientID;
-
-            if (patient.PreferredFoods.Count > 0)
-            {
-                DAO.DataAccess.SavePreferredFoodsForPatient(patient);
-            }
-
-            if (patient.FoodsToAvoid.Count > 0)
-            {
-                DAO.DataAccess.SaveFoodsAvoidedForPatient(patient);
-            }
-
-            return true;
-        }
-
-        #endregion
-
-        #region Search Data methods
-
-        private void btnSearchPatient_Click(object sender, EventArgs e)
-        {
-            LoadPatientDataByNameAndPhone();
-        }
-
-        private void patientNameTextBox_TextChanged(object sender, EventArgs e)
-        {
-            UpdateSearchButtonState();
-        }
-
-        private void phoneTextBox_TextChanged(object sender, EventArgs e)
-        {
-            UpdateSearchButtonState();
-        }
-
-        private void UpdateSearchButtonState()
-        {
-            btnSearchPatient.Enabled = !String.IsNullOrEmpty(PatientName) && !String.IsNullOrEmpty(PhoneNumber);
-        }
-
-        private void LoadPatientDataByNameAndPhone()
-        {
-            patient = DAO.DataAccess.GetPatientByNameAndPhone(PatientName, PhoneNumber);
-            if (patient != null)
-            {
-                FillFormWithPatientData(patient);
-            }
-        }
-
-        private void FillFormWithPatientData(Patient patient)
+        private void FillFormWithPatientData()
         {
             if (patient == null)
             {
@@ -431,7 +379,82 @@ namespace DietPlanner
             FoodsAvoided = patient.FoodsToAvoid;
         }
 
+        #region Save Data methods
+        private bool EmptyOrInvalidFields()
+        {
+            return string.IsNullOrWhiteSpace(PatientName) ||
+                string.IsNullOrWhiteSpace(Gender) ||
+                string.IsNullOrWhiteSpace(PhoneNumber) ||
+                PatientHeight == -1f ||
+                PatientWeight == -1f ||
+                ActivityLevelCoefficient == 0f ||
+                GoalValue == int.MaxValue;
+        }
+
+        private void btnSaveData_Click(object sender, EventArgs e)
+        {
+            if (SavePatientData())
+            {
+                MessageBox.Show("Τα στοιχεία αποθηκεύτηκαν με επιτυχία");
+            }
+        }
+
+        private bool SavePatientData()
+        {
+            if (EmptyOrInvalidFields())
+            {
+                MessageBox.Show("Παρακαλώ συμπληρώστε όλα τα πεδία!", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            Patient newPatientData = new Patient()
+            {
+                PatientID = ID,
+                Name = PatientName,
+                Gender = Gender,
+                PhoneNumber = PhoneNumber,
+                DateOfBirth = DateOfBirth,
+                Height = PatientHeight,
+                Weight = PatientWeight,
+                ActivityLevel = ActivityLevelCoefficient,
+                Goal = GoalValue,
+                PreferredFoods = FoodsPreferred,
+                FoodsToAvoid = FoodsAvoided
+            };
+
+            if (DataAccess.SavePatientData(newPatientData))
+            {
+                Patient = newPatientData;
+            }
+            else
+            {
+                return false;
+            }
+
+            if (Patient.PreferredFoods.Count > 0)
+            {
+                DataAccess.SavePreferredFoodsForPatient(Patient);
+            }
+
+            if (Patient.FoodsToAvoid.Count > 0)
+            {
+                DataAccess.SaveFoodsAvoidedForPatient(Patient);
+            }
+
+            return true;
+        }
+
         #endregion
+
+        private void btnSearchPatient_Click(object sender, EventArgs e)
+        {
+            Patient = DataAccess.GetPatientByNameAndPhone(PatientName, PhoneNumber);
+        }
+
+        private void UpdateSearchButtonState(object sender, EventArgs e)
+        {
+            btnSearchPatient.Enabled = !String.IsNullOrEmpty(PatientName) && !String.IsNullOrEmpty(PhoneNumber);
+        }
 
         #region Preferences methods
         private void btnAddPreferred_Click(object sender, EventArgs e)
@@ -473,76 +496,26 @@ namespace DietPlanner
         }
         #endregion
 
-        private void btnGeneratePlan_Click(object sender, EventArgs e)
+        private void btnViewOrGeneratePlan_Click(object sender, EventArgs e)  
         {
-            if (patient == null)
+            if (!SavePatientData())
             {
-                if (!SavePatientData())
-                {
-                    return;
-                }
+                return;
             }
-            
-            Plan plan = new PlanGenerator(patient).Plan;
 
-            FormPlan formPlan = new FormPlan(plan);
+            Plan = DataAccess.GetPlanForPatient(Patient);
+            if (Plan == null)
+            {
+                Plan = new PlanGenerator(Patient).Plan;
+            }
+
+            FormPlan formPlan = new FormPlan(this, Plan);
             formPlan.Show();
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            patient = null;
-            ID = String.Empty;
-            PatientName = String.Empty;
-            Gender = String.Empty;
-            PhoneNumber = String.Empty;
-            DateOfBirthStr = "01/01/2000";
-            heightTextBox.Clear();
-            weightTextBox.Clear();
-            comboBoxActivityLevel.SelectedItem = null;
-            comboBoxGoal.SelectedItem = null;
-            listBoxPreferred.Items.Clear();
-            listBoxAvoided.Items.Clear();
-        }
-
-        private void comboBoxActivityLevel_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void heightTextBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void weightTextBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void comboBoxGoal_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void birthDatePicker_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listBoxAvoided_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxID_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listBoxPreferred_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            Patient = null;
         }
     }
 }

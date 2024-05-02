@@ -1,4 +1,4 @@
-TO DO NEXT (22 Apr 2024 16:12)
+TO DO NEXT (02 May 2024 16:45)
 
 
 
@@ -14,9 +14,6 @@ TO DO NEXT (22 Apr 2024 16:12)
 		- Cheat meals should be proper meals, not desserts
 		- Snacks should be neutral, with few calories and no sugar
 	- Translate to greek
-
-- Functionality to view patient's existing plan
-	- Option to generate a new one
 ===============================================================================
 
 
