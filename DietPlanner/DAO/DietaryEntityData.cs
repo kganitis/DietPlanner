@@ -1,8 +1,8 @@
-﻿using DietPlanner.DTO;
+﻿using DietPlanner.Model;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DietPlanner.DataAccess
+namespace DietPlanner.DAO
 {
     internal static class DietaryEntityData
     {

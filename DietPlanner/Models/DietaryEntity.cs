@@ -1,5 +1,5 @@
 ﻿
-namespace DietPlanner.DTO
+namespace DietPlanner.Model
 {
     internal abstract class DietaryEntity
     {

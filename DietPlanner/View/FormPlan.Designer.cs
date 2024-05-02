@@ -76,7 +76,7 @@
             // 
             // tableLayoutPanelBase
             // 
-            this.tableLayoutPanelBase.BackColor = System.Drawing.Color.Cornsilk;
+            this.tableLayoutPanelBase.BackColor = System.Drawing.Color.DarkSlateGray;
             this.tableLayoutPanelBase.ColumnCount = 1;
             this.tableLayoutPanelBase.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelBase.Controls.Add(this.tableLayoutPanelPatientData, 0, 0);
@@ -95,7 +95,7 @@
             // 
             // tableLayoutPanelPatientData
             // 
-            this.tableLayoutPanelPatientData.BackColor = System.Drawing.Color.Cornsilk;
+            this.tableLayoutPanelPatientData.BackColor = System.Drawing.Color.DarkSlateGray;
             this.tableLayoutPanelPatientData.ColumnCount = 1;
             this.tableLayoutPanelPatientData.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelPatientData.Controls.Add(this.panelPatientName, 0, 1);
@@ -111,7 +111,7 @@
             // 
             // panelPatientName
             // 
-            this.panelPatientName.BackColor = System.Drawing.Color.Cornsilk;
+            this.panelPatientName.BackColor = System.Drawing.Color.DarkSlateGray;
             this.panelPatientName.Controls.Add(this.labelPatientName);
             this.panelPatientName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPatientName.Location = new System.Drawing.Point(3, 38);
@@ -122,7 +122,8 @@
             // labelPatientName
             // 
             this.labelPatientName.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.labelPatientName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.labelPatientName.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.labelPatientName.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.labelPatientName.Location = new System.Drawing.Point(0, 0);
             this.labelPatientName.Name = "labelPatientName";
             this.labelPatientName.Size = new System.Drawing.Size(1888, 30);
@@ -142,9 +143,10 @@
             // 
             // labelTitle
             // 
-            this.labelTitle.BackColor = System.Drawing.Color.PaleGoldenrod;
+            this.labelTitle.BackColor = System.Drawing.Color.DarkSlateGray;
             this.labelTitle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.labelTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 16F, System.Drawing.FontStyle.Bold);
+            this.labelTitle.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.labelTitle.Location = new System.Drawing.Point(0, 0);
             this.labelTitle.Name = "labelTitle";
             this.labelTitle.Size = new System.Drawing.Size(1888, 29);
@@ -154,6 +156,8 @@
             // 
             // tableLayoutPanelDays
             // 
+            this.tableLayoutPanelDays.BackColor = System.Drawing.Color.SlateGray;
+            this.tableLayoutPanelDays.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Outset;
             this.tableLayoutPanelDays.ColumnCount = 7;
             this.tableLayoutPanelDays.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
             this.tableLayoutPanelDays.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
@@ -182,31 +186,34 @@
             this.panel6.Controls.Add(this.treeViewDay7);
             this.panel6.Controls.Add(this.labelDay7);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(1623, 3);
+            this.panel6.Location = new System.Drawing.Point(1625, 5);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(268, 895);
+            this.panel6.Size = new System.Drawing.Size(264, 891);
             this.panel6.TabIndex = 6;
             // 
             // treeViewDay7
             // 
-            this.treeViewDay7.BackColor = System.Drawing.Color.Ivory;
+            this.treeViewDay7.BackColor = System.Drawing.Color.SlateGray;
             this.treeViewDay7.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeViewDay7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewDay7.Font = new System.Drawing.Font("Segoe UI", 8.75F);
+            this.treeViewDay7.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.treeViewDay7.Location = new System.Drawing.Point(0, 24);
             this.treeViewDay7.Name = "treeViewDay7";
             this.treeViewDay7.ShowLines = false;
             this.treeViewDay7.ShowPlusMinus = false;
-            this.treeViewDay7.Size = new System.Drawing.Size(268, 871);
+            this.treeViewDay7.Size = new System.Drawing.Size(264, 867);
             this.treeViewDay7.TabIndex = 1;
             // 
             // labelDay7
             // 
-            this.labelDay7.BackColor = System.Drawing.Color.LemonChiffon;
+            this.labelDay7.BackColor = System.Drawing.Color.DarkSlateGray;
             this.labelDay7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelDay7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.labelDay7.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.labelDay7.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.labelDay7.Location = new System.Drawing.Point(0, 0);
             this.labelDay7.Name = "labelDay7";
-            this.labelDay7.Size = new System.Drawing.Size(268, 24);
+            this.labelDay7.Size = new System.Drawing.Size(264, 24);
             this.labelDay7.TabIndex = 0;
             this.labelDay7.Text = "Ημέρα 7η";
             this.labelDay7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -216,31 +223,34 @@
             this.panel5.Controls.Add(this.treeViewDay6);
             this.panel5.Controls.Add(this.labelDay6);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(1353, 3);
+            this.panel5.Location = new System.Drawing.Point(1355, 5);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(264, 895);
+            this.panel5.Size = new System.Drawing.Size(262, 891);
             this.panel5.TabIndex = 5;
             // 
             // treeViewDay6
             // 
-            this.treeViewDay6.BackColor = System.Drawing.Color.Ivory;
+            this.treeViewDay6.BackColor = System.Drawing.Color.SlateGray;
             this.treeViewDay6.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeViewDay6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewDay6.Font = new System.Drawing.Font("Segoe UI", 8.75F);
+            this.treeViewDay6.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.treeViewDay6.Location = new System.Drawing.Point(0, 24);
             this.treeViewDay6.Name = "treeViewDay6";
             this.treeViewDay6.ShowLines = false;
             this.treeViewDay6.ShowPlusMinus = false;
-            this.treeViewDay6.Size = new System.Drawing.Size(264, 871);
+            this.treeViewDay6.Size = new System.Drawing.Size(262, 867);
             this.treeViewDay6.TabIndex = 1;
             // 
             // labelDay6
             // 
-            this.labelDay6.BackColor = System.Drawing.Color.LemonChiffon;
+            this.labelDay6.BackColor = System.Drawing.Color.DarkSlateGray;
             this.labelDay6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelDay6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.labelDay6.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.labelDay6.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.labelDay6.Location = new System.Drawing.Point(0, 0);
             this.labelDay6.Name = "labelDay6";
-            this.labelDay6.Size = new System.Drawing.Size(264, 24);
+            this.labelDay6.Size = new System.Drawing.Size(262, 24);
             this.labelDay6.TabIndex = 0;
             this.labelDay6.Text = "Ημέρα 6η";
             this.labelDay6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -250,31 +260,34 @@
             this.panel4.Controls.Add(this.treeViewDay5);
             this.panel4.Controls.Add(this.labelDay5);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(1083, 3);
+            this.panel4.Location = new System.Drawing.Point(1085, 5);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(264, 895);
+            this.panel4.Size = new System.Drawing.Size(262, 891);
             this.panel4.TabIndex = 4;
             // 
             // treeViewDay5
             // 
-            this.treeViewDay5.BackColor = System.Drawing.Color.Ivory;
+            this.treeViewDay5.BackColor = System.Drawing.Color.SlateGray;
             this.treeViewDay5.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeViewDay5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewDay5.Font = new System.Drawing.Font("Segoe UI", 8.75F);
+            this.treeViewDay5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.treeViewDay5.Location = new System.Drawing.Point(0, 24);
             this.treeViewDay5.Name = "treeViewDay5";
             this.treeViewDay5.ShowLines = false;
             this.treeViewDay5.ShowPlusMinus = false;
-            this.treeViewDay5.Size = new System.Drawing.Size(264, 871);
+            this.treeViewDay5.Size = new System.Drawing.Size(262, 867);
             this.treeViewDay5.TabIndex = 1;
             // 
             // labelDay5
             // 
-            this.labelDay5.BackColor = System.Drawing.Color.LemonChiffon;
+            this.labelDay5.BackColor = System.Drawing.Color.DarkSlateGray;
             this.labelDay5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelDay5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.labelDay5.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.labelDay5.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.labelDay5.Location = new System.Drawing.Point(0, 0);
             this.labelDay5.Name = "labelDay5";
-            this.labelDay5.Size = new System.Drawing.Size(264, 24);
+            this.labelDay5.Size = new System.Drawing.Size(262, 24);
             this.labelDay5.TabIndex = 0;
             this.labelDay5.Text = "Ημέρα 5η";
             this.labelDay5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -284,31 +297,34 @@
             this.panel3.Controls.Add(this.treeViewDay4);
             this.panel3.Controls.Add(this.labelDay4);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(813, 3);
+            this.panel3.Location = new System.Drawing.Point(815, 5);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(264, 895);
+            this.panel3.Size = new System.Drawing.Size(262, 891);
             this.panel3.TabIndex = 3;
             // 
             // treeViewDay4
             // 
-            this.treeViewDay4.BackColor = System.Drawing.Color.Ivory;
+            this.treeViewDay4.BackColor = System.Drawing.Color.SlateGray;
             this.treeViewDay4.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeViewDay4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewDay4.Font = new System.Drawing.Font("Segoe UI", 8.75F);
+            this.treeViewDay4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.treeViewDay4.Location = new System.Drawing.Point(0, 24);
             this.treeViewDay4.Name = "treeViewDay4";
             this.treeViewDay4.ShowLines = false;
             this.treeViewDay4.ShowPlusMinus = false;
-            this.treeViewDay4.Size = new System.Drawing.Size(264, 871);
+            this.treeViewDay4.Size = new System.Drawing.Size(262, 867);
             this.treeViewDay4.TabIndex = 1;
             // 
             // labelDay4
             // 
-            this.labelDay4.BackColor = System.Drawing.Color.LemonChiffon;
+            this.labelDay4.BackColor = System.Drawing.Color.DarkSlateGray;
             this.labelDay4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelDay4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.labelDay4.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.labelDay4.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.labelDay4.Location = new System.Drawing.Point(0, 0);
             this.labelDay4.Name = "labelDay4";
-            this.labelDay4.Size = new System.Drawing.Size(264, 24);
+            this.labelDay4.Size = new System.Drawing.Size(262, 24);
             this.labelDay4.TabIndex = 0;
             this.labelDay4.Text = "Ημέρα 4η";
             this.labelDay4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -318,31 +334,34 @@
             this.panel2.Controls.Add(this.treeViewDay3);
             this.panel2.Controls.Add(this.labelDay3);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(543, 3);
+            this.panel2.Location = new System.Drawing.Point(545, 5);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(264, 895);
+            this.panel2.Size = new System.Drawing.Size(262, 891);
             this.panel2.TabIndex = 2;
             // 
             // treeViewDay3
             // 
-            this.treeViewDay3.BackColor = System.Drawing.Color.Ivory;
+            this.treeViewDay3.BackColor = System.Drawing.Color.SlateGray;
             this.treeViewDay3.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeViewDay3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewDay3.Font = new System.Drawing.Font("Segoe UI", 8.75F);
+            this.treeViewDay3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.treeViewDay3.Location = new System.Drawing.Point(0, 24);
             this.treeViewDay3.Name = "treeViewDay3";
             this.treeViewDay3.ShowLines = false;
             this.treeViewDay3.ShowPlusMinus = false;
-            this.treeViewDay3.Size = new System.Drawing.Size(264, 871);
+            this.treeViewDay3.Size = new System.Drawing.Size(262, 867);
             this.treeViewDay3.TabIndex = 1;
             // 
             // labelDay3
             // 
-            this.labelDay3.BackColor = System.Drawing.Color.LemonChiffon;
+            this.labelDay3.BackColor = System.Drawing.Color.DarkSlateGray;
             this.labelDay3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelDay3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.labelDay3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.labelDay3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.labelDay3.Location = new System.Drawing.Point(0, 0);
             this.labelDay3.Name = "labelDay3";
-            this.labelDay3.Size = new System.Drawing.Size(264, 24);
+            this.labelDay3.Size = new System.Drawing.Size(262, 24);
             this.labelDay3.TabIndex = 0;
             this.labelDay3.Text = "Ημέρα 3η";
             this.labelDay3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -352,65 +371,72 @@
             this.panel1.Controls.Add(this.treeViewDay2);
             this.panel1.Controls.Add(this.labelDay2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(273, 3);
+            this.panel1.Location = new System.Drawing.Point(275, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(264, 895);
+            this.panel1.Size = new System.Drawing.Size(262, 891);
             this.panel1.TabIndex = 1;
             // 
             // treeViewDay2
             // 
-            this.treeViewDay2.BackColor = System.Drawing.Color.Ivory;
+            this.treeViewDay2.BackColor = System.Drawing.Color.SlateGray;
             this.treeViewDay2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeViewDay2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewDay2.Font = new System.Drawing.Font("Segoe UI", 8.75F);
+            this.treeViewDay2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.treeViewDay2.Location = new System.Drawing.Point(0, 24);
             this.treeViewDay2.Name = "treeViewDay2";
             this.treeViewDay2.ShowLines = false;
             this.treeViewDay2.ShowPlusMinus = false;
-            this.treeViewDay2.Size = new System.Drawing.Size(264, 871);
+            this.treeViewDay2.Size = new System.Drawing.Size(262, 867);
             this.treeViewDay2.TabIndex = 1;
             // 
             // labelDay2
             // 
-            this.labelDay2.BackColor = System.Drawing.Color.LemonChiffon;
+            this.labelDay2.BackColor = System.Drawing.Color.DarkSlateGray;
             this.labelDay2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelDay2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.labelDay2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.labelDay2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.labelDay2.Location = new System.Drawing.Point(0, 0);
             this.labelDay2.Name = "labelDay2";
-            this.labelDay2.Size = new System.Drawing.Size(264, 24);
+            this.labelDay2.Size = new System.Drawing.Size(262, 24);
             this.labelDay2.TabIndex = 0;
             this.labelDay2.Text = "Ημέρα 2η";
             this.labelDay2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panelDay1
             // 
+            this.panelDay1.BackColor = System.Drawing.Color.SlateGray;
             this.panelDay1.Controls.Add(this.treeViewDay1);
             this.panelDay1.Controls.Add(this.labelDay1);
             this.panelDay1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelDay1.Location = new System.Drawing.Point(3, 3);
+            this.panelDay1.Location = new System.Drawing.Point(5, 5);
             this.panelDay1.Name = "panelDay1";
-            this.panelDay1.Size = new System.Drawing.Size(264, 895);
+            this.panelDay1.Size = new System.Drawing.Size(262, 891);
             this.panelDay1.TabIndex = 0;
             // 
             // treeViewDay1
             // 
-            this.treeViewDay1.BackColor = System.Drawing.Color.Ivory;
+            this.treeViewDay1.BackColor = System.Drawing.Color.SlateGray;
             this.treeViewDay1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeViewDay1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewDay1.Font = new System.Drawing.Font("Segoe UI", 8.75F);
+            this.treeViewDay1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.treeViewDay1.Location = new System.Drawing.Point(0, 24);
             this.treeViewDay1.Name = "treeViewDay1";
             this.treeViewDay1.ShowLines = false;
             this.treeViewDay1.ShowPlusMinus = false;
-            this.treeViewDay1.Size = new System.Drawing.Size(264, 871);
+            this.treeViewDay1.Size = new System.Drawing.Size(262, 867);
             this.treeViewDay1.TabIndex = 1;
             // 
             // labelDay1
             // 
-            this.labelDay1.BackColor = System.Drawing.Color.LemonChiffon;
+            this.labelDay1.BackColor = System.Drawing.Color.DarkSlateGray;
             this.labelDay1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelDay1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.labelDay1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.labelDay1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.labelDay1.Location = new System.Drawing.Point(0, 0);
             this.labelDay1.Name = "labelDay1";
-            this.labelDay1.Size = new System.Drawing.Size(264, 24);
+            this.labelDay1.Size = new System.Drawing.Size(262, 24);
             this.labelDay1.TabIndex = 0;
             this.labelDay1.Text = "Ημέρα 1η";
             this.labelDay1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -427,27 +453,35 @@
             // 
             // btnSavePlan
             // 
-            this.btnSavePlan.BackColor = System.Drawing.Color.LimeGreen;
-            this.btnSavePlan.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.btnSavePlan.BackColor = System.Drawing.Color.ForestGreen;
+            this.btnSavePlan.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSavePlan.FlatAppearance.BorderColor = System.Drawing.Color.DarkGreen;
+            this.btnSavePlan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSavePlan.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.btnSavePlan.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.btnSavePlan.Location = new System.Drawing.Point(1691, 2);
             this.btnSavePlan.Margin = new System.Windows.Forms.Padding(2);
             this.btnSavePlan.Name = "btnSavePlan";
             this.btnSavePlan.Size = new System.Drawing.Size(201, 37);
             this.btnSavePlan.TabIndex = 28;
-            this.btnSavePlan.Text = "Αποθήκευση Πλάνου";
+            this.btnSavePlan.Text = "Αποθήκευση πλάνου";
             this.btnSavePlan.UseVisualStyleBackColor = false;
             this.btnSavePlan.Click += new System.EventHandler(this.btnSavePlan_Click);
             // 
             // btnRegeneratePlan
             // 
-            this.btnRegeneratePlan.BackColor = System.Drawing.Color.Gold;
-            this.btnRegeneratePlan.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.btnRegeneratePlan.BackColor = System.Drawing.Color.Goldenrod;
+            this.btnRegeneratePlan.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRegeneratePlan.FlatAppearance.BorderColor = System.Drawing.Color.DarkGoldenrod;
+            this.btnRegeneratePlan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRegeneratePlan.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.btnRegeneratePlan.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.btnRegeneratePlan.Location = new System.Drawing.Point(1486, 2);
             this.btnRegeneratePlan.Margin = new System.Windows.Forms.Padding(2);
             this.btnRegeneratePlan.Name = "btnRegeneratePlan";
             this.btnRegeneratePlan.Size = new System.Drawing.Size(201, 37);
             this.btnRegeneratePlan.TabIndex = 29;
-            this.btnRegeneratePlan.Text = "Επανέκδοση Πλάνου";
+            this.btnRegeneratePlan.Text = "Επανέκδοση πλάνου";
             this.btnRegeneratePlan.UseVisualStyleBackColor = false;
             this.btnRegeneratePlan.Click += new System.EventHandler(this.btnRegeneratePlan_Click);
             // 
@@ -455,7 +489,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackColor = System.Drawing.Color.DarkSlateGray;
             this.ClientSize = new System.Drawing.Size(1900, 1037);
             this.Controls.Add(this.tableLayoutPanelBase);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;

@@ -1,5 +1,5 @@
-﻿using DietPlanner.DataAccess;
-using DietPlanner.DTO;
+﻿using DietPlanner.DAO;
+using DietPlanner.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -326,7 +326,7 @@ namespace DietPlanner
 
             List<Meal> preferredMealsForType = mealsPreferred.Where(meal => meal.Type == mealType).ToList();
 
-            // Prioritize preferred meals by giving it an appearance boost
+            // Prioritize preferred meals by giving them an appearance boost
             if (random.NextDouble() < preferredMealProbability && preferredMealsForType.Any())
             {
                 Meal selectedPreferredMeal = SelectNonRepeatedMeal(preferredMealsForType);

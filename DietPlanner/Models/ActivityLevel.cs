@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DietPlanner.DTO
+namespace DietPlanner.Model
 {
     public static class ActivityLevel
     {

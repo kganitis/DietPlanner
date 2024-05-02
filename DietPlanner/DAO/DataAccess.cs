@@ -1,4 +1,4 @@
-﻿using DietPlanner.DTO;
+﻿using DietPlanner.Model;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace DietPlanner.DataAccess
+namespace DietPlanner.DAO
 {
     internal static class DataAccess
     {

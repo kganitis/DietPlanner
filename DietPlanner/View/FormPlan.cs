@@ -1,5 +1,5 @@
-﻿using DietPlanner.DataAccess;
-using DietPlanner.DTO;
+﻿using DietPlanner.DAO;
+using DietPlanner.Model;
 using System;
 using System.Data;
 using System.Drawing;
@@ -84,7 +84,7 @@ namespace DietPlanner
 
         private void btnSavePlan_Click(object sender, EventArgs e)
         {
-            DataAccess.DataAccess.SavePlan(plan);
+            DataAccess.SavePlan(plan);
         }
 
         private void btnRegeneratePlan_Click(object sender, EventArgs e)

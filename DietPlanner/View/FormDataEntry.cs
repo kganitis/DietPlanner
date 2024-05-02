@@ -1,5 +1,5 @@
-﻿using DietPlanner.DataAccess;
-using DietPlanner.DTO;
+﻿using DietPlanner.DAO;
+using DietPlanner.Model;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -206,7 +206,7 @@ namespace DietPlanner
                     return 0f;
                 }
                 float weightCoeff = 13.397f, heightCoeff = 4.799f, ageCoeff = 5.677f, genderCoeff = 88.632f;
-                if (Gender == DTO.Gender.FEMALE) { weightCoeff = 9.247f; heightCoeff = 3.098f; ageCoeff = 4.330f; genderCoeff = 447.593f; }
+                if (Gender == Model.Gender.FEMALE) { weightCoeff = 9.247f; heightCoeff = 3.098f; ageCoeff = 4.330f; genderCoeff = 447.593f; }
                 return weightCoeff * PatientWeight + heightCoeff * PatientHeight - ageCoeff * Age + genderCoeff;
             }
         }
@@ -362,17 +362,17 @@ namespace DietPlanner
                 patient.FoodsToAvoid = FoodsAvoided;
             }
 
-            patient = DataAccess.DataAccess.SavePatientData(patient);
+            patient = DAO.DataAccess.SavePatientData(patient);
             ID = patient.PatientID;
 
             if (patient.PreferredFoods.Count > 0)
             {
-                DataAccess.DataAccess.SavePreferredFoodsForPatient(patient);
+                DAO.DataAccess.SavePreferredFoodsForPatient(patient);
             }
 
             if (patient.FoodsToAvoid.Count > 0)
             {
-                DataAccess.DataAccess.SaveFoodsAvoidedForPatient(patient);
+                DAO.DataAccess.SaveFoodsAvoidedForPatient(patient);
             }
 
             return true;
@@ -404,7 +404,7 @@ namespace DietPlanner
 
         private void LoadPatientDataByNameAndPhone()
         {
-            patient = DataAccess.DataAccess.GetPatientByNameAndPhone(PatientName, PhoneNumber);
+            patient = DAO.DataAccess.GetPatientByNameAndPhone(PatientName, PhoneNumber);
             if (patient != null)
             {
                 FillFormWithPatientData(patient);
@@ -503,6 +503,46 @@ namespace DietPlanner
             comboBoxGoal.SelectedItem = null;
             listBoxPreferred.Items.Clear();
             listBoxAvoided.Items.Clear();
+        }
+
+        private void comboBoxActivityLevel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void heightTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void weightTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBoxGoal_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void birthDatePicker_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBoxAvoided_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxID_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBoxPreferred_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

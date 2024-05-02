@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DietPlanner.DTO
+namespace DietPlanner.Model
 {
     internal class Plan
     {

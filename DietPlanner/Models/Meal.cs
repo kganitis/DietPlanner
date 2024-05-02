@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace DietPlanner.DTO
+namespace DietPlanner.Model
 {
     internal class Meal : DietaryEntity
     {

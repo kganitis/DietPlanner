@@ -99,7 +99,7 @@
     <Compile Include="DAO\DBUtil.cs" />
     <Compile Include="DAO\DietaryEntityData.cs" />
     <Compile Include="Service\PlanGenerator.cs" />
-    <Compile Include="DTO\ActivityLevel.cs" />
+    <Compile Include="Models\ActivityLevel.cs" />
     <Compile Include="View\FormPreferences.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,16 +118,16 @@
     <Compile Include="View\FormDataEntry.Designer.cs">
       <DependentUpon>FormDataEntry.cs</DependentUpon>
     </Compile>
-    <Compile Include="DTO\Goal.cs" />
-    <Compile Include="DTO\DietaryEntity.cs" />
-    <Compile Include="DTO\Food.cs" />
-    <Compile Include="DTO\FoodCategory.cs" />
-    <Compile Include="DTO\Gender.cs" />
-    <Compile Include="DTO\Meal.cs" />
-    <Compile Include="DTO\MealItem.cs" />
-    <Compile Include="DTO\MealType.cs" />
-    <Compile Include="DTO\Patient.cs" />
-    <Compile Include="DTO\Plan.cs" />
+    <Compile Include="Models\Goal.cs" />
+    <Compile Include="Models\DietaryEntity.cs" />
+    <Compile Include="Models\Food.cs" />
+    <Compile Include="Models\FoodCategory.cs" />
+    <Compile Include="Models\Gender.cs" />
+    <Compile Include="Models\Meal.cs" />
+    <Compile Include="Models\MealItem.cs" />
+    <Compile Include="Models\MealType.cs" />
+    <Compile Include="Models\Patient.cs" />
+    <Compile Include="Models\Plan.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="View\FormPreferences.resx">

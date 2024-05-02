@@ -1,4 +1,4 @@
-﻿using DietPlanner.DataAccess;
+﻿using DietPlanner.DAO;
 using System;
 using System.Windows.Forms;
 

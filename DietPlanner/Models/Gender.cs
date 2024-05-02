@@ -1,4 +1,4 @@
-﻿namespace DietPlanner.DTO
+﻿namespace DietPlanner.Model
 {
     public static class Gender
     {
