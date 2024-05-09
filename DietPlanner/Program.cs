@@ -1,4 +1,5 @@
 ﻿using DietPlanner.DAO;
+using DietPlanner.View;
 using System;
 using System.Windows.Forms;
 

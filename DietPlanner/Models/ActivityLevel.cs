@@ -29,7 +29,7 @@ namespace DietPlanner.Model
             return 0f;
         }
 
-        public static object[] GetActivityLevels => Coefficients.Keys.ToArray();
+        public static object[] GetActivityLevelsArray() => Coefficients.Keys.ToArray();
 
         public static string GetLevelFromCoefficient(float coefficient)
         {

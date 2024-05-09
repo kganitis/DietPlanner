@@ -24,7 +24,7 @@ namespace DietPlanner.Model
             return int.MaxValue;
         }
 
-        public static object[] GetGoals => Values.Keys.ToArray();
+        public static object[] GetGoalsArray() => Values.Keys.ToArray();
 
         public static string GetGoalFromValue(int value)
         {

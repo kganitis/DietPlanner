@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Windows.Forms;
 
 namespace DietPlanner.Model
 {
@@ -52,10 +51,6 @@ namespace DietPlanner.Model
                 if (DateTime.TryParseExact(value, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate))
                 {
                     dateOfBirth = parsedDate;
-                }
-                else
-                {
-                    MessageBox.Show("Μη έγκυρη μορφή ημερομηνίας. Επιτρεπόμενη μορφή: ηη/MM/εεεε.", "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

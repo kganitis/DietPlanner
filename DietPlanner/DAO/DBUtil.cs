@@ -1,45 +1,48 @@
 ﻿using System;
 using System.Data.SQLite;
 
-internal static class DBUtil
+namespace DietPlanner.DAO
 {
-    private static readonly string connectionString = "Data source=DietPlanner.db;Version=3;";
-    private static SQLiteConnection connection;
-
-    static DBUtil()
+    internal static class DBUtil
     {
-        connection = new SQLiteConnection(connectionString);
-    }
+        private static readonly string connectionString = "Data source=DietPlanner.db;Version=3;";
+        private static SQLiteConnection connection;
 
-    public static string ConnectionString { get { return connectionString; } }
-
-    public static SQLiteConnection GetConnection()
-    {
-        if (connection.State != System.Data.ConnectionState.Open)
+        static DBUtil()
         {
-            try
-            {
-                connection.Open();
-            }
-            catch (SQLiteException ex)
-            {
-                Console.WriteLine($"Error opening connection: {ex.Message}");
-            }
+            connection = new SQLiteConnection(connectionString);
         }
-        return connection;
-    }
 
-    public static void CloseConnection()
-    {
-        if (connection.State != System.Data.ConnectionState.Closed)
+        public static string ConnectionString { get { return connectionString; } }
+
+        public static SQLiteConnection GetConnection()
         {
-            try
+            if (connection.State != System.Data.ConnectionState.Open)
             {
-                connection.Close();
+                try
+                {
+                    connection.Open();
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine($"Error opening connection: {ex.Message}");
+                }
             }
-            catch (SQLiteException ex)
+            return connection;
+        }
+
+        public static void CloseConnection()
+        {
+            if (connection.State != System.Data.ConnectionState.Closed)
             {
-                Console.WriteLine($"Error closing connection: {ex.Message}");
+                try
+                {
+                    connection.Close();
+                }
+                catch (SQLiteException ex)
+                {
+                    Console.WriteLine($"Error closing connection: {ex.Message}");
+                }
             }
         }
     }

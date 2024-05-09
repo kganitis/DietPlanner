@@ -4,9 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 
-namespace DietPlanner
+namespace DietPlanner.View
 {
     public partial class FormDataEntry : Form
     {
@@ -340,8 +339,8 @@ namespace DietPlanner
 
         private void FormDataEntry_Load(object sender, EventArgs e)
         {
-            comboBoxActivityLevel.Items.AddRange(ActivityLevel.GetActivityLevels);
-            comboBoxGoal.Items.AddRange(Goal.GetGoals);
+            comboBoxActivityLevel.Items.AddRange(ActivityLevel.GetActivityLevelsArray());
+            comboBoxGoal.Items.AddRange(Goal.GetGoalsArray());
         }
 
         private void ClearForm()
@@ -422,14 +421,12 @@ namespace DietPlanner
                 FoodsToAvoid = FoodsAvoided
             };
 
-            if (DataAccess.SavePatientData(newPatientData))
-            {
-                Patient = newPatientData;
-            }
-            else
+            if (!DataAccess.SavePatientData(newPatientData))
             {
                 return false;
             }
+
+            Patient = newPatientData;
 
             if (Patient.PreferredFoods.Count > 0)
             {
@@ -506,7 +503,7 @@ namespace DietPlanner
             Plan = DataAccess.GetPlanForPatient(Patient);
             if (Plan == null)
             {
-                Plan = new PlanGenerator(Patient).Plan;
+                Plan = new Service.PlanGenerator(Patient).Plan;
             }
 
             FormPlan formPlan = new FormPlan(this, Plan);

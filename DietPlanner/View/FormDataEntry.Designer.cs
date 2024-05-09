@@ -1,4 +1,4 @@
-﻿namespace DietPlanner
+﻿namespace DietPlanner.View
 {
     partial class FormDataEntry
     {
@@ -450,7 +450,7 @@
             // 
             // textBoxID
             // 
-            this.textBoxID.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.textBoxID.BackColor = System.Drawing.Color.Gainsboro;
             this.textBoxID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxID.Enabled = false;
             this.textBoxID.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
@@ -467,10 +467,10 @@
             this.btnClear.FlatAppearance.BorderColor = System.Drawing.Color.SlateGray;
             this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClear.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClear.Location = new System.Drawing.Point(340, 97);
+            this.btnClear.Location = new System.Drawing.Point(340, 95);
             this.btnClear.Margin = new System.Windows.Forms.Padding(2);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(97, 26);
+            this.btnClear.Size = new System.Drawing.Size(97, 29);
             this.btnClear.TabIndex = 37;
             this.btnClear.Text = "Καθαρισμός";
             this.btnClear.UseVisualStyleBackColor = false;

@@ -5,7 +5,6 @@ using System.Data.SQLite;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace DietPlanner.DAO
 {

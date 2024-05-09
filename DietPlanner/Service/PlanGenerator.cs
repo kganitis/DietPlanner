@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DietPlanner
+namespace DietPlanner.Service
 {
     internal class PlanGenerator
     {

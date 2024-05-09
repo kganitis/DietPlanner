@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace DietPlanner
+namespace DietPlanner.View
 {
     public partial class FormPlan : Form
     {
@@ -96,7 +96,7 @@ namespace DietPlanner
 
         private void btnRegeneratePlan_Click(object sender, EventArgs e)
         {
-            Plan newPlan = new PlanGenerator(plan.Patient).Plan;
+            Plan newPlan = new Service.PlanGenerator(plan.Patient).Plan;
             FormPlan formPlan = new FormPlan(dataEntry, newPlan);
             Hide();
             formPlan.Show();

@@ -1,4 +1,4 @@
-﻿namespace DietPlanner
+﻿namespace DietPlanner.View
 {
     partial class FormPreferences
     {
