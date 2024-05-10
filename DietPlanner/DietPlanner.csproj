@@ -95,32 +95,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAO\DataAccess.cs" />
-    <Compile Include="DAO\DBUtil.cs" />
-    <Compile Include="DAO\DietaryEntityData.cs" />
     <Compile Include="Data Access Layer\DataAccess.cs" />
     <Compile Include="Data Access Layer\DBUtil.cs" />
     <Compile Include="Data Access Layer\DietaryEntitiesData.cs" />
     <Compile Include="Service\PlanGenerator.cs" />
     <Compile Include="Models\ActivityLevel.cs" />
-    <Compile Include="View\FormPreferences.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="View\FormPreferences.Designer.cs">
-      <DependentUpon>FormPreferences.cs</DependentUpon>
-    </Compile>
-    <Compile Include="View\FormPlan.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="View\FormPlan.Designer.cs">
-      <DependentUpon>FormPlan.cs</DependentUpon>
-    </Compile>
-    <Compile Include="View\FormDataEntry.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="View\FormDataEntry.Designer.cs">
-      <DependentUpon>FormDataEntry.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\Goal.cs" />
     <Compile Include="Models\DietaryEntity.cs" />
     <Compile Include="Models\Food.cs" />
@@ -151,15 +130,6 @@
     <Compile Include="View\PreferencesView.designer.cs">
       <DependentUpon>PreferencesView.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="View\FormPreferences.resx">
-      <DependentUpon>FormPreferences.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="View\FormPlan.resx">
-      <DependentUpon>FormPlan.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="View\FormDataEntry.resx">
-      <DependentUpon>FormDataEntry.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
