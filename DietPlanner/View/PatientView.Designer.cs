@@ -1,6 +1,6 @@
 ﻿namespace DietPlanner.View
 {
-    partial class FormDataEntry
+    partial class PatientView
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDataEntry));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PatientView));
             this.patientNameTextBox = new System.Windows.Forms.TextBox();
             this.labelTitle = new System.Windows.Forms.Label();
             this.labelName = new System.Windows.Forms.Label();

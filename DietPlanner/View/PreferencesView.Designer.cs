@@ -1,6 +1,6 @@
 ﻿namespace DietPlanner.View
 {
-    partial class FormPreferences
+    partial class PreferencesView
     {
         /// <summary>
         /// Required designer variable.

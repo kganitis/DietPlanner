@@ -95,28 +95,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAO\DataAccess.cs" />
-    <Compile Include="DAO\DBUtil.cs" />
-    <Compile Include="DAO\DietaryEntityData.cs" />
+    <Compile Include="Data Access Layer\DataAccess.cs" />
+    <Compile Include="Data Access Layer\DBUtil.cs" />
+    <Compile Include="Data Access Layer\DietaryEntitiesData.cs" />
     <Compile Include="Service\PlanGenerator.cs" />
     <Compile Include="Models\ActivityLevel.cs" />
-    <Compile Include="View\FormPreferences.cs">
+    <Compile Include="View\PreferencesView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\FormPreferences.Designer.cs">
-      <DependentUpon>FormPreferences.cs</DependentUpon>
+    <Compile Include="View\PreferencesView.Designer.cs">
+      <DependentUpon>PreferencesView.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\FormPlan.cs">
+    <Compile Include="View\PlanView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\FormPlan.Designer.cs">
-      <DependentUpon>FormPlan.cs</DependentUpon>
+    <Compile Include="View\PlanView.Designer.cs">
+      <DependentUpon>PlanView.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\FormDataEntry.cs">
+    <Compile Include="View\PatientView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\FormDataEntry.Designer.cs">
-      <DependentUpon>FormDataEntry.cs</DependentUpon>
+    <Compile Include="View\PatientView.Designer.cs">
+      <DependentUpon>PatientView.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Goal.cs" />
     <Compile Include="Models\DietaryEntity.cs" />
@@ -130,14 +130,14 @@
     <Compile Include="Models\Plan.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="View\FormPreferences.resx">
-      <DependentUpon>FormPreferences.cs</DependentUpon>
+    <EmbeddedResource Include="View\PreferencesView.resx">
+      <DependentUpon>PreferencesView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\FormPlan.resx">
-      <DependentUpon>FormPlan.cs</DependentUpon>
+    <EmbeddedResource Include="View\PlanView.resx">
+      <DependentUpon>PlanView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\FormDataEntry.resx">
-      <DependentUpon>FormDataEntry.cs</DependentUpon>
+    <EmbeddedResource Include="View\PatientView.resx">
+      <DependentUpon>PatientView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

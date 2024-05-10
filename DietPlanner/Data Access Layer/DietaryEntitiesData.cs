@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DietPlanner.DAO
 {
-    internal static class DietaryEntityData
+    internal static class DietaryEntitiesData
     {
         private static FoodCategory foodCategoryTree;
         private static List<Food> allFoodsList;

@@ -15,8 +15,8 @@ namespace DietPlanner
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            DietaryEntityData.Initialize();
-            Application.Run(new FormDataEntry());
+            DietaryEntitiesData.Initialize();
+            Application.Run(new PatientView());
         }
     }
 }

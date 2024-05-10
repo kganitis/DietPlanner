@@ -47,12 +47,12 @@ namespace DietPlanner.Service
             };
 
             // Initialization
-            breakfast = DietaryEntityData.GetMealTypeByName("Breakfast");
-            lunch = DietaryEntityData.GetMealTypeByName("Lunch");
-            dinner = DietaryEntityData.GetMealTypeByName("Dinner");
-            snack = DietaryEntityData.GetMealTypeByName("Snack");
-            dessert = DietaryEntityData.GetMealTypeByName("Dessert");
-            cheatMeal = DietaryEntityData.GetMealTypeByName("Cheat Meal");
+            breakfast = DietaryEntitiesData.GetMealTypeByName("Breakfast");
+            lunch = DietaryEntitiesData.GetMealTypeByName("Lunch");
+            dinner = DietaryEntitiesData.GetMealTypeByName("Dinner");
+            snack = DietaryEntitiesData.GetMealTypeByName("Snack");
+            dessert = DietaryEntitiesData.GetMealTypeByName("Dessert");
+            cheatMeal = DietaryEntitiesData.GetMealTypeByName("Cheat Meal");
 
             InitializeMealTypeWeights();
 
@@ -128,7 +128,7 @@ namespace DietPlanner.Service
         private List<FoodCategory> DetermineAllowedFoodCategories()
         {
             var allowedCategories = new List<FoodCategory>();
-            AddNode(DietaryEntityData.GetFoodCategoryTree());
+            AddNode(DietaryEntitiesData.GetFoodCategoryTree());
             return allowedCategories;
 
             void AddNode(FoodCategory category)
@@ -146,7 +146,7 @@ namespace DietPlanner.Service
 
         private List<Food> DetermineAllowedFoods()
         {
-            return DietaryEntityData.GetAllFoodsList()
+            return DietaryEntitiesData.GetAllFoodsList()
                 .Where(food => foodCategoriesAllowed.Contains(food.Category))
                 .Where(food => !foodsAvoided.Contains(food))
                 .ToList();
@@ -154,12 +154,12 @@ namespace DietPlanner.Service
 
         private List<MealType> DetermineAllowedMealTypes()
         {
-            return DietaryEntityData.GetAllMealTypesList().Where(type => !mealTypesAvoided.Contains(type)).ToList();
+            return DietaryEntitiesData.GetAllMealTypesList().Where(type => !mealTypesAvoided.Contains(type)).ToList();
         }
 
         private List<Meal> DetermineAllowedMeals()
         {
-            return DietaryEntityData.GetAllMealsList()
+            return DietaryEntitiesData.GetAllMealsList()
                 .Where(meal => meal.Ingredients.All(ingredient => foodsAllowed.Contains(ingredient.Key)))
                 .Where(meal => mealTypesAllowed.Contains(meal.Type))
                 .Where(meal => !mealsAvoided.Contains(meal))
@@ -171,7 +171,7 @@ namespace DietPlanner.Service
             List<FoodCategory> preferredList = patient.PreferredFoods.OfType<FoodCategory>().ToList();
             List<FoodCategory> preferredAndDescendants = new List<FoodCategory>();
 
-            SearchForPreferredCategory(DietaryEntityData.GetFoodCategoryTree());
+            SearchForPreferredCategory(DietaryEntitiesData.GetFoodCategoryTree());
 
             foodCategoriesAllowed = foodCategoriesAllowed.Union(preferredAndDescendants).ToList();
 
@@ -230,7 +230,7 @@ namespace DietPlanner.Service
         {
             List<Meal> mealsPreferred = patient.PreferredFoods.OfType<Meal>().ToList();
 
-            List<Meal> mealsPreferredFromFoods = DietaryEntityData.GetAllMealsList()
+            List<Meal> mealsPreferredFromFoods = DietaryEntitiesData.GetAllMealsList()
                 .Where(meal => meal.Ingredients.Keys.Any(key => foodsPreferred.Contains(key)))
                 .ToList();
 

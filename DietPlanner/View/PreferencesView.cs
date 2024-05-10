@@ -7,12 +7,12 @@ using System.Windows.Forms;
 
 namespace DietPlanner.View
 {
-    public partial class FormPreferences : Form
+    public partial class PreferencesView : Form
     {
         private ListBox foodsListBoxToFill;
         private ListBox excludedListBox;
 
-        public FormPreferences(ListBox foodsListBoxToFill, ListBox excludedListBox)
+        public PreferencesView(ListBox foodsListBoxToFill, ListBox excludedListBox)
         {
             InitializeComponent();
             this.foodsListBoxToFill = foodsListBoxToFill;
@@ -161,11 +161,11 @@ namespace DietPlanner.View
 
         private void FormPreferences_Load(object sender, EventArgs e)
         {
-            FoodCategoryTree = DietaryEntityData.GetFoodCategoryTree();
+            FoodCategoryTree = DietaryEntitiesData.GetFoodCategoryTree();
             treeViewFoodCategories.ExpandAll();
-            AllFoods = DietaryEntityData.GetAllFoodsList();
-            AllMeals = DietaryEntityData.GetAllMealsList();
-            AllMealTypes = DietaryEntityData.GetAllMealTypesList();
+            AllFoods = DietaryEntitiesData.GetAllFoodsList();
+            AllMeals = DietaryEntitiesData.GetAllMealsList();
+            AllMealTypes = DietaryEntitiesData.GetAllMealTypesList();
         }
 
         private void buttonInsert_Click(object sender, EventArgs e)

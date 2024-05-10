@@ -19,98 +19,6 @@ namespace DietPlanner.DAO
          * and adds them to the appropriate patient's preferenece list,
          * then returns the patient instance.
          */
-        public static Patient GetPatientByID(string patientID)
-        {
-            Patient patient = null;
-
-            try
-            {
-                SQLiteConnection connection = DBUtil.GetConnection();
-
-                string query = "SELECT * FROM Patient WHERE Patient_id = @patientID";
-                SQLiteCommand command = new SQLiteCommand(query, connection);
-                command.Parameters.AddWithValue("@patientID", patientID);
-                SQLiteDataReader reader = command.ExecuteReader();
-
-                if (reader.Read())
-                {
-                    // Retrieve patient data from the Patient table
-                    string name = reader["Name"].ToString();
-                    string gender = reader["Gender"].ToString();
-                    string phoneNumber = reader["Phone_number"].ToString();
-
-                    string dateOfBirth = reader["Date_of_birth"].ToString();
-                    DateTime.TryParseExact(dateOfBirth, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate);
-
-                    float height = Convert.ToSingle(reader["Height"]);
-                    float weight = Convert.ToSingle(reader["Weight"]);
-                    float activityLevel = Convert.ToSingle(reader["Activity_level"]);
-                    int goal = int.Parse(reader["Goal"].ToString());
-
-                    patient = new Patient()
-                    {
-                        PatientID = patientID,
-                        Name = name,
-                        Gender = gender,
-                        PhoneNumber = phoneNumber,
-                        DateOfBirth = parsedDate,
-                        Height = height,
-                        Weight = weight,
-                        ActivityLevel = activityLevel,
-                        Goal = goal
-                    };
-
-                    // Retrieve patient preferences from the Patient_Preferences table
-                    query = @"SELECT Patient_id, Dietary_entity_id, Rule
-                                FROM Patient_Preferences
-                                WHERE Patient_id = @patientID";
-
-                    command = new SQLiteCommand(query, connection);
-                    command.Parameters.AddWithValue("@patientID", patientID);
-
-                    reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        string id = reader["Dietary_entity_id"].ToString();
-                        int rule = Convert.ToInt32(reader["Rule"]);
-
-                        // Add dietary entity to the appropriate list based on the rule
-                        if (rule == 1)
-                        {
-                            patient.PreferredFoods.Add(DietaryEntityData.GetDietaryEntityByID(id));
-                        }
-                        else if (rule == 0)
-                        {
-                            patient.FoodsToAvoid.Add(DietaryEntityData.GetDietaryEntityByID(id));
-                        }
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Δεν βρέθηκαν δεδομένα για τον ασθενή: " + patientID, "Μήνυμα", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                DBUtil.CloseConnection();
-            }
-
-            return patient;
-        }
-
-        /*
-         * Connects to the DB,
-         * READS patient data corresponding to the given patientID,
-         * creates a Patient instance,
-         * READS patient preferences data for the given patientID,
-         * fetches the dietary entity instances,
-         * and adds them to the appropriate patient's preferenece list,
-         * then returns the patient instance.
-         */
         public static Patient GetPatientByNameAndPhone(string name, string phoneNumber)
         {
             Patient patient = null;
@@ -171,11 +79,11 @@ namespace DietPlanner.DAO
                         // Add dietary entity to the appropriate list based on the rule
                         if (rule == 1)
                         {
-                            patient.PreferredFoods.Add(DietaryEntityData.GetDietaryEntityByID(entityID));
+                            patient.PreferredFoods.Add(DietaryEntitiesData.GetDietaryEntityByID(entityID));
                         }
                         else if (rule == 0)
                         {
-                            patient.FoodsToAvoid.Add(DietaryEntityData.GetDietaryEntityByID(entityID));
+                            patient.FoodsToAvoid.Add(DietaryEntitiesData.GetDietaryEntityByID(entityID));
                         }
                     }
                 }
@@ -301,7 +209,7 @@ namespace DietPlanner.DAO
                         Name = name,
                         Unit = unit,
                         Quantity = quantity,
-                        Category = DietaryEntityData.GetCategoryByID(categoryID),
+                        Category = DietaryEntitiesData.GetCategoryByID(categoryID),
                         Calories = calories,
                         Protein = proteins,
                         Carbs = carbs,
@@ -356,7 +264,7 @@ namespace DietPlanner.DAO
                     {
                         ID = mealId,
                         Name = name,
-                        Type = DietaryEntityData.GetMealTypeByID(typeId)
+                        Type = DietaryEntitiesData.GetMealTypeByID(typeId)
                     };
 
                     allMealsList.Add(meal);
@@ -375,7 +283,7 @@ namespace DietPlanner.DAO
                     float quantity = Convert.ToSingle(reader["Quantity"].ToString());
 
                     Meal meal = allMealsList.FirstOrDefault(m => m.ID == mealId);
-                    Food food = DietaryEntityData.GetFoodByID(foodId);
+                    Food food = DietaryEntitiesData.GetFoodByID(foodId);
                     meal.Ingredients.Add(food, quantity);
                 }
             }
@@ -633,7 +541,7 @@ namespace DietPlanner.DAO
 
                     MealItem mealItem = new MealItem()
                     {
-                        Meal = DietaryEntityData.GetMealByID(mealID),
+                        Meal = DietaryEntitiesData.GetMealByID(mealID),
                         Quantity = quantity,
                         Day = day,
                         TimeOfDay = timeOfDay

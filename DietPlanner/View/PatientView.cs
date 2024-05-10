@@ -7,9 +7,9 @@ using System.Windows.Forms;
 
 namespace DietPlanner.View
 {
-    public partial class FormDataEntry : Form
+    public partial class PatientView : Form
     {
-        FormPreferences formPreferences;
+        PreferencesView formPreferences;
 
         private Patient patient = null;
         private Plan plan = null;
@@ -332,7 +332,7 @@ namespace DietPlanner.View
 
         #endregion
 
-        public FormDataEntry()
+        public PatientView()
         {
             InitializeComponent();
         }
@@ -468,7 +468,7 @@ namespace DietPlanner.View
         {
             if (formPreferences == null || formPreferences.IsDisposed)
             {
-                formPreferences = new FormPreferences(listBoxToFill, exlcudedListBox);
+                formPreferences = new PreferencesView(listBoxToFill, exlcudedListBox);
                 formPreferences.Show();
             }
         }
@@ -491,6 +491,7 @@ namespace DietPlanner.View
                 listBox.Items.RemoveAt(selectedIndex);
             }
         }
+
         #endregion
 
         private void btnViewOrGeneratePlan_Click(object sender, EventArgs e)  
@@ -506,7 +507,7 @@ namespace DietPlanner.View
                 Plan = new Service.PlanGenerator(Patient).Plan;
             }
 
-            FormPlan formPlan = new FormPlan(this, Plan);
+            PlanView formPlan = new PlanView(this, Plan);
             formPlan.Show();
         }
 

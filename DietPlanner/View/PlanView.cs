@@ -8,15 +8,15 @@ using System.Windows.Forms;
 
 namespace DietPlanner.View
 {
-    public partial class FormPlan : Form
+    public partial class PlanView : Form
     {
-        private FormDataEntry dataEntry;
+        private PatientView dataEntry;
         private Plan plan;
         private TreeView[] treeViewDay;
 
         private Font boldFont;
 
-        internal FormPlan(FormDataEntry dataEntry, Plan plan)
+        internal PlanView(PatientView dataEntry, Plan plan)
         {
             InitializeComponent();
             this.dataEntry = dataEntry;
@@ -97,7 +97,7 @@ namespace DietPlanner.View
         private void btnRegeneratePlan_Click(object sender, EventArgs e)
         {
             Plan newPlan = new Service.PlanGenerator(plan.Patient).Plan;
-            FormPlan formPlan = new FormPlan(dataEntry, newPlan);
+            PlanView formPlan = new PlanView(dataEntry, newPlan);
             Hide();
             formPlan.Show();
             Close();
