@@ -1,4 +1,5 @@
-﻿using DietPlanner.DAO;
+﻿using DietPlanner.Controller;
+using DietPlanner.DAO;
 using DietPlanner.Model;
 using System;
 using System.Collections.Generic;
@@ -421,21 +422,28 @@ namespace DietPlanner.View
                 FoodsToAvoid = FoodsAvoided
             };
 
-            if (!DataAccess.SavePatientData(newPatientData))
+            PatientInsertController patientInsertController = new PatientInsertController();
+            patientInsertController.InsertNewPatient(newPatientData);
+
+            /*if (!DataAccess.SavePatientData(newPatientData))
             {
                 return false;
-            }
+            }*/
 
             Patient = newPatientData;
 
             if (Patient.PreferredFoods.Count > 0)
             {
-                DataAccess.SavePreferredFoodsForPatient(Patient);
+                SavePreferredFoodsController savePreferredFoodsController = new SavePreferredFoodsController();
+                savePreferredFoodsController.SavePreferredFoods(Patient);
+                //DataAccess.SavePreferredFoodsForPatient(Patient);
             }
 
             if (Patient.FoodsToAvoid.Count > 0)
             {
-                DataAccess.SaveFoodsAvoidedForPatient(Patient);
+                SaveAvoidedFoodsController saveAvoidedFoodsController = new SaveAvoidedFoodsController();
+                saveAvoidedFoodsController.SaveAvoidedFoods(Patient);
+                //DataAccess.SaveFoodsAvoidedForPatient(Patient);
             }
 
             return true;
