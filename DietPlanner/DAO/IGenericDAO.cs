@@ -9,8 +9,6 @@ namespace DietPlanner.DAO
     internal interface IGenericDAO<T>
     {
         bool Save(T entity);
-        //void Update (T entity, T newEntity);
-        //T Delete (T entity);
         //void ShowAllItems();
     }
 }
