@@ -53,18 +53,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <ManifestCertificateThumbprint>2625132232A122346DFB9D78CA46F30767062DD1</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>DietPlanner_TemporaryKey.pfx</ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>true</SignManifests>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -99,17 +87,17 @@
     <Compile Include="Data Access Layer\DBUtil.cs" />
     <Compile Include="Data Access Layer\DietaryEntitiesData.cs" />
     <Compile Include="Service\PlanGenerator.cs" />
-    <Compile Include="Models\ActivityLevel.cs" />
-    <Compile Include="Models\Goal.cs" />
-    <Compile Include="Models\DietaryEntity.cs" />
-    <Compile Include="Models\Food.cs" />
-    <Compile Include="Models\FoodCategory.cs" />
-    <Compile Include="Models\Gender.cs" />
-    <Compile Include="Models\Meal.cs" />
-    <Compile Include="Models\MealItem.cs" />
-    <Compile Include="Models\MealType.cs" />
-    <Compile Include="Models\Patient.cs" />
-    <Compile Include="Models\Plan.cs" />
+    <Compile Include="Model\ActivityLevel.cs" />
+    <Compile Include="Model\Goal.cs" />
+    <Compile Include="Model\DietaryEntity.cs" />
+    <Compile Include="Model\Food.cs" />
+    <Compile Include="Model\FoodCategory.cs" />
+    <Compile Include="Model\Gender.cs" />
+    <Compile Include="Model\Meal.cs" />
+    <Compile Include="Model\MealItem.cs" />
+    <Compile Include="Model\MealType.cs" />
+    <Compile Include="Model\Patient.cs" />
+    <Compile Include="Model\Plan.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\PatientView.cs">
