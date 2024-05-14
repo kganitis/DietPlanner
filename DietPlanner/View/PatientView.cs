@@ -453,7 +453,9 @@ namespace DietPlanner.View
 
         private void btnSearchPatient_Click(object sender, EventArgs e)
         {
-            Patient = DataAccess.GetPatientByNameAndPhone(PatientName, PhoneNumber);
+            GetPatienByNameAndPhoneController getPatienByNameAndPhoneController = new GetPatienByNameAndPhoneController();
+            Patient = getPatienByNameAndPhoneController.GetPatientByNameAndPhone(PatientName, PhoneNumber);
+            //Patient = DataAccess.GetPatientByNameAndPhone(PatientName, PhoneNumber);
         }
 
         private void UpdateSearchButtonState(object sender, EventArgs e)

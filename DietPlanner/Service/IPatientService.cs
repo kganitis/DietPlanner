@@ -12,5 +12,6 @@ namespace DietPlanner.Service
         void InsertPatient (Patient patient);
         void SavePreferredFoods(Patient patient);
         void SaveAvoidedFoods(Patient patient);
+        Patient GetPatientByNameAndPhone(string name, string phoneNumber);
     }
 }

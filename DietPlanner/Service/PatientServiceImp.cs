@@ -31,5 +31,10 @@ namespace DietPlanner.Service
         {
             _patientDAO.SaveFoodsAvoidedForPatient(patient);
         }
+
+        public Patient GetPatientByNameAndPhone(string name, string phoneNumber)
+        {
+            return _patientDAO.GetPatientByNameAndPhone(name, phoneNumber);
+        }
     }
 }

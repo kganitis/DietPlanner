@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -81,6 +82,100 @@ namespace DietPlanner.DAO
 
                 return success;
             
+        }
+
+        /*
+         * Connects to the DB,
+         * READS patient data corresponding to the given patientID,
+         * creates a Patient instance,
+         * READS patient preferences data for the given patientID,
+         * fetches the dietary entity instances,
+         * and adds them to the appropriate patient's preferenece list,
+         * then returns the patient instance.
+         */
+        public Patient GetPatientByNameAndPhone(string name, string phoneNumber)
+        {
+            Patient patient = null;
+
+            try
+            {
+                SQLiteConnection connection = DBUtil.GetConnection();
+
+                string query = "SELECT * FROM Patient WHERE Name LIKE @name AND Phone_number = @phoneNumber";
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@name", "%" + name + "%");
+                command.Parameters.AddWithValue("@phoneNumber", phoneNumber);
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    // Retrieve patient data from the Patient table
+                    string patientID = reader["Patient_id"].ToString();
+                    name = reader["Name"].ToString();
+                    string gender = reader["Gender"].ToString();
+                    phoneNumber = reader["Phone_number"].ToString();
+
+                    string dateOfBirth = reader["Date_of_birth"].ToString();
+                    DateTime.TryParseExact(dateOfBirth, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate);
+
+                    float height = Convert.ToSingle(reader["Height"]);
+                    float weight = Convert.ToSingle(reader["Weight"]);
+                    float activityLevel = Convert.ToSingle(reader["Activity_level"]);
+                    int goal = int.Parse(reader["Goal"].ToString());
+
+                    patient = new Patient()
+                    {
+                        PatientID = patientID,
+                        Name = name,
+                        Gender = gender,
+                        PhoneNumber = phoneNumber,
+                        DateOfBirth = parsedDate,
+                        Height = height,
+                        Weight = weight,
+                        ActivityLevel = activityLevel,
+                        Goal = goal
+                    };
+
+                    // Retrieve patient preferences from the Patient_Preferences table
+                    query = @"SELECT Patient_id, Dietary_entity_id, Rule
+                                FROM Patient_Preferences
+                                WHERE Patient_id = @patientID";
+
+                    command = new SQLiteCommand(query, connection);
+                    command.Parameters.AddWithValue("@patientID", patientID);
+
+                    reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        string entityID = reader["Dietary_entity_id"].ToString();
+                        int rule = Convert.ToInt32(reader["Rule"]);
+
+                        // Add dietary entity to the appropriate list based on the rule
+                        if (rule == 1)
+                        {
+                            patient.PreferredFoods.Add(DietaryEntitiesData.GetDietaryEntityByID(entityID));
+                        }
+                        else if (rule == 0)
+                        {
+                            patient.FoodsToAvoid.Add(DietaryEntitiesData.GetDietaryEntityByID(entityID));
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Δεν βρέθηκαν δεδομένα ασθενή με τα στοιχεία που δώσατε.", "Μήνυμα", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                DBUtil.CloseConnection();
+            }
+
+            return patient;
         }
 
         /*

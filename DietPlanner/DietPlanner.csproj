@@ -83,6 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\GetPatienByNameAndPhoneController.cs" />
     <Compile Include="Controller\PatientInsertController.cs" />
     <Compile Include="Controller\SaveAvoidedFoodsController.cs" />
     <Compile Include="Controller\SavePreferredFoodsController.cs" />
