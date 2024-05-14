@@ -425,10 +425,12 @@ namespace DietPlanner.View
             PatientInsertController patientInsertController = new PatientInsertController();
             patientInsertController.InsertNewPatient(newPatientData);
 
-            /*if (!DataAccess.SavePatientData(newPatientData))
+            /*if (!DataAccess.SavePatientData(newPatientData)) 
             {
                 return false;
-            }*/
+            }
+             * v1 code
+             */ 
 
             Patient = newPatientData;
 
@@ -436,14 +438,14 @@ namespace DietPlanner.View
             {
                 SavePreferredFoodsController savePreferredFoodsController = new SavePreferredFoodsController();
                 savePreferredFoodsController.SavePreferredFoods(Patient);
-                //DataAccess.SavePreferredFoodsForPatient(Patient);
+                //DataAccess.SavePreferredFoodsForPatient(Patient); v1 code
             }
 
             if (Patient.FoodsToAvoid.Count > 0)
             {
                 SaveAvoidedFoodsController saveAvoidedFoodsController = new SaveAvoidedFoodsController();
                 saveAvoidedFoodsController.SaveAvoidedFoods(Patient);
-                //DataAccess.SaveFoodsAvoidedForPatient(Patient);
+                //DataAccess.SaveFoodsAvoidedForPatient(Patient); v1 code
             }
 
             return true;
@@ -455,7 +457,7 @@ namespace DietPlanner.View
         {
             GetPatienByNameAndPhoneController getPatienByNameAndPhoneController = new GetPatienByNameAndPhoneController();
             Patient = getPatienByNameAndPhoneController.GetPatientByNameAndPhone(PatientName, PhoneNumber);
-            //Patient = DataAccess.GetPatientByNameAndPhone(PatientName, PhoneNumber);
+            //Patient = DataAccess.GetPatientByNameAndPhone(PatientName, PhoneNumber); v1 code
         }
 
         private void UpdateSearchButtonState(object sender, EventArgs e)
@@ -511,7 +513,10 @@ namespace DietPlanner.View
                 return;
             }
 
-            Plan = DataAccess.GetPlanForPatient(Patient);
+            GetPlanForPatientController getPlanForPatientController = new GetPlanForPatientController();
+            Plan = getPlanForPatientController.GetPlanForPatient(Patient);
+
+            //Plan = DataAccess.GetPlanForPatient(Patient); //v1 code
             if (Plan == null)
             {
                 Plan = new Service.PlanGenerator(Patient).Plan;
