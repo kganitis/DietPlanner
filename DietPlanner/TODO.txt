@@ -6,14 +6,8 @@ TO DO NEXT (02 May 2024 16:45)
 - SOA Integration
 
 - Curate foods and meal data
-	- Revise units and quantities
-		- Make less use of 'grams' as a unit
 	- Triple the number of snacks
-	- Make a clear separation of snacks, desserts and cheat meals
-		- Desserts should be sweet
-		- Cheat meals should be proper meals, not desserts
-		- Snacks should be neutral, with few calories and no sugar
-	- Translate to greek
+	- Double the number of breakfasts
 ===============================================================================
 
 
