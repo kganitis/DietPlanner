@@ -309,7 +309,9 @@ namespace DietPlanner.View
                 else
                 {
                     FillFormWithPatientData();
-                    Plan = DataAccess.GetPlanForPatient(value);
+                    GetPlanForPatientController getPlanForPatientController = new GetPlanForPatientController();
+                    Plan = getPlanForPatientController.GetPlanForPatient(patient);
+                    //Plan = DataAccess.GetPlanForPatient(value);
                 }
             }
         }

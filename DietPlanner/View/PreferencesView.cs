@@ -1,5 +1,6 @@
 ﻿using DietPlanner.DAO;
 using DietPlanner.Model;
+using DietPlanner.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -161,11 +162,12 @@ namespace DietPlanner.View
 
         private void FormPreferences_Load(object sender, EventArgs e)
         {
-            FoodCategoryTree = DietaryEntitiesData.GetFoodCategoryTree();
+            DietaryEntityServiceImp dietaryEntityService = DietaryEntityServiceImp.getInstance();
+            FoodCategoryTree = dietaryEntityService.GetFoodCategoryTree();
             treeViewFoodCategories.ExpandAll();
-            AllFoods = DietaryEntitiesData.GetAllFoodsList();
-            AllMeals = DietaryEntitiesData.GetAllMealsList();
-            AllMealTypes = DietaryEntitiesData.GetAllMealTypesList();
+            AllFoods = dietaryEntityService.GetAllFoodsList();
+            AllMeals = dietaryEntityService.GetAllMealsList();
+            AllMealTypes = dietaryEntityService.GetAllMealTypesList();
         }
 
         private void buttonInsert_Click(object sender, EventArgs e)

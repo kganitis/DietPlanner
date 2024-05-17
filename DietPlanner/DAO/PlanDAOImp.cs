@@ -1,4 +1,5 @@
 ﻿using DietPlanner.Model;
+using DietPlanner.Service;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -87,7 +88,7 @@ namespace DietPlanner.DAO
 
                     MealItem mealItem = new MealItem()
                     {
-                        Meal = DietaryEntitiesData.GetMealByID(mealID),
+                        Meal = DietaryEntityServiceImp.getInstance().GetMealByID(mealID),
                         Quantity = quantity,
                         Day = day,
                         TimeOfDay = timeOfDay

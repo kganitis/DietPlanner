@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace DietPlanner.DAO
 {
-    internal interface IPlanDAO : IGenericDAO<Plan>
+    internal interface IPlanDAO
     {
+        bool Save(Plan plan);
         Plan GetPlanForPatient(Patient patient);
     }
 }

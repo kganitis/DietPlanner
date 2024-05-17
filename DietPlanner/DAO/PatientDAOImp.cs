@@ -1,4 +1,5 @@
 ﻿using DietPlanner.Model;
+using DietPlanner.Service;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -153,11 +154,11 @@ namespace DietPlanner.DAO
                         // Add dietary entity to the appropriate list based on the rule
                         if (rule == 1)
                         {
-                            patient.PreferredFoods.Add(DietaryEntitiesData.GetDietaryEntityByID(entityID));
+                            patient.PreferredFoods.Add(DietaryEntityServiceImp.getInstance().GetDietaryEntityByID(entityID));
                         }
                         else if (rule == 0)
                         {
-                            patient.FoodsToAvoid.Add(DietaryEntitiesData.GetDietaryEntityByID(entityID));
+                            patient.FoodsToAvoid.Add(DietaryEntityServiceImp.getInstance().GetDietaryEntityByID(entityID));
                         }
                     }
                 }

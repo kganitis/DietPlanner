@@ -1,33 +1,58 @@
-﻿using DietPlanner.Model;
+﻿using DietPlanner.DAO;
+using DietPlanner.Model;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DietPlanner.DAO
+namespace DietPlanner.Service
 {
-    internal static class DietaryEntitiesData
+    internal sealed class DietaryEntityServiceImp : IDietaryEntityService
     {
-        private static FoodCategory foodCategoryTree;
-        private static List<Food> allFoodsList;
-        private static List<Meal> allMealsList;
-        private static List<MealType> allMealTypesList;
-
-        public static void Initialize()
+        private FoodCategory foodCategoryTree;
+        private List<Food> allFoodsList;
+        private List<Meal> allMealsList;
+        private List<MealType> allMealTypesList;
+        private static DietaryEntityServiceImp instance;
+        private static readonly object lockObj = new object();
+        public static DietaryEntityServiceImp getInstance() 
         {
-            foodCategoryTree = DataAccess.GetFoodCategoryTree();
-            allFoodsList = DataAccess.GetAllFoodData();
-            allMealTypesList = DataAccess.GetAllMealTypeData();
-            allMealsList = DataAccess.GetAllMealData();
+            if (instance == null)
+            {
+                lock (lockObj)
+                {
+                    if (instance == null)
+                    {
+                        instance = new DietaryEntityServiceImp();
+                    }
+                }
+                
+            }   
+            return instance;
         }
 
-        public static FoodCategory GetFoodCategoryTree() => foodCategoryTree;
+        public void Initialize()
+        {
+            DietaryEntityDAOImp dietaryEntityDAOImp = new DietaryEntityDAOImp();
 
-        public static List<Food> GetAllFoodsList() => allFoodsList;
+            foodCategoryTree = dietaryEntityDAOImp.GetFoodCategoryTree();
+            allFoodsList = dietaryEntityDAOImp.GetAllFoods();
+            allMealTypesList = dietaryEntityDAOImp.GetAllMealTypes();
+            allMealsList = dietaryEntityDAOImp.GetAllMeals();
+        }
+
+        private DietaryEntityServiceImp()
+        {
+            
+        }
+
+        public FoodCategory GetFoodCategoryTree() => foodCategoryTree;
+
+        public List<Food> GetAllFoodsList() => allFoodsList;
         
-        public static List<Meal> GetAllMealsList() => allMealsList;
+        public List<Meal> GetAllMealsList() => allMealsList;
 
-        public static List<MealType> GetAllMealTypesList() => allMealTypesList;
+        public List<MealType> GetAllMealTypesList() => allMealTypesList;
 
-        public static FoodCategory GetCategoryByID(string ID)
+        public FoodCategory GetCategoryByID(string ID)
         {
             return FindCategoryInTreeRecursive(foodCategoryTree);
 
@@ -52,7 +77,7 @@ namespace DietPlanner.DAO
             }
         }
 
-        public static FoodCategory GetCategoryByName(string name)
+        public FoodCategory GetCategoryByName(string name)
         {
             return FindCategoryInTreeRecursive(foodCategoryTree);
 
@@ -77,37 +102,37 @@ namespace DietPlanner.DAO
             }
         }
 
-        public static Food GetFoodByID(string ID)
+        public Food GetFoodByID(string ID)
         {
             return allFoodsList.FirstOrDefault(food => food.ID == ID);
         }
 
-        public static Food GetFoodByName(string name)
+        public Food GetFoodByName(string name)
         {
             return allFoodsList.FirstOrDefault(food => food.Name == name);
         }
 
-        public static Meal GetMealByID(string ID)
+        public Meal GetMealByID(string ID)
         {
             return allMealsList.FirstOrDefault(meal => meal.ID == ID);
         }
 
-        public static Meal GetMealByName(string name)
+        public Meal GetMealByName(string name)
         {
             return allMealsList.FirstOrDefault(meal => meal.Name == name);
         }
 
-        public static MealType GetMealTypeByID(string ID)
+        public MealType GetMealTypeByID(string ID)
         {
             return allMealTypesList.FirstOrDefault(type => type.ID == ID);
         }
 
-        public static MealType GetMealTypeByName(string name)
+        public MealType GetMealTypeByName(string name)
         {
             return allMealTypesList.FirstOrDefault(type => type.Name == name);
         }
 
-        public static DietaryEntity GetDietaryEntityByID(string ID)
+        public DietaryEntity GetDietaryEntityByID(string ID)
         {
             FoodCategory category = GetCategoryByID(ID);
             Food food = GetFoodByID(ID);
@@ -121,7 +146,7 @@ namespace DietPlanner.DAO
             else { return null; }
         }
 
-        public static DietaryEntity GetDietaryEntityByName(string name)
+        public DietaryEntity GetDietaryEntityByName(string name)
         {
             FoodCategory category = GetCategoryByName(name);
             Food food = GetFoodByName(name);
