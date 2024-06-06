@@ -1,23 +1,29 @@
-﻿using DietPlanner.DAO;
-using DietPlanner.Model;
+﻿using DietPlanner.Model;
 using DietPlanner.Service;
+using System.Collections.Generic;
 
 namespace DietPlanner.Controller
 {
     internal class DietaryEntityController
     {
-        public void SavePreferredFoods(Patient patient)
+        public FoodCategory GetFoodCategoryTree()
         {
-            IPatientDAO patientDAO = new PatientDAOImp();
-            IPatientService patientService = new PatientServiceImp(patientDAO);
-            patientService.SavePreferredFoods(patient);
+            return DietaryEntityServiceImp.Instance().GetFoodCategoryTree();
         }
 
-        public void SaveAvoidedFoods(Patient patient)
+        public List<Food> GetAllFoodsList()
         {
-            IPatientDAO patientDAO = new PatientDAOImp();
-            IPatientService patientService = new PatientServiceImp(patientDAO);
-            patientService.SaveAvoidedFoods(patient);
+            return DietaryEntityServiceImp.Instance().GetAllFoodsList();
+        }
+
+        public List<Meal> GetAllMealsList()
+        {
+            return DietaryEntityServiceImp.Instance().GetAllMealsList();
+        }
+
+        public List<MealType> GetAllMealTypesList()
+        {
+            return DietaryEntityServiceImp.Instance().GetAllMealTypesList();
         }
     }
 }

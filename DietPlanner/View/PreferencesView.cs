@@ -1,5 +1,5 @@
-﻿using DietPlanner.Model;
-using DietPlanner.Service;
+﻿using DietPlanner.Controller;
+using DietPlanner.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,8 @@ namespace DietPlanner.View
 {
     public partial class PreferencesView : Form
     {
+        private DietaryEntityController dietaryEntityController = new DietaryEntityController();
+
         private ListBox foodsListBoxToFill;
         private ListBox excludedListBox;
 
@@ -161,12 +163,11 @@ namespace DietPlanner.View
 
         private void FormPreferences_Load(object sender, EventArgs e)
         {
-            DietaryEntityServiceImp dietaryEntityService = DietaryEntityServiceImp.Instance();
-            FoodCategoryTree = dietaryEntityService.GetFoodCategoryTree();
+            FoodCategoryTree = dietaryEntityController.GetFoodCategoryTree();
             treeViewFoodCategories.ExpandAll();
-            AllFoods = dietaryEntityService.GetAllFoodsList();
-            AllMeals = dietaryEntityService.GetAllMealsList();
-            AllMealTypes = dietaryEntityService.GetAllMealTypesList();
+            AllFoods = dietaryEntityController.GetAllFoodsList();
+            AllMeals = dietaryEntityController.GetAllMealsList();
+            AllMealTypes = dietaryEntityController.GetAllMealTypesList();
         }
 
         private void buttonInsert_Click(object sender, EventArgs e)

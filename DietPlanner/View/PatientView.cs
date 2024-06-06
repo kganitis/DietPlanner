@@ -10,7 +10,6 @@ namespace DietPlanner.View
     public partial class PatientView : Form
     {
         private PatientController patientController = new PatientController();
-        private DietaryEntityController dietaryEntityController = new DietaryEntityController();
         private PlanController planController = new PlanController();
 
         private PreferencesView formPreferences;
@@ -434,12 +433,12 @@ namespace DietPlanner.View
 
             if (Patient.PreferredFoods.Count > 0)
             {
-                dietaryEntityController.SavePreferredFoods(Patient);
+                patientController.SavePreferredFoodsForPatient(Patient);
             }
 
             if (Patient.FoodsToAvoid.Count > 0)
             {
-                dietaryEntityController.SaveAvoidedFoods(Patient);
+                patientController.SaveAvoidedFoodsForPatient(Patient);
             }
 
             return true;
@@ -509,7 +508,7 @@ namespace DietPlanner.View
 
             if (Plan == null)
             {
-                Plan = new Service.PlanGenerator(Patient).Plan;
+                Plan = planController.GeneratePlanForPatient(Patient);
             }
 
             PlanView formPlan = new PlanView(this, Plan);

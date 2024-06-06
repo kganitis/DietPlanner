@@ -1,10 +1,5 @@
 ﻿using DietPlanner.DAO;
 using DietPlanner.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DietPlanner.Service
 {
@@ -22,12 +17,12 @@ namespace DietPlanner.Service
             return _patientDAO.Save(patient);
         }
 
-        public void SavePreferredFoods(Patient patient)
+        public void SavePreferredFoodsForPatient(Patient patient)
         {
             _patientDAO.SavePreferredFoodsForPatient(patient);
         }
 
-        public void SaveAvoidedFoods(Patient patient)
+        public void SaveAvoidedFoodsForPatient(Patient patient)
         {
             _patientDAO.SaveFoodsAvoidedForPatient(patient);
         }

@@ -21,6 +21,4 @@ namespace DietPlanner.Model
         internal List<MealItem> MealPlan { get => mealPlan; set => mealPlan = value; }
         public int MealsPerDay { get => mealsPerDay; set => mealsPerDay = value; }
     }
-
-
 }

@@ -1,12 +1,8 @@
 ﻿using DietPlanner.Model;
 using DietPlanner.Service;
 using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DietPlanner.DAO
@@ -23,14 +19,14 @@ namespace DietPlanner.DAO
         public bool Save(Patient patient)
         {
                         
-                string query = String.Empty;
+                string query = string.Empty;
                 SQLiteCommand command;
                 bool success = false;
                 try
                 {
                     SQLiteConnection connection = DBUtil.GetConnection();
                     // Generate a new ID if needed
-                    if (String.IsNullOrEmpty(patient.PatientID))
+                    if (string.IsNullOrEmpty(patient.PatientID))
                     {
                         // Get the maximum patient_id value
                         query = "SELECT MAX(CAST(SUBSTR(Patient_id, 2) AS INTEGER)) FROM Patient";
@@ -185,7 +181,7 @@ namespace DietPlanner.DAO
          */
         public void SavePreferredFoodsForPatient(Patient patient) 
         {
-            string query = String.Empty;
+            string query = string.Empty;
             SQLiteCommand command;
 
             try
@@ -228,7 +224,7 @@ namespace DietPlanner.DAO
          */
         public void SaveFoodsAvoidedForPatient(Patient patient) 
         {
-            string query = String.Empty;
+            string query = string.Empty;
             SQLiteCommand command;
 
             try

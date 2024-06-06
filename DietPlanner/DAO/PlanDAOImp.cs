@@ -1,18 +1,14 @@
 ﻿using DietPlanner.Model;
 using DietPlanner.Service;
 using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DietPlanner.DAO
 {
     internal class PlanDAOImp : IPlanDAO
     {
-        public bool Save (Plan plan)
+        public bool Save(Plan plan)
         {
             bool success = false;
 
@@ -20,7 +16,7 @@ namespace DietPlanner.DAO
             {
                 SQLiteConnection connection = DBUtil.GetConnection();
 
-                // First clear any existing _plan for the patient
+                // First clear any existing plan for the patient
                 string query = "DELETE FROM Plan WHERE Patient_id = @patientID";
 
                 SQLiteCommand command = new SQLiteCommand(query, connection);
@@ -28,7 +24,7 @@ namespace DietPlanner.DAO
 
                 command.ExecuteNonQuery();
 
-                // Insert new _plan data
+                // Insert new plan data
                 foreach (var mealItem in plan.MealPlan)
                 {
                     query = "INSERT INTO Plan (Patient_id, Day, Time_of_day, Meal_id, Quantity) VALUES (@patientID, @day, @time, @mealID, @quantity)";

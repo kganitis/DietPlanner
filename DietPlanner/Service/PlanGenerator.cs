@@ -64,8 +64,6 @@ namespace DietPlanner.Service
 
             AdjustParametersBasedOnMealTypes();
 
-            // PrintAllLists();
-
             GeneratePlan();
         }
 
@@ -415,79 +413,6 @@ namespace DietPlanner.Service
                 T value = list[k];
                 list[k] = list[n];
                 list[n] = value;
-            }
-        }
-
-        #endregion
-
-        #region Printing methods
-
-        private void PrintList<T>(string title, List<T> list) where T : DietaryEntity
-        {
-            Console.WriteLine(title);
-            Console.WriteLine("===========================================");
-            foreach (var entity in list)
-            {
-                Console.WriteLine("-" + entity.Name);
-            }
-            Console.WriteLine();
-        }
-
-        private void PrintAllLists()
-        {
-            PrintList("Food Categories Allowed:", foodCategoriesAllowed);
-            PrintList("Food Categories Preferred:", foodCategoriesPreferred);
-            PrintList("Food Categories Avoided:", foodCategoriesAvoided);
-
-            PrintList("Foods Allowed:", foodsAllowed);
-            PrintList("Foods Preferred:", foodsPreferred);
-            PrintList("Foods Avoided:", foodsAvoided);
-
-            PrintList("Meals Allowed:", mealsAllowed);
-            PrintList("Meals Preferred:", mealsPreferred);
-            PrintList("Meals Avoided:", mealsAvoided);
-
-            PrintList("Meal Types Allowed:", mealTypesAllowed);
-            PrintList("Meal Types Preferred:", mealTypesPreferred);
-            PrintList("Meal Types Avoided:", mealTypesAvoided);
-        }
-
-        private void PrintPlan()
-        {
-            Console.WriteLine($"Plan for Patient ID: {_plan.Patient.PatientID}");
-            Console.WriteLine("===========================================");
-            Console.WriteLine($"Daily Calorie Goal: {dailyCalorieGoal} kcal");
-            Console.WriteLine();
-
-            for (int day = 1; day <= 7; day++)
-            {
-                float totalCaloriesForDay = 0;
-
-                Console.WriteLine($"Day {day}:");
-                Console.WriteLine("-------------------------------------------");
-
-                for (int timeOfDay = 1; timeOfDay <= 6; timeOfDay++)
-                {
-                    var mealItem = _plan.MealPlan.FirstOrDefault(item => item.Day == day && item.TimeOfDay == timeOfDay);
-                    if (mealItem != null)
-                    {
-                        float mealCalories = mealItem.Meal.Calories * mealItem.Quantity;
-                        totalCaloriesForDay += mealCalories;
-
-                        Console.WriteLine($"Time of Day: {mealItem.Meal.Type.Name}");
-                        Console.WriteLine($"Meal: {mealItem.Meal.Name} (Quantity: {mealItem.Quantity})");
-                        Console.WriteLine($"Calories: {mealCalories} kcal");
-                        Console.WriteLine("Ingredients:");
-                        foreach (var ingredient in mealItem.Ingredients)
-                        {
-                            Console.WriteLine($"- {ingredient.Key.Name}: {ingredient.Value * ingredient.Key.Quantity} {ingredient.Key.Unit}");
-                        }
-                        Console.WriteLine();
-                    }
-                }
-
-                Console.WriteLine($"Total Calories for Day {day}: {totalCaloriesForDay} kcal");
-                Console.WriteLine();
             }
         }
 

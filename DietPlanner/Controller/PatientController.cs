@@ -6,18 +6,26 @@ namespace DietPlanner.Controller
 {
     internal class PatientController
     {
+        IPatientService patientService = new PatientServiceImp(new PatientDAOImp());
+
         public bool InsertNewPatient(Patient patient)
         {
-            IPatientDAO patientDAO = new PatientDAOImp();
-            IPatientService patientService = new PatientServiceImp(patientDAO);
             return patientService.InsertPatient(patient);
         }
 
         public Patient GetPatientByNameAndPhone(string name, string phoneNumber)
         {
-            IPatientDAO patientDAO = new PatientDAOImp();
-            IPatientService patientService = new PatientServiceImp(patientDAO);
             return patientService.GetPatientByNameAndPhone(name, phoneNumber);
+        }
+
+        public void SavePreferredFoodsForPatient(Patient patient)
+        {
+            patientService.SavePreferredFoodsForPatient(patient);
+        }
+
+        public void SaveAvoidedFoodsForPatient(Patient patient)
+        {
+            patientService.SaveAvoidedFoodsForPatient(patient);
         }
     }
 }

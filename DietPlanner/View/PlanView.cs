@@ -10,6 +10,8 @@ namespace DietPlanner.View
 {
     public partial class PlanView : Form
     {
+        private PlanController planController = new PlanController();
+
         private PatientView dataEntry;
         private Plan plan;
         private TreeView[] treeViewDay;
@@ -87,7 +89,6 @@ namespace DietPlanner.View
 
         private void btnSavePlan_Click(object sender, EventArgs e)
         {
-            PlanController planController = new PlanController();
             if (planController.SavePlan(plan)) 
             {
                 MessageBox.Show("Το πλάνο αποθηκεύτηκε με επιτυχία!");
@@ -97,7 +98,7 @@ namespace DietPlanner.View
 
         private void btnRegeneratePlan_Click(object sender, EventArgs e)
         {
-            Plan newPlan = new Service.PlanGenerator(plan.Patient).Plan;
+            Plan newPlan = planController.GeneratePlanForPatient(plan.Patient);
             PlanView formPlan = new PlanView(dataEntry, newPlan);
             Hide();
             formPlan.Show();
