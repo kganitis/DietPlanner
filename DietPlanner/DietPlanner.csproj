@@ -83,12 +83,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\GetPatienByNameAndPhoneController.cs" />
-    <Compile Include="Controller\GetPlanForPatientController.cs" />
-    <Compile Include="Controller\PatientInsertController.cs" />
-    <Compile Include="Controller\SaveAvoidedFoodsController.cs" />
-    <Compile Include="Controller\SavePlanController.cs" />
-    <Compile Include="Controller\SavePreferredFoodsController.cs" />
+    <Compile Include="Controller\DietaryEntityController.cs" />
+    <Compile Include="Controller\PatientController.cs" />
+    <Compile Include="Controller\PlanController.cs" />
     <Compile Include="DAO\DietaryEntityDAOImp.cs" />
     <Compile Include="DAO\IDietaryEntityDAO.cs" />
     <Compile Include="DAO\IPatientDAO.cs" />

@@ -17,9 +17,9 @@ namespace DietPlanner.Service
             _patientDAO = patientDAO;
         }
 
-        public void InsertPatient(Patient patient)
+        public bool InsertPatient(Patient patient)
         {
-            _patientDAO.Save(patient);
+            return _patientDAO.Save(patient);
         }
 
         public void SavePreferredFoods(Patient patient)

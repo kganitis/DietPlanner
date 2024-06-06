@@ -1,5 +1,4 @@
-﻿using DietPlanner.DAO;
-using DietPlanner.Model;
+﻿using DietPlanner.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +7,10 @@ namespace DietPlanner.Service
 {
     internal class PlanGenerator
     {
-        private DietaryEntityServiceImp dietaryEntityService = DietaryEntityServiceImp.getInstance();
-        private readonly Plan plan;
+        private DietaryEntityServiceImp dietaryEntityService = DietaryEntityServiceImp.Instance();
+        private readonly Plan _plan;
 
-        public Plan Plan => plan;
+        public Plan Plan => _plan;
 
         // Lists for dietary entities
         private List<FoodCategory> foodCategoriesAllowed, foodCategoriesPreferred, foodCategoriesAvoided;
@@ -41,7 +40,7 @@ namespace DietPlanner.Service
 
         public PlanGenerator(Patient patient)
         {
-            plan = new Plan()
+            _plan = new Plan()
             {
                 Patient = patient,
                 MealsPerDay = mealsPerDay,
@@ -312,7 +311,7 @@ namespace DietPlanner.Service
 
                 float quantity = CalculateQuantityForMeal(selectedMeal, remainingCalories, remainingWeightedMeals);
 
-                plan.MealPlan.Add(new MealItem(selectedMeal, quantity, day, time));
+                _plan.MealPlan.Add(new MealItem(selectedMeal, quantity, day, time));
 
                 mealsSelectedForDay.Add(selectedMeal);
 
@@ -455,7 +454,7 @@ namespace DietPlanner.Service
 
         private void PrintPlan()
         {
-            Console.WriteLine($"Plan for Patient ID: {plan.Patient.PatientID}");
+            Console.WriteLine($"Plan for Patient ID: {_plan.Patient.PatientID}");
             Console.WriteLine("===========================================");
             Console.WriteLine($"Daily Calorie Goal: {dailyCalorieGoal} kcal");
             Console.WriteLine();
@@ -469,7 +468,7 @@ namespace DietPlanner.Service
 
                 for (int timeOfDay = 1; timeOfDay <= 6; timeOfDay++)
                 {
-                    var mealItem = plan.MealPlan.FirstOrDefault(item => item.Day == day && item.TimeOfDay == timeOfDay);
+                    var mealItem = _plan.MealPlan.FirstOrDefault(item => item.Day == day && item.TimeOfDay == timeOfDay);
                     if (mealItem != null)
                     {
                         float mealCalories = mealItem.Meal.Calories * mealItem.Quantity;

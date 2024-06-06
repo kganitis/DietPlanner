@@ -20,7 +20,7 @@ namespace DietPlanner.DAO
             {
                 SQLiteConnection connection = DBUtil.GetConnection();
 
-                // First clear any existing plan for the patient
+                // First clear any existing _plan for the patient
                 string query = "DELETE FROM Plan WHERE Patient_id = @patientID";
 
                 SQLiteCommand command = new SQLiteCommand(query, connection);
@@ -28,7 +28,7 @@ namespace DietPlanner.DAO
 
                 command.ExecuteNonQuery();
 
-                // Insert new plan data
+                // Insert new _plan data
                 foreach (var mealItem in plan.MealPlan)
                 {
                     query = "INSERT INTO Plan (Patient_id, Day, Time_of_day, Meal_id, Quantity) VALUES (@patientID, @day, @time, @mealID, @quantity)";
@@ -88,7 +88,7 @@ namespace DietPlanner.DAO
 
                     MealItem mealItem = new MealItem()
                     {
-                        Meal = DietaryEntityServiceImp.getInstance().GetMealByID(mealID),
+                        Meal = DietaryEntityServiceImp.Instance().GetMealByID(mealID),
                         Quantity = quantity,
                         Day = day,
                         TimeOfDay = timeOfDay

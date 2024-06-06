@@ -1,10 +1,5 @@
 ﻿using DietPlanner.DAO;
 using DietPlanner.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DietPlanner.Service
 {
@@ -25,6 +20,11 @@ namespace DietPlanner.Service
         public Plan GetPlanForPatient(Patient patient)
         {
             return _planDAO.GetPlanForPatient(patient);
+        }
+
+        public Plan GeneratePlanForPatient(Patient patient)
+        {
+            return new PlanGenerator(patient).Plan;
         }
     }
 }

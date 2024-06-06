@@ -154,11 +154,11 @@ namespace DietPlanner.DAO
                         // Add dietary entity to the appropriate list based on the rule
                         if (rule == 1)
                         {
-                            patient.PreferredFoods.Add(DietaryEntityServiceImp.getInstance().GetDietaryEntityByID(entityID));
+                            patient.PreferredFoods.Add(DietaryEntityServiceImp.Instance().GetDietaryEntityByID(entityID));
                         }
                         else if (rule == 0)
                         {
-                            patient.FoodsToAvoid.Add(DietaryEntityServiceImp.getInstance().GetDietaryEntityByID(entityID));
+                            patient.FoodsToAvoid.Add(DietaryEntityServiceImp.Instance().GetDietaryEntityByID(entityID));
                         }
                     }
                 }

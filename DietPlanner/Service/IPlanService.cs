@@ -1,9 +1,4 @@
 ﻿using DietPlanner.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DietPlanner.Service
 {
@@ -11,5 +6,6 @@ namespace DietPlanner.Service
     {
         bool SavePlan(Plan plan);
         Plan GetPlanForPatient(Patient patient);
+        Plan GeneratePlanForPatient(Patient patient);
     }
 }

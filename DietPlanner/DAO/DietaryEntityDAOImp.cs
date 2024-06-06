@@ -117,7 +117,7 @@ namespace DietPlanner.DAO
                         Name = name,
                         Unit = unit,
                         Quantity = quantity,
-                        Category = DietaryEntityServiceImp.getInstance().GetCategoryByID(categoryID),
+                        Category = DietaryEntityServiceImp.Instance().GetCategoryByID(categoryID),
                         Calories = calories,
                         Protein = proteins,
                         Carbs = carbs,
@@ -172,7 +172,7 @@ namespace DietPlanner.DAO
                     {
                         ID = mealId,
                         Name = name,
-                        Type = DietaryEntityServiceImp.getInstance().GetMealTypeByID(typeId)
+                        Type = DietaryEntityServiceImp.Instance().GetMealTypeByID(typeId)
                     };
 
                     allMealsList.Add(meal);
@@ -191,7 +191,7 @@ namespace DietPlanner.DAO
                     float quantity = Convert.ToSingle(reader["Quantity"].ToString());
 
                     Meal meal = allMealsList.FirstOrDefault(m => m.ID == mealId);
-                    Food food = DietaryEntityServiceImp.getInstance().GetFoodByID(foodId);
+                    Food food = DietaryEntityServiceImp.Instance().GetFoodByID(foodId);
                     meal.Ingredients.Add(food, quantity);
                 }
             }

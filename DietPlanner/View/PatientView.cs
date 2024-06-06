@@ -1,5 +1,4 @@
 ﻿using DietPlanner.Controller;
-using DietPlanner.DAO;
 using DietPlanner.Model;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,11 @@ namespace DietPlanner.View
 {
     public partial class PatientView : Form
     {
-        PreferencesView formPreferences;
+        private PatientController patientController = new PatientController();
+        private DietaryEntityController dietaryEntityController = new DietaryEntityController();
+        private PlanController planController = new PlanController();
+
+        private PreferencesView formPreferences;
 
         private Patient patient = null;
         private Plan plan = null;
@@ -309,9 +312,7 @@ namespace DietPlanner.View
                 else
                 {
                     FillFormWithPatientData();
-                    GetPlanForPatientController getPlanForPatientController = new GetPlanForPatientController();
-                    Plan = getPlanForPatientController.GetPlanForPatient(patient);
-                    //Plan = DataAccess.GetPlanForPatient(value);
+                    Plan = planController.GetPlanForPatient(patient);
                 }
             }
         }
@@ -424,30 +425,21 @@ namespace DietPlanner.View
                 FoodsToAvoid = FoodsAvoided
             };
 
-            PatientInsertController patientInsertController = new PatientInsertController();
-            patientInsertController.InsertNewPatient(newPatientData);
-
-            /*if (!DataAccess.SavePatientData(newPatientData)) 
+            if (!patientController.InsertNewPatient(newPatientData))
             {
                 return false;
             }
-             * v1 code
-             */ 
 
-            Patient = newPatientData;
+           Patient = newPatientData;
 
             if (Patient.PreferredFoods.Count > 0)
             {
-                SavePreferredFoodsController savePreferredFoodsController = new SavePreferredFoodsController();
-                savePreferredFoodsController.SavePreferredFoods(Patient);
-                //DataAccess.SavePreferredFoodsForPatient(Patient); v1 code
+                dietaryEntityController.SavePreferredFoods(Patient);
             }
 
             if (Patient.FoodsToAvoid.Count > 0)
             {
-                SaveAvoidedFoodsController saveAvoidedFoodsController = new SaveAvoidedFoodsController();
-                saveAvoidedFoodsController.SaveAvoidedFoods(Patient);
-                //DataAccess.SaveFoodsAvoidedForPatient(Patient); v1 code
+                dietaryEntityController.SaveAvoidedFoods(Patient);
             }
 
             return true;
@@ -457,9 +449,7 @@ namespace DietPlanner.View
 
         private void btnSearchPatient_Click(object sender, EventArgs e)
         {
-            GetPatienByNameAndPhoneController getPatienByNameAndPhoneController = new GetPatienByNameAndPhoneController();
-            Patient = getPatienByNameAndPhoneController.GetPatientByNameAndPhone(PatientName, PhoneNumber);
-            //Patient = DataAccess.GetPatientByNameAndPhone(PatientName, PhoneNumber); v1 code
+            Patient = patientController.GetPatientByNameAndPhone(PatientName, PhoneNumber);
         }
 
         private void UpdateSearchButtonState(object sender, EventArgs e)
@@ -515,10 +505,8 @@ namespace DietPlanner.View
                 return;
             }
 
-            GetPlanForPatientController getPlanForPatientController = new GetPlanForPatientController();
-            Plan = getPlanForPatientController.GetPlanForPatient(Patient);
+            Plan = planController.GetPlanForPatient(Patient);
 
-            //Plan = DataAccess.GetPlanForPatient(Patient); //v1 code
             if (Plan == null)
             {
                 Plan = new Service.PlanGenerator(Patient).Plan;

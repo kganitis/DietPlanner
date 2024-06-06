@@ -1,5 +1,4 @@
-﻿using DietPlanner.DAO;
-using DietPlanner.Service;
+﻿using DietPlanner.Service;
 using DietPlanner.View;
 using System;
 using System.Windows.Forms;
@@ -16,7 +15,7 @@ namespace DietPlanner
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            DietaryEntityServiceImp.getInstance().Initialize();
+            DietaryEntityServiceImp.Instance().Initialize();
             Application.Run(new PatientView());
         }
     }

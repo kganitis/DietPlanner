@@ -1,5 +1,4 @@
 ﻿using DietPlanner.Controller;
-using DietPlanner.DAO;
 using DietPlanner.Model;
 using System;
 using System.Data;
@@ -88,18 +87,12 @@ namespace DietPlanner.View
 
         private void btnSavePlan_Click(object sender, EventArgs e)
         {
-            SavePlanController savePlanController = new SavePlanController();
-            if (savePlanController.SavePlan(plan)) 
+            PlanController planController = new PlanController();
+            if (planController.SavePlan(plan)) 
             {
                 MessageBox.Show("Το πλάνο αποθηκεύτηκε με επιτυχία!");
                 dataEntry.Plan = plan;
             }
-
-            /*if (DataAccess.SavePlan(plan))
-            {
-                MessageBox.Show("Το πλάνο αποθηκεύτηκε με επιτυχία!");
-                dataEntry.Plan = plan;
-            }*/
         }
 
         private void btnRegeneratePlan_Click(object sender, EventArgs e)

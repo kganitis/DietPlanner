@@ -7,13 +7,20 @@ namespace DietPlanner.Service
 {
     internal sealed class DietaryEntityServiceImp : IDietaryEntityService
     {
+        private static DietaryEntityServiceImp instance;
+        private static readonly object lockObj = new object();
+
         private FoodCategory foodCategoryTree;
         private List<Food> allFoodsList;
         private List<Meal> allMealsList;
         private List<MealType> allMealTypesList;
-        private static DietaryEntityServiceImp instance;
-        private static readonly object lockObj = new object();
-        public static DietaryEntityServiceImp getInstance() 
+        
+        private DietaryEntityServiceImp()
+        {
+            
+        }
+
+        public static DietaryEntityServiceImp Instance()
         {
             if (instance == null)
             {
@@ -24,8 +31,7 @@ namespace DietPlanner.Service
                         instance = new DietaryEntityServiceImp();
                     }
                 }
-                
-            }   
+            }
             return instance;
         }
 
@@ -37,11 +43,6 @@ namespace DietPlanner.Service
             allFoodsList = dietaryEntityDAOImp.GetAllFoods();
             allMealTypesList = dietaryEntityDAOImp.GetAllMealTypes();
             allMealsList = dietaryEntityDAOImp.GetAllMeals();
-        }
-
-        private DietaryEntityServiceImp()
-        {
-            
         }
 
         public FoodCategory GetFoodCategoryTree() => foodCategoryTree;

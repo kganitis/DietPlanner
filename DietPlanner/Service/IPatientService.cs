@@ -9,7 +9,7 @@ namespace DietPlanner.Service
 {
     internal interface IPatientService
     {
-        void InsertPatient (Patient patient);
+        bool InsertPatient (Patient patient);
         void SavePreferredFoods(Patient patient);
         void SaveAvoidedFoods(Patient patient);
         Patient GetPatientByNameAndPhone(string name, string phoneNumber);
