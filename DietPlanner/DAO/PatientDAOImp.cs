@@ -9,22 +9,22 @@ namespace DietPlanner.DAO
 {
     internal class PatientDAOImp : IPatientDAO
     {
-
         /*
          * Connects to the DB,
          * inserts into Patient table the data of the given patient,
-         * or updates them if the given patient is found,
+         * OR updates them if the given patient is found,
          * by deleting them first, then re-inserting them.
          */
         public bool Save(Patient patient)
         {
-                        
                 string query = string.Empty;
                 SQLiteCommand command;
                 bool success = false;
+
                 try
                 {
                     SQLiteConnection connection = DBUtil.GetConnection();
+
                     // Generate a new ID if needed
                     if (string.IsNullOrEmpty(patient.PatientID))
                     {
@@ -78,7 +78,6 @@ namespace DietPlanner.DAO
                 }
 
                 return success;
-            
         }
 
         /*

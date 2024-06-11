@@ -15,13 +15,13 @@ namespace DietPlanner.View
         private PatientView dataEntry;
         private Plan plan;
         private TreeView[] treeViewDay;
-
+        
         private Font boldFont;
 
-        internal PlanView(PatientView dataEntry, Plan plan)
+        internal PlanView(PatientView dataEntryForm, Plan plan)
         {
             InitializeComponent();
-            this.dataEntry = dataEntry;
+            this.dataEntry = dataEntryForm;
             this.plan = plan;
             treeViewDay = new TreeView[] { treeViewDay1, treeViewDay2, treeViewDay3, treeViewDay4, treeViewDay5, treeViewDay6, treeViewDay7 };
             boldFont = new Font(treeViewDay1.Font, FontStyle.Bold);
