@@ -13,25 +13,6 @@ namespace DietPlanner.Model
         private float fiber;
         private float fats;
 
-        public Food() { }
-
-        public Food(string id, string name, string unit, float quantity, float calories, 
-                    float protein, float carbs, float sugars, float fiber,
-                    float fats, FoodCategory category)
-        {
-            ID = id;
-            Name = name;
-            Unit = unit;
-            Quantity = quantity;
-            Calories = calories;
-            Protein = protein;
-            Carbs = carbs;
-            Sugars = sugars;
-            Fiber = fiber;
-            Fats = fats;
-            Category = category;
-        }
-
         public string Unit { get => unit; set => unit = value; }
         public float Quantity { get => quantity; set => quantity = value; }
         public float Calories { get => calories; set => calories = value; }

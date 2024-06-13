@@ -15,10 +15,7 @@ namespace DietPlanner.Service
         private List<Meal> allMealsList;
         private List<MealType> allMealTypesList;
         
-        private DietaryEntityServiceImp()
-        {
-            
-        }
+        private DietaryEntityServiceImp() { }
 
         public static DietaryEntityServiceImp Instance()
         {

@@ -8,9 +8,9 @@ namespace DietPlanner.Controller
     {
         IPatientService patientService = new PatientServiceImp(new PatientDAOImp());
 
-        public bool InsertNewPatient(Patient patient)
+        public bool SaveNewPatient(Patient patient)
         {
-            return patientService.InsertPatient(patient);
+            return patientService.SavePatient(patient);
         }
 
         public Patient GetPatientByNameAndPhone(string name, string phoneNumber)

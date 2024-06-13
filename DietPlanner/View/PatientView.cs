@@ -424,7 +424,7 @@ namespace DietPlanner.View
                 FoodsToAvoid = FoodsAvoided
             };
 
-            if (!patientController.InsertNewPatient(newPatientData))
+            if (!patientController.SaveNewPatient(newPatientData))
             {
                 return false;
             }

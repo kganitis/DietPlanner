@@ -1,9 +1,11 @@
 ﻿using DietPlanner.Model;
 using DietPlanner.Service;
 using System;
+using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Globalization;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace DietPlanner.DAO
 {
@@ -11,11 +13,9 @@ namespace DietPlanner.DAO
     {
         /*
          * Connects to the DB,
-         * inserts into Patient table the data of the given patient,
-         * OR updates them if the given patient is found,
-         * by deleting them first, then re-inserting them.
+         * INSERTS into Patient table the data of the given patient,
          */
-        public bool Save(Patient patient)
+        public bool Insert(Patient patient)
         {
                 string query = string.Empty;
                 SQLiteCommand command;
@@ -25,30 +25,6 @@ namespace DietPlanner.DAO
                 {
                     SQLiteConnection connection = DBUtil.GetConnection();
 
-                    // Generate a new ID if needed
-                    if (string.IsNullOrEmpty(patient.PatientID))
-                    {
-                        // Get the maximum patient_id value
-                        query = "SELECT MAX(CAST(SUBSTR(Patient_id, 2) AS INTEGER)) FROM Patient";
-                        command = new SQLiteCommand(query, connection);
-                        object maxIdResult = command.ExecuteScalar();
-
-                        // Get the next value, or start from "p0000" if there are no records yet
-                        int newIdNumber = maxIdResult == DBNull.Value ? 0 : Convert.ToInt32(maxIdResult) + 1;
-
-                        // Format the new patientID
-                        patient.PatientID = "p" + newIdNumber.ToString("D4"); // D4 ensures 4 digits, padding with leading zeros if necessary
-                    }
-
-                    // First delete the given patient's data, if found
-                    query = "DELETE FROM Patient WHERE Patient_id = @patientId";
-
-                    command = new SQLiteCommand(query, connection);
-                    command.Parameters.AddWithValue("@patientId", patient.PatientID);
-
-                    command.ExecuteNonQuery();
-
-                    // Insert patient's data (essentially updating them if previously deleted)
                     query = "INSERT INTO Patient(Patient_id, Name, Gender, Phone_number, Date_of_birth, Height, Weight, Activity_level, Goal) " +
                                 "VALUES (@patientId, @name, @gender, @phoneNumber, @date, @height, @weight, @activity, @goal)";
 
@@ -82,11 +58,80 @@ namespace DietPlanner.DAO
 
         /*
          * Connects to the DB,
+         * READS the maximum ID in the Patient table
+         * and returns the next value 
+         */
+        public string GetNextAvailablePatientID()
+        {
+            string query = string.Empty;
+            SQLiteCommand command;
+            string patientID = string.Empty;
+
+            try
+            {
+                SQLiteConnection connection = DBUtil.GetConnection();
+
+                // Get the maximum patient_id value
+                query = "SELECT MAX(CAST(SUBSTR(Patient_id, 2) AS INTEGER)) FROM Patient";
+                command = new SQLiteCommand(query, connection);
+                object maxIdResult = command.ExecuteScalar();
+
+                // Get the next value, or start from "p0000" if there are no records yet
+                int newIdNumber = maxIdResult == DBNull.Value ? 0 : Convert.ToInt32(maxIdResult) + 1;
+
+                // Format the new patientID
+                patientID = "p" + newIdNumber.ToString("D4"); // D4 ensures 4 digits, padding with leading zeros if necessary
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n" + query, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                DBUtil.CloseConnection();
+            }
+
+            return patientID;
+        }
+
+        /*
+         * Connects to the DB,
+         * DELETES a given patient from the Patient table
+         */
+        public bool Delete(Patient patient)
+        {
+            string query = string.Empty;
+            SQLiteCommand command;
+            bool success = false;
+
+            try
+            {
+                SQLiteConnection connection = DBUtil.GetConnection();
+
+                query = "DELETE FROM Patient WHERE Patient_id = @patientId";
+                command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@patientId", patient.PatientID);
+                command.ExecuteNonQuery();
+
+                success = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n" + query, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                success = false;
+            }
+            finally
+            {
+                DBUtil.CloseConnection();
+            }
+
+            return success;
+        }
+
+        /*
+         * Connects to the DB,
          * READS patient data corresponding to the given patientID,
          * creates a Patient instance,
-         * READS patient preferences data for the given patientID,
-         * fetches the dietary entity instances,
-         * and adds them to the appropriate patient's preferenece list,
          * then returns the patient instance.
          */
         public Patient GetPatientByNameAndPhone(string name, string phoneNumber)
@@ -131,31 +176,6 @@ namespace DietPlanner.DAO
                         ActivityLevel = activityLevel,
                         Goal = goal
                     };
-
-                    // Retrieve patient preferences from the Patient_Preferences table
-                    query = @"SELECT Patient_id, Dietary_entity_id, Rule
-                                FROM Patient_Preferences
-                                WHERE Patient_id = @patientID";
-
-                    command = new SQLiteCommand(query, connection);
-                    command.Parameters.AddWithValue("@patientID", patientID);
-
-                    reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        string entityID = reader["Dietary_entity_id"].ToString();
-                        int rule = Convert.ToInt32(reader["Rule"]);
-
-                        // Add dietary entity to the appropriate list based on the rule
-                        if (rule == 1)
-                        {
-                            patient.PreferredFoods.Add(DietaryEntityServiceImp.Instance().GetDietaryEntityByID(entityID));
-                        }
-                        else if (rule == 0)
-                        {
-                            patient.FoodsToAvoid.Add(DietaryEntityServiceImp.Instance().GetDietaryEntityByID(entityID));
-                        }
-                    }
                 }
                 else
                 {
@@ -176,9 +196,103 @@ namespace DietPlanner.DAO
 
         /*
          * Connects to the DB,
-         * inserts into Patient_Preferences table the preferred foods for the given patient
+         * READS the preferred foods data for a given patient
+         * and returns them into a List
          */
-        public void SavePreferredFoodsForPatient(Patient patient) 
+        public List<DietaryEntity> GetPreferredFoodsForPatient(Patient patient)
+        {
+            List<DietaryEntity> preferredFoods = new List<DietaryEntity>();
+
+            try
+            {
+                SQLiteConnection connection = DBUtil.GetConnection();
+
+                string query = @"SELECT Patient_id, Dietary_entity_id, Rule
+                                FROM Patient_Preferences
+                                WHERE Patient_id = @patientID";
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@patientID", patient.PatientID);
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                if (!reader.Read())
+                {
+                    MessageBox.Show("Δεν βρέθηκαν δεδομένα ασθενή με τα στοιχεία που δώσατε.", "Μήνυμα", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                while (reader.Read())
+                {
+                    string entityID = reader["Dietary_entity_id"].ToString();
+                    int rule = Convert.ToInt32(reader["Rule"]);
+                    if (rule == 1)
+                    {
+                        preferredFoods.Add(DietaryEntityServiceImp.Instance().GetDietaryEntityByID(entityID));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                DBUtil.CloseConnection();
+            }
+
+            return preferredFoods;
+        }
+
+        /*
+         * Connects to the DB,
+         * READS the avoided foods data for a given patient
+         * and returns them into a List
+         */
+        public List<DietaryEntity> GetAvoidedFoodsForPatient(Patient patient)
+        {
+            List<DietaryEntity> avoidedFoods = new List<DietaryEntity>();
+
+            try
+            {
+                SQLiteConnection connection = DBUtil.GetConnection();
+
+                string query = @"SELECT Patient_id, Dietary_entity_id, Rule
+                                FROM Patient_Preferences
+                                WHERE Patient_id = @patientID";
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@patientID", patient.PatientID);
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                if (!reader.Read())
+                {
+                    MessageBox.Show("Δεν βρέθηκαν δεδομένα ασθενή με τα στοιχεία που δώσατε.", "Μήνυμα", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                while (reader.Read())
+                {
+                    string entityID = reader["Dietary_entity_id"].ToString();
+                    int rule = Convert.ToInt32(reader["Rule"]);
+                    if (rule == 0)
+                    {
+                        avoidedFoods.Add(DietaryEntityServiceImp.Instance().GetDietaryEntityByID(entityID));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                DBUtil.CloseConnection();
+            }
+
+            return avoidedFoods;
+        }
+
+        /*
+         * Connects to the DB,
+         * INSERTS into Patient_Preferences table the preferred foods for the given patient
+         */
+        public void InsertPreferredFoodsForPatient(Patient patient) 
         {
             string query = string.Empty;
             SQLiteCommand command;
@@ -219,9 +333,9 @@ namespace DietPlanner.DAO
 
         /*
          * Connects to the DB,
-         * inserts into Patient_Preferences table the avoided foods for the given patient
+         * INSERTS into Patient_Preferences table the avoided foods for the given patient
          */
-        public void SaveFoodsAvoidedForPatient(Patient patient) 
+        public void InsertFoodsAvoidedForPatient(Patient patient) 
         {
             string query = string.Empty;
             SQLiteCommand command;

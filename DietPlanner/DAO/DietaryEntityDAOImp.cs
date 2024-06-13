@@ -37,7 +37,11 @@ namespace DietPlanner.DAO
                     string name = reader["Name"].ToString();
                     string parentId = reader["Parent"].ToString();
 
-                    FoodCategory category = new FoodCategory(categoryId, name);
+                    FoodCategory category = new FoodCategory
+                    {
+                        ID = categoryId,
+                        Name = name
+                    };
                     AddToTree(rootCategory, category, parentId);
                 }
             }
@@ -56,7 +60,11 @@ namespace DietPlanner.DAO
             {
                 if (String.IsNullOrEmpty(parentId))
                 {
-                    rootCategory = new FoodCategory(category.ID, category.Name);
+                    rootCategory = new FoodCategory
+                    {
+                        ID = category.ID,
+                        Name = category.Name
+                    };
                 }
 
                 if (parent == null) { return; }

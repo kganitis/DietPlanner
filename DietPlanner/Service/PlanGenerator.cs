@@ -365,7 +365,7 @@ namespace DietPlanner.Service
             {
                 return dessert;
             }
-            if (cheatMealDay == day && cheatMealTime == time)
+            if (day == cheatMealDay && time == cheatMealTime)
             {
                 return cheatMeal;
             }

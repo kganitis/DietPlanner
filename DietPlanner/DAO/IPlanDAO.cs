@@ -4,7 +4,8 @@ namespace DietPlanner.DAO
 {
     internal interface IPlanDAO
     {
-        bool Save(Plan plan);
+        bool Insert(Plan plan);
+        bool Delete(Plan plan);
         Plan GetPlanForPatient(Patient patient);
     }
 }

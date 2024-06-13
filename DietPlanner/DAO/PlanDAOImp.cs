@@ -8,7 +8,7 @@ namespace DietPlanner.DAO
 {
     internal class PlanDAOImp : IPlanDAO
     {
-        public bool Save(Plan plan)
+        public bool Insert(Plan plan)
         {
             bool success = false;
 
@@ -16,20 +16,11 @@ namespace DietPlanner.DAO
             {
                 SQLiteConnection connection = DBUtil.GetConnection();
 
-                // First clear any existing plan for the patient
-                string query = "DELETE FROM Plan WHERE Patient_id = @patientID";
-
-                SQLiteCommand command = new SQLiteCommand(query, connection);
-                command.Parameters.AddWithValue("@patientID", plan.Patient.PatientID);
-
-                command.ExecuteNonQuery();
-
-                // Insert new plan data
                 foreach (var mealItem in plan.MealPlan)
                 {
-                    query = "INSERT INTO Plan (Patient_id, Day, Time_of_day, Meal_id, Quantity) VALUES (@patientID, @day, @time, @mealID, @quantity)";
+                    string query = "INSERT INTO Plan (Patient_id, Day, Time_of_day, Meal_id, Quantity) VALUES (@patientID, @day, @time, @mealID, @quantity)";
 
-                    command = new SQLiteCommand(query, connection);
+                    SQLiteCommand command = new SQLiteCommand(query, connection);
                     command.Parameters.AddWithValue("@patientID", plan.Patient.PatientID);
                     command.Parameters.AddWithValue("@day", mealItem.Day);
                     command.Parameters.AddWithValue("@time", mealItem.TimeOfDay);
@@ -40,6 +31,34 @@ namespace DietPlanner.DAO
 
                     success = true;
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Σφάλμα", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                success = false;
+            }
+            finally
+            {
+                DBUtil.CloseConnection();
+            }
+
+            return success;
+        }
+
+        public bool Delete(Plan plan)
+        {
+            bool success = false;
+
+            try
+            {
+                SQLiteConnection connection = DBUtil.GetConnection();
+
+                string query = "DELETE FROM Plan WHERE Patient_id = @patientID";
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+                command.Parameters.AddWithValue("@patientID", plan.Patient.PatientID);
+                command.ExecuteNonQuery();
+
+                success = true;
             }
             catch (Exception ex)
             {

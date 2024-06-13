@@ -1,12 +1,17 @@
 ﻿using DietPlanner.Model;
+using System.Collections.Generic;
 
 namespace DietPlanner.DAO
 {
     internal interface IPatientDAO
     {
-        bool Save(Patient patient);
+        bool Insert(Patient patient);
+        string GetNextAvailablePatientID();
+        bool Delete(Patient patient);
         Patient GetPatientByNameAndPhone(string name, string phoneNum);
-        void SavePreferredFoodsForPatient(Patient patient);
-        void SaveFoodsAvoidedForPatient(Patient patient);
+        List<DietaryEntity> GetPreferredFoodsForPatient(Patient patient);
+        List<DietaryEntity> GetAvoidedFoodsForPatient(Patient patient);
+        void InsertPreferredFoodsForPatient(Patient patient);
+        void InsertFoodsAvoidedForPatient(Patient patient);
     }
 }

@@ -12,9 +12,13 @@ namespace DietPlanner.Service
             _planDAO = planDAO;
         }
 
-        public bool SavePlan (Plan plan)
+        public bool SavePlan(Plan plan)
         {
-           return _planDAO.Save(plan);
+            if (_planDAO.Delete(plan))
+            {
+                return _planDAO.Insert(plan);
+            }
+            else { return false; }
         }
 
         public Plan GetPlanForPatient(Patient patient)
